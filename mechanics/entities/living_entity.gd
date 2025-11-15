@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func recompute_effects() -> void:
 	computed_data = data.duplicate(true)
-	for effect in get_effects():
+	for effect in effects:
 		effect.compute(computed_data)
 
 class ProcessVelocityData:
