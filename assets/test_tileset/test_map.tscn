@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=4 uid="uid://dljuju3xst130"]
+[gd_scene load_steps=3 format=4 uid="uid://dljuju3xst130"]
 
 [ext_resource type="TileSet" uid="uid://bc5ohqnr5qre6" path="res://assets/test_tileset/test_tiles.tres" id="1_atj7b"]
+[ext_resource type="PackedScene" uid="uid://je5b0j4xyyyv" path="res://scenes/sandstorm/sandstorm.tscn" id="2_3q0ob"]
 
 [node name="TestMap" type="Node"]
 
 [node name="Terrain" type="Node2D" parent="."]
 position = Vector2(-168, -112)
-scale = Vector2(2, 2)
 
 [node name="Polygon2D3" type="Polygon2D" parent="Terrain"]
 color = Color(0, 0, 0, 1)
@@ -45,3 +45,8 @@ tile_set = ExtResource("1_atj7b")
 modulate = Color(1, 0.3254902, 0.24705882, 1)
 tile_map_data = PackedByteArray("AAALAP//AAAAAAAAAAALAAAAAAAAAAEAAAALAAEAAAAAAAIAAAALAAMAAAAAAAEAAAALAAQAAAAAAAEAAAALAAUAAAAFAAMAAAAHAAUAAAABAAAAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAAKAAUAAAABAAAAAAAGAAUAAAABAAAAAAAFAAUAAAAAAAAAAAALAAIAAAAAAAAAAAD//wUAAAAAAAIAAAAAAAUAAAACAAIAAAABAAUAAAAAAAIAAAACAAUAAAACAAIAAAADAAUAAAAAAAIAAAAEAAUAAAACAAIAAAD//wQAAAAAAAAAAAAAAAQAAAACAAAAAAABAAQAAAAAAAAAAAACAAQAAAACAAAAAAADAAQAAAAAAAAAAAAEAAQAAAACAAAAAAD//wYAAAAIAAEAAAD//wcAAAAIAAEAAAABAAYAAAAIAAEAAAABAAcAAAAIAAEAAAADAAYAAAAIAAEAAAADAAcAAAAIAAEAAAAEAAYAAAAKAAEAAAAEAAcAAAAKAAEAAAACAAYAAAAKAAEAAAACAAcAAAAKAAEAAAAAAAYAAAAKAAEAAAAAAAcAAAAKAAEAAAAIAP//AAADAAIAAAAIAP3/AAADAAAAAAAIAP7/AAADAAEAAAAJAP3/AAADAAAAAAAJAP7/AAADAAEAAAAJAP//AAADAAIAAAAHAP3/AAADAAAAAAAHAP7/AAADAAEAAAAHAP//AAADAAIAAAA=")
 tile_set = ExtResource("1_atj7b")
+
+[node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
+z_index = 1
+position = Vector2(0, -48)
+scale = Vector2(2, 2)

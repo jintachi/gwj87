@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4yw58lhqrvr3"
-path="res://.godot/imported/nomad.png-b6f701a3d019fb6929a9579be6c7605a.ctex"
+uid="uid://do1dpg7urrjbk"
+path="res://.godot/imported/frame0022.png-64e6f5761fd39c177b482e43a7223225.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/nomad.png"
-dest_files=["res://.godot/imported/nomad.png-b6f701a3d019fb6929a9579be6c7605a.ctex"]
+source_file="res://assets/sprites/nomad/nomad_frames/frame0022.png"
+dest_files=["res://.godot/imported/frame0022.png-64e6f5761fd39c177b482e43a7223225.ctex"]
 
 [params]
 
