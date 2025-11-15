@@ -250,7 +250,6 @@ rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResour
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("47_y5a7b")
 volume_db = -33.32
-pitch_scale = 1.4815
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_86p0n")

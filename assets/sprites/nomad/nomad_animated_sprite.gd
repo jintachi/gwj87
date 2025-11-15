@@ -35,6 +35,6 @@ func _ready():
                 audio_stream.stream = rad_audio_streams[1]
             elif radiation_amount >= 0.70:
                 audio_stream.stream = rad_audio_streams[2]
-            audio_stream.pitch_scale = 1 + radiation_amount * 1.5
+            audio_stream.pitch_scale = 1 + radiation_amount * 0.5
             audio_stream.play(),
     )
