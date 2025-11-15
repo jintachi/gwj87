@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://blvgfrn7vqqah"]
+[gd_scene load_steps=57 format=3 uid="uid://blvgfrn7vqqah"]
 
 [ext_resource type="Texture2D" uid="uid://e7x1jx628o85" path="res://assets/sprites/nomad/nomad_frames/frame0016.png" id="2_pbqkw"]
 [ext_resource type="Texture2D" uid="uid://dbn2hyg6rmjtr" path="res://assets/sprites/nomad/nomad_frames/frame0017.png" id="3_62wtq"]
@@ -45,6 +45,10 @@
 [ext_resource type="Texture2D" uid="uid://d3v3s35va464y" path="res://assets/sprites/nomad/nomad_frames/frame0043.png" id="44_soc0m"]
 [ext_resource type="Texture2D" uid="uid://dyn2ouc4rkc2b" path="res://assets/sprites/nomad/nomad_frames/frame0044.png" id="45_fdh4b"]
 [ext_resource type="Texture2D" uid="uid://cbtu8slyoubjq" path="res://assets/sprites/nomad/nomad_frames/frame0045.png" id="46_8qllj"]
+[ext_resource type="Script" uid="uid://brq342s508rav" path="res://assets/sprites/nomad/nomad_animated_sprite.gd" id="46_dtoso"]
+[ext_resource type="AudioStream" uid="uid://cev2202iqiqcn" path="res://assets/sprites/nomad/radalarm_lo.mp3" id="47_y5a7b"]
+[ext_resource type="AudioStream" uid="uid://rxroqcnrrcvg" path="res://assets/sprites/nomad/radalarm_med.mp3" id="48_a068p"]
+[ext_resource type="AudioStream" uid="uid://deucdeccufeoc" path="res://assets/sprites/nomad/radalarm_hi.mp3" id="49_d77k0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_04bfb"]
 animations = [{
@@ -207,7 +211,53 @@ animations = [{
 "speed": 24.0
 }]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_86p0n"]
+blend_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_dtoso"]
+offsets = PackedFloat32Array(0.37333333, 1)
+colors = PackedColorArray(7.70092e-06, 0.7134493, 0.87639487, 0.16862746, 1.6364455e-06, 0.6630182, 0.7146353, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xogpb"]
+gradient = SubResource("Gradient_dtoso")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_86p0n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.24812031, 1), 0.0, 0.0, 0, 0, Vector2(0.5902256, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_dtoso"]
+curve = SubResource("Curve_86p0n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u18wl"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_dtoso")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_04bfb")
 animation = &"walk"
-frame_progress = 0.19027205
+frame_progress = 0.90791005
+script = ExtResource("46_dtoso")
+geiger_audio_toggle = false
+rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("47_y5a7b")
+volume_db = -33.32
+pitch_scale = 1.4815
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_86p0n")
+position = Vector2(6, -12)
+amount = 1
+texture = SubResource("GradientTexture2D_xogpb")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_u18wl")
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
