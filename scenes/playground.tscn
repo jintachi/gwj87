@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://berpwfhtg3xm8"]
+
+[ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_qchbg"]
+[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="2_kddj0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kddj0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q8s1k"]
+noise = SubResource("FastNoiseLite_kddj0")
+
+[sub_resource type="Resource" id="Resource_q8s1k"]
+script = ExtResource("2_kddj0")
+movement_speed = 256.0
+metadata/_custom_type_script = "uid://ca40jequl07s1"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qchbg"]
+size = Vector2(32, 48)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kddj0"]
+radius = 16.0
+
+[node name="Main" type="Node"]
+
+[node name="Ground" type="Sprite2D" parent="."]
+position = Vector2(0, 24.500008)
+scale = Vector2(2.4765625, 1.5839844)
+texture = SubResource("NoiseTexture2D_q8s1k")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+script = ExtResource("1_qchbg")
+data = SubResource("Resource_q8s1k")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = SubResource("PlaceholderTexture2D_qchbg")
+offset = Vector2(0, -24)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_speed = 60.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_kddj0")
