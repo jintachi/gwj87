@@ -1,10 +1,15 @@
-[gd_scene load_steps=14 format=3 uid="uid://wepmsqh4axsa"]
+[gd_scene load_steps=25 format=3 uid="uid://wepmsqh4axsa"]
 
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_qchbg"]
-[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="2_kddj0"]
 [ext_resource type="Script" uid="uid://cm18cx1ktfan0" path="res://mechanics/effects/area_of_effect.gd" id="2_q8s1k"]
 [ext_resource type="Shader" uid="uid://b4qs845i3go35" path="res://shaders/color.gdshader" id="3_kddj0"]
 [ext_resource type="Resource" uid="uid://dcl8e5e0jbdld" path="res://IceEffect.tres" id="3_mm0a5"]
+[ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="5_mrac1"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="5_o6wi6"]
+[ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="6_2q4k0"]
+[ext_resource type="Texture2D" uid="uid://c077toxp08etq" path="res://assets/sprites/camel.png" id="6_o6wi6"]
+[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/axe.gd" id="8_2q4k0"]
+[ext_resource type="PackedScene" uid="uid://bs3qoxmweqlyb" path="res://bullet.tscn" id="8_x1amm"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kddj0"]
 
@@ -21,10 +26,38 @@ size = Vector2(128, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mm0a5"]
 size = Vector2(128, 128)
 
-[sub_resource type="Resource" id="Resource_mm0a5"]
-script = ExtResource("2_kddj0")
-movement_speed = 100.0
-metadata/_custom_type_script = "uid://ca40jequl07s1"
+[sub_resource type="Resource" id="Resource_x1amm"]
+script = ExtResource("6_2q4k0")
+size = 30
+metadata/_custom_type_script = "uid://bov44tgaen1t"
+
+[sub_resource type="Resource" id="Resource_mrac1"]
+script = ExtResource("5_mrac1")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_k63md"]
+script = ExtResource("8_2q4k0")
+bullet = ExtResource("8_x1amm")
+slot_type = 5
+metadata/_custom_type_script = "uid://cnibtsckb1myb"
+
+[sub_resource type="Resource" id="Resource_2q4k0"]
+script = ExtResource("5_mrac1")
+slot_type = 5
+item = SubResource("Resource_k63md")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_2bfhc"]
+script = ExtResource("5_mrac1")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_osidk"]
+script = ExtResource("5_mrac1")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_rlvb3"]
+script = ExtResource("5_mrac1")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qchbg"]
 size = Vector2(32, 48)
@@ -35,8 +68,9 @@ radius = 16.0
 [node name="Main" type="Node"]
 
 [node name="Ground" type="Sprite2D" parent="."]
-position = Vector2(0, 24.500008)
-scale = Vector2(2.4765625, 1.5839844)
+modulate = Color(0.26130536, 0.08462194, 0.012531371, 1)
+position = Vector2(-32, 21.75002)
+scale = Vector2(2.4804688, 1.6201173)
 texture = SubResource("NoiseTexture2D_q8s1k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -54,7 +88,13 @@ shape = SubResource("RectangleShape2D_mm0a5")
 [node name="Player" type="CharacterBody2D" parent="."]
 motion_mode = 1
 script = ExtResource("1_qchbg")
-data = SubResource("Resource_mm0a5")
+general_inventory = SubResource("Resource_x1amm")
+data = ExtResource("5_o6wi6")
+head_item = SubResource("Resource_mrac1")
+weapon_item = SubResource("Resource_2q4k0")
+armor_item = SubResource("Resource_2bfhc")
+consumable_item = SubResource("Resource_osidk")
+ammo_item = SubResource("Resource_rlvb3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture_repeat = 2
@@ -66,4 +106,15 @@ process_callback = 0
 position_smoothing_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_kddj0")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(148, 130)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture_repeat = 2
+texture = ExtResource("6_o6wi6")
+offset = Vector2(0, -24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_kddj0")

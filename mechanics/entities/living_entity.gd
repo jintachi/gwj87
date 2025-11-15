@@ -1,10 +1,17 @@
 extends Entity
 class_name LivingEntity
 
-signal onHit
+var input_dir : Vector2
+var attack_dir : Vector2
 
 @export var data : LivingEntityData
 var computed_data : LivingEntityData
+
+@export var head_item : InventorySlot
+@export var weapon_item : InventorySlot
+@export var armor_item : InventorySlot
+@export var consumable_item : InventorySlot
+@export var ammo_item : InventorySlot
 
 func _ready() -> void:
 	recompute_effects()
@@ -26,6 +33,7 @@ class VelocityCallable extends LivingDefaultCallable:
 		vel_data.entity.velocity = vel_data.direction * vel_data.entity.computed_data.movement_speed
 
 var process_velocity: VelocityCallable = VelocityCallable.new()
+
 func move(direction: Vector2, delta: float) -> void:
 	var vel_data = ProcessVelocityData.new()
 	vel_data.entity = self
@@ -33,6 +41,12 @@ func move(direction: Vector2, delta: float) -> void:
 	vel_data.delta = delta
 	process_velocity.trickle_down(vel_data)
 
-# TODO: It's not good
-func hit(damage: float) -> void:
-	onHit.emit(damage)
+func process_items(delta: float) -> void:
+	var data = InventoryItem.ItemProcessData.new()
+	data.entity = self
+	data.delta = delta
+	head_item.item_process(data)
+	weapon_item.item_process(data)
+	armor_item.item_process(data)
+	consumable_item.item_process(data)
+	ammo_item.item_process(data)
