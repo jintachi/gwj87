@@ -63,6 +63,7 @@ func parse_command(command) -> void:
 		return
 
 func saveManager() -> SaveManager: return SaveManager
+func player() -> Player: return Player.instance
 
 func save() -> void:
 	if !SaveManager.myData:

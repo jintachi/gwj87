@@ -1,7 +1,7 @@
 extends Node
 class_name Effect
 
-var priority : int = 0
+@export var priority : int = 0
 
 # takes instance of entity specific data as input and modifies it
 func compute(_data: Variant) -> void:

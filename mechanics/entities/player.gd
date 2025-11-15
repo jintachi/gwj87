@@ -1,10 +1,20 @@
 extends LivingEntity
 class_name Player
 
-func get_input():
-	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	velocity = input_dir * computed_data.movement_speed
+static var instance : Player
+var input_dir : Vector2
+var attack_dir : Vector2
 
-func _physics_process(delta):
-	get_input()
+func _ready() -> void:
+	super()
+	instance = self
+	
+func get_attack_input() -> void:
+	attack_dir = Input.get_vector("attack_left", "attack_right", "attack_up", "attack_down")
+func get_move_input() -> void:
+	input_dir = Input.get_vector("left", "right", "up", "down")
+
+func _physics_process(delta: float) -> void:
+	get_move_input()
+	move(input_dir, delta)
 	move_and_collide(velocity * delta)
