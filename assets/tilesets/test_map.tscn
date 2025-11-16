@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=4 uid="uid://dljuju3xst130"]
 
-[ext_resource type="TileSet" uid="uid://bc5ohqnr5qre6" path="res://assets/test_tileset/test_tiles.tres" id="1_atj7b"]
+[ext_resource type="TileSet" uid="uid://bc5ohqnr5qre6" path="res://assets/tilesets/test_tiles.tres" id="1_atj7b"]
 [ext_resource type="PackedScene" uid="uid://je5b0j4xyyyv" path="res://scenes/sandstorm/sandstorm.tscn" id="2_3q0ob"]
 [ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="2_ignv8"]
 [ext_resource type="PackedScene" uid="uid://c0lfap4mc25lk" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite.tscn" id="4_055nu"]
@@ -50,7 +50,7 @@ tile_set = ExtResource("1_atj7b")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("2_ignv8")]
 position = Vector2(127, -92)
-frame_progress = 0.37324503
+frame_progress = 0.835502
 
 [node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
 visible = false
@@ -62,4 +62,4 @@ scale = Vector2(2, 2)
 
 [node name="PyroFlySprite" parent="." instance=ExtResource("4_055nu")]
 position = Vector2(16, -112)
-frame_progress = 0.06573368
+frame_progress = 0.68144983

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d2yn4nfov3wjo"]
 
-[ext_resource type="Shader" uid="uid://sfws7y0pve5w" path="res://assets/test_tileset/pixelated_line.gdshader" id="1_bp77v"]
+[ext_resource type="Shader" uid="uid://sfws7y0pve5w" path="res://assets/tracer_line/pixelated_line.gdshader" id="1_bp77v"]
 [ext_resource type="Script" uid="uid://cjswrwhjmiiut" path="res://assets/tracer_line/tracer_line.gd" id="2_pnwip"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0sw1t"]
