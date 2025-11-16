@@ -42,11 +42,11 @@ func move(direction: Vector2, delta: float) -> void:
 	process_velocity.trickle_down(vel_data)
 
 func process_items(delta: float) -> void:
-	var data = InventoryItem.ItemProcessData.new()
-	data.entity = self
-	data.delta = delta
-	head_item.item_process(data)
-	weapon_item.item_process(data)
-	armor_item.item_process(data)
-	consumable_item.item_process(data)
-	ammo_item.item_process(data)
+	var item_data = InventoryItem.ItemProcessData.new()
+	item_data.entity = self
+	item_data.delta = delta
+	head_item.item_process(item_data)
+	weapon_item.item_process(item_data)
+	armor_item.item_process(item_data)
+	consumable_item.item_process(item_data)
+	ammo_item.item_process(item_data)

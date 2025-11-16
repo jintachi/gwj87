@@ -24,6 +24,7 @@ SoundManager="*res://autoloads/audio/sound_manager.gd"
 GameGlobal="*res://autoloads/general/game_global.gd"
 GameGlobalEvents="*res://autoloads/general/game_global_events.gd"
 DebugConsoleScene="*res://autoloads/debug/debug_console.tscn"
+TransitionScene="*res://autoloads/general/transition_scene.tscn"
 
 [display]
 
