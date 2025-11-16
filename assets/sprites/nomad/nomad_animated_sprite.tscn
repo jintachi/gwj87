@@ -1,5 +1,6 @@
-[gd_scene load_steps=57 format=3 uid="uid://blvgfrn7vqqah"]
+[gd_scene load_steps=59 format=3 uid="uid://blvgfrn7vqqah"]
 
+[ext_resource type="Shader" uid="uid://cuj34asa5dt53" path="res://assets/shaders/outline.gdshader" id="1_a068p"]
 [ext_resource type="Texture2D" uid="uid://e7x1jx628o85" path="res://assets/sprites/nomad/nomad_frames/frame0016.png" id="2_pbqkw"]
 [ext_resource type="Texture2D" uid="uid://dbn2hyg6rmjtr" path="res://assets/sprites/nomad/nomad_frames/frame0017.png" id="3_62wtq"]
 [ext_resource type="Texture2D" uid="uid://cpmnbkdhf4jld" path="res://assets/sprites/nomad/nomad_frames/frame0018.png" id="4_kkn3m"]
@@ -49,6 +50,14 @@
 [ext_resource type="AudioStream" uid="uid://cev2202iqiqcn" path="res://assets/sprites/nomad/radalarm_lo.mp3" id="47_y5a7b"]
 [ext_resource type="AudioStream" uid="uid://rxroqcnrrcvg" path="res://assets/sprites/nomad/radalarm_med.mp3" id="48_a068p"]
 [ext_resource type="AudioStream" uid="uid://deucdeccufeoc" path="res://assets/sprites/nomad/radalarm_hi.mp3" id="49_d77k0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d77k0"]
+shader = ExtResource("1_a068p")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 2.000000095
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_04bfb"]
 animations = [{
@@ -208,7 +217,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 24.0
+"speed": 20.0
 }]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_86p0n"]
@@ -240,9 +249,10 @@ gravity = Vector3(0, 0, 0)
 alpha_curve = SubResource("CurveTexture_dtoso")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+material = SubResource("ShaderMaterial_d77k0")
 sprite_frames = SubResource("SpriteFrames_04bfb")
 animation = &"walk"
-frame_progress = 0.90791005
+frame_progress = 0.6051416
 script = ExtResource("46_dtoso")
 geiger_audio_toggle = false
 rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]
@@ -250,6 +260,7 @@ rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResour
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("47_y5a7b")
 volume_db = -33.32
+pitch_scale = 1.028
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_86p0n")

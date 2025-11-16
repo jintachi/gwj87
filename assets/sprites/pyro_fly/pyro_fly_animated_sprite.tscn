@@ -1,0 +1,60 @@
+[gd_scene load_steps=12 format=3 uid="uid://c0lfap4mc25lk"]
+
+[ext_resource type="Shader" uid="uid://ct3wgrieor2fr" path="res://assets/shaders/subsampler_outline.gdshader" id="1_028ys"]
+[ext_resource type="Texture2D" uid="uid://do0pyn2wlnnr3" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0000.png" id="2_e4ilx"]
+[ext_resource type="Texture2D" uid="uid://c50wbaw4w6725" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0001.png" id="3_gwn20"]
+[ext_resource type="Texture2D" uid="uid://xsklgfh2fkd6" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0002.png" id="4_iilgk"]
+[ext_resource type="Texture2D" uid="uid://d03nash7axjqi" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0003.png" id="5_gpunj"]
+[ext_resource type="Texture2D" uid="uid://c01xuh3ll03fc" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0004.png" id="6_y8bv7"]
+[ext_resource type="Texture2D" uid="uid://1dw7ym2pn0r5" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0005.png" id="7_pehg1"]
+[ext_resource type="Texture2D" uid="uid://c80one2nw2nk4" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0006.png" id="8_ccbkw"]
+[ext_resource type="Script" uid="uid://b3memur3m4jkt" path="res://assets/shaders/animated_subsampler.gd" id="9_lx642"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ju33"]
+shader = ExtResource("1_028ys")
+shader_parameter/pic_scale = 1.0
+shader_parameter/pic_rot = 1.75
+shader_parameter/origin = Vector2(0, -1.2246063e-17)
+shader_parameter/subdivisions = 116.91
+shader_parameter/round_alpha = true
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 2.000000095
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fwakp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e4ilx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gwn20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_iilgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gpunj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_y8bv7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pehg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ccbkw")
+}],
+"loop": true,
+"name": &"default_fly",
+"speed": 48.0
+}]
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D"]
+material = SubResource("ShaderMaterial_5ju33")
+sprite_frames = SubResource("SpriteFrames_fwakp")
+animation = &"default_fly"
+frame_progress = 0.8608737
+script = ExtResource("9_lx642")

@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=4 uid="uid://dljuju3xst130"]
+[gd_scene load_steps=5 format=4 uid="uid://dljuju3xst130"]
 
 [ext_resource type="TileSet" uid="uid://bc5ohqnr5qre6" path="res://assets/test_tileset/test_tiles.tres" id="1_atj7b"]
 [ext_resource type="PackedScene" uid="uid://je5b0j4xyyyv" path="res://scenes/sandstorm/sandstorm.tscn" id="2_3q0ob"]
+[ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="2_ignv8"]
+[ext_resource type="PackedScene" uid="uid://c0lfap4mc25lk" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite.tscn" id="4_055nu"]
 
 [node name="TestMap" type="Node"]
 
@@ -46,7 +48,19 @@ modulate = Color(1, 0.3254902, 0.24705882, 1)
 tile_map_data = PackedByteArray("AAALAP//AAAAAAAAAAALAAAAAAAAAAEAAAALAAEAAAAAAAIAAAALAAMAAAAAAAEAAAALAAQAAAAAAAEAAAALAAUAAAAFAAMAAAAHAAUAAAABAAAAAAAIAAUAAAABAAAAAAAJAAUAAAABAAAAAAAKAAUAAAABAAAAAAAGAAUAAAABAAAAAAAFAAUAAAAAAAAAAAALAAIAAAAAAAAAAAD//wUAAAAAAAIAAAAAAAUAAAACAAIAAAABAAUAAAAAAAIAAAACAAUAAAACAAIAAAADAAUAAAAAAAIAAAAEAAUAAAACAAIAAAD//wQAAAAAAAAAAAAAAAQAAAACAAAAAAABAAQAAAAAAAAAAAACAAQAAAACAAAAAAADAAQAAAAAAAAAAAAEAAQAAAACAAAAAAD//wYAAAAIAAEAAAD//wcAAAAIAAEAAAABAAYAAAAIAAEAAAABAAcAAAAIAAEAAAADAAYAAAAIAAEAAAADAAcAAAAIAAEAAAAEAAYAAAAKAAEAAAAEAAcAAAAKAAEAAAACAAYAAAAKAAEAAAACAAcAAAAKAAEAAAAAAAYAAAAKAAEAAAAAAAcAAAAKAAEAAAAIAP//AAADAAIAAAAIAP3/AAADAAAAAAAIAP7/AAADAAEAAAAJAP3/AAADAAAAAAAJAP7/AAADAAEAAAAJAP//AAADAAIAAAAHAP3/AAADAAAAAAAHAP7/AAADAAEAAAAHAP//AAADAAIAAAA=")
 tile_set = ExtResource("1_atj7b")
 
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("2_ignv8")]
+position = Vector2(43, 14)
+animation = &"idle"
+frame_progress = 0.36106384
+
 [node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
+visible = false
 z_index = 1
 position = Vector2(0, -48)
 scale = Vector2(2, 2)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="AnimatedSprite2D2" parent="." instance=ExtResource("4_055nu")]
+position = Vector2(50, -110)
+frame_progress = 0.929934

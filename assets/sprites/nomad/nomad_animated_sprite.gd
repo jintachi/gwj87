@@ -38,3 +38,5 @@ func _ready():
             audio_stream.pitch_scale = 1 + radiation_amount * 0.5
             audio_stream.play(),
     )
+    animation = "idle"
+    play()
