@@ -1,30 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://dljuju3xst130"]
+[gd_scene load_steps=5 format=4 uid="uid://dljuju3xst130"]
 
 [ext_resource type="TileSet" uid="uid://bc5ohqnr5qre6" path="res://assets/test_tileset/test_tiles.tres" id="1_atj7b"]
 [ext_resource type="PackedScene" uid="uid://je5b0j4xyyyv" path="res://scenes/sandstorm/sandstorm.tscn" id="2_3q0ob"]
 [ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="2_ignv8"]
 [ext_resource type="PackedScene" uid="uid://c0lfap4mc25lk" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite.tscn" id="4_055nu"]
-[ext_resource type="Shader" uid="uid://sfws7y0pve5w" path="res://assets/test_tileset/pixelated_line.gdshader" id="5_klf56"]
-[ext_resource type="Script" uid="uid://cjswrwhjmiiut" path="res://assets/tracer_line/tracer_line.gd" id="6_847f5"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sw1t"]
-shader = ExtResource("5_klf56")
-shader_parameter/point1 = Vector2(0, 0)
-shader_parameter/point2 = Vector2(-0.5, -0.5)
-shader_parameter/amount = 256.0
-shader_parameter/line_width = 0.005
-shader_parameter/endpoint_size = 0.01
-shader_parameter/line_color = Color(0.47349334, 0.92, 0.44160002, 0.70980394)
-shader_parameter/divisions = 16.0
-shader_parameter/stripe_bias = 2.5
-shader_parameter/speed = 0.1
-
-[sub_resource type="Gradient" id="Gradient_il604"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gelub"]
-gradient = SubResource("Gradient_il604")
-width = 1024
-height = 1024
 
 [node name="TestMap" type="Node"]
 
@@ -71,7 +50,7 @@ tile_set = ExtResource("1_atj7b")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("2_ignv8")]
 position = Vector2(127, -92)
-frame_progress = 0.21583687
+frame_progress = 0.37324503
 
 [node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
 visible = false
@@ -83,11 +62,4 @@ scale = Vector2(2, 2)
 
 [node name="PyroFlySprite" parent="." instance=ExtResource("4_055nu")]
 position = Vector2(16, -112)
-frame_progress = 0.6138444
-
-[node name="TracerLine" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_0sw1t")
-texture = SubResource("GradientTexture2D_gelub")
-script = ExtResource("6_847f5")
-follow_mouse = true
-square_range = 1024.0
+frame_progress = 0.06573368

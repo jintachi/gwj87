@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2yn4nfov3wjo"]
+
+[ext_resource type="Shader" uid="uid://sfws7y0pve5w" path="res://assets/test_tileset/pixelated_line.gdshader" id="1_bp77v"]
+[ext_resource type="Script" uid="uid://cjswrwhjmiiut" path="res://assets/tracer_line/tracer_line.gd" id="2_pnwip"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0sw1t"]
+shader = ExtResource("1_bp77v")
+shader_parameter/point1 = Vector2(0, 0)
+shader_parameter/point2 = Vector2(-0.5, -0.5)
+shader_parameter/amount = 256.0
+shader_parameter/line_width = 0.005
+shader_parameter/endpoint_size = 0.01
+shader_parameter/line_color = Color(0.47349334, 0.92, 0.44160002, 0.70980394)
+shader_parameter/divisions = 16.0
+shader_parameter/stripe_bias = 2.5
+shader_parameter/speed = 0.1
+
+[sub_resource type="Gradient" id="Gradient_il604"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gelub"]
+gradient = SubResource("Gradient_il604")
+width = 1024
+height = 1024
+
+[node name="TracerLine" type="Sprite2D"]
+material = SubResource("ShaderMaterial_0sw1t")
+texture = SubResource("GradientTexture2D_gelub")
+script = ExtResource("2_pnwip")
+follow_mouse = true
+square_range = 1024.0
