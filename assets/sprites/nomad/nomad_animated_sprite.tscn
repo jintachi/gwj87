@@ -53,6 +53,8 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d77k0"]
 shader = ExtResource("1_a068p")
+shader_parameter/enable_fill = false
+shader_parameter/fill_color = Color(0, 0, 0, 1)
 shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/width = 2.000000095
 shader_parameter/pattern = 1
@@ -251,8 +253,8 @@ alpha_curve = SubResource("CurveTexture_dtoso")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_d77k0")
 sprite_frames = SubResource("SpriteFrames_04bfb")
-animation = &"walk"
-frame_progress = 0.6051416
+animation = &"idle"
+frame_progress = 0.017755603
 script = ExtResource("46_dtoso")
 geiger_audio_toggle = false
 rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]

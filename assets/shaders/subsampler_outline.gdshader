@@ -1,5 +1,8 @@
 shader_type canvas_item;
 
+uniform bool enable_fill = false;
+uniform vec4 fill_color : source_color = vec4(1.0);
+
 uniform sampler2D pic;
 uniform float pic_scale = 2.0;
 uniform float pic_rot = 0.0;
@@ -87,6 +90,9 @@ void fragment() {
 	if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
 		COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb, color.a) : color.rgb;
 		COLOR.a += (1.0 - COLOR.a) * color.a;
+	}
+	if (enable_fill && COLOR.a > 0.0 && length(COLOR - color) > 0.01){
+			COLOR = fill_color;
 	}
 	// Called for every pixel the material is visible on.
 }

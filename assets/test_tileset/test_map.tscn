@@ -50,8 +50,7 @@ tile_set = ExtResource("1_atj7b")
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("2_ignv8")]
 position = Vector2(43, 14)
-animation = &"idle"
-frame_progress = 0.36106384
+frame_progress = 0.21053897
 
 [node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
 visible = false
@@ -63,4 +62,4 @@ scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D2" parent="." instance=ExtResource("4_055nu")]
 position = Vector2(50, -110)
-frame_progress = 0.929934
+frame_progress = 0.48933065

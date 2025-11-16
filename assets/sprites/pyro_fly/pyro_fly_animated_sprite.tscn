@@ -12,9 +12,11 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ju33"]
 shader = ExtResource("1_028ys")
+shader_parameter/enable_fill = false
+shader_parameter/fill_color = Color(1, 1, 1, 1)
 shader_parameter/pic_scale = 1.0
 shader_parameter/pic_rot = 1.75
-shader_parameter/origin = Vector2(0, -1.2246063e-17)
+shader_parameter/origin = Vector2(0, 0.049556505)
 shader_parameter/subdivisions = 116.91
 shader_parameter/round_alpha = true
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -52,9 +54,9 @@ animations = [{
 "speed": 48.0
 }]
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_5ju33")
 sprite_frames = SubResource("SpriteFrames_fwakp")
 animation = &"default_fly"
-frame_progress = 0.8608737
+frame_progress = 0.65633285
 script = ExtResource("9_lx642")
