@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="5_o6wi6"]
 [ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="6_2q4k0"]
 [ext_resource type="Texture2D" uid="uid://c077toxp08etq" path="res://assets/sprites/camel.png" id="6_o6wi6"]
-[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/axe.gd" id="8_2q4k0"]
+[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/test_shooter.gd" id="8_2q4k0"]
 [ext_resource type="PackedScene" uid="uid://bs3qoxmweqlyb" path="res://bullet.tscn" id="8_x1amm"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kddj0"]
@@ -33,6 +33,7 @@ metadata/_custom_type_script = "uid://bov44tgaen1t"
 
 [sub_resource type="Resource" id="Resource_mrac1"]
 script = ExtResource("5_mrac1")
+slot_type = 1
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="Resource" id="Resource_k63md"]
@@ -49,14 +50,17 @@ metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="Resource" id="Resource_2bfhc"]
 script = ExtResource("5_mrac1")
+slot_type = 2
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="Resource" id="Resource_osidk"]
 script = ExtResource("5_mrac1")
+slot_type = 3
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="Resource" id="Resource_rlvb3"]
 script = ExtResource("5_mrac1")
+slot_type = 4
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qchbg"]
