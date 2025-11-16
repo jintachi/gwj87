@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bst6qis84f4k5"
-path="res://.godot/imported/pyro_fly.png-722892df57633498245b19a14ebaeb48.ctex"
+uid="uid://d15hb2skjqskh"
+path="res://.godot/imported/frame0041.png-b85684a5c3a8d6bb2673ecbbfc1252e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pyro_fly.png"
-dest_files=["res://.godot/imported/pyro_fly.png-722892df57633498245b19a14ebaeb48.ctex"]
+source_file="res://assets/sprites/nomad/nomad_frames/frame0041.png"
+dest_files=["res://.godot/imported/frame0041.png-b85684a5c3a8d6bb2673ecbbfc1252e3.ctex"]
 
 [params]
 

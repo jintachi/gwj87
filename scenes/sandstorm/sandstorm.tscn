@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://je5b0j4xyyyv"]
+
+[ext_resource type="Texture2D" uid="uid://dxp7acxcsr07" path="res://scenes/sandstorm/sparkles2.png" id="1_7mf8x"]
+[ext_resource type="Shader" uid="uid://ctaycxvv7wy3i" path="res://scenes/sandstorm/sandstorm.gdshader" id="1_pmf4t"]
+
+[sub_resource type="Gradient" id="Gradient_2kqto"]
+offsets = PackedFloat32Array(0, 0.40666667, 0.6333333, 1)
+colors = PackedColorArray(0.28288546, 0.102473624, 0.2563183, 1, 0.5727127, 0.18519011, 0.11038374, 1, 0.5662206, 0.26621202, 0.035811976, 1, 0.8437692, 0.6782347, 0.46707958, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_esjb0"]
+gradient = SubResource("Gradient_2kqto")
+width = 512
+height = 512
+fill_from = Vector2(0.4, 0.6)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76w10"]
+shader = ExtResource("1_pmf4t")
+shader_parameter/scroll_vector = Vector2(0.585, 0.18)
+shader_parameter/subdivisions = 32.0
+
+[node name="Sandstorm" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.39215687)
+texture = SubResource("GradientTexture2D_esjb0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 2
+texture_repeat = 2
+material = SubResource("ShaderMaterial_76w10")
+texture = ExtResource("1_7mf8x")
