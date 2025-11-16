@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c0lfap4mc25lk"]
+[gd_scene load_steps=24 format=3 uid="uid://c0lfap4mc25lk"]
 
 [ext_resource type="Shader" uid="uid://ct3wgrieor2fr" path="res://assets/shaders/subsampler_outline.gdshader" id="1_028ys"]
 [ext_resource type="Texture2D" uid="uid://do0pyn2wlnnr3" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0000.png" id="2_e4ilx"]
@@ -9,14 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://1dw7ym2pn0r5" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0005.png" id="7_pehg1"]
 [ext_resource type="Texture2D" uid="uid://c80one2nw2nk4" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0006.png" id="8_ccbkw"]
 [ext_resource type="Script" uid="uid://b3memur3m4jkt" path="res://assets/shaders/animated_subsampler.gd" id="9_lx642"]
+[ext_resource type="Texture2D" uid="uid://dwyosvs38pv3o" path="res://assets/environment_particles/dust_particles/spritesheet.png" id="10_b6ji3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ju33"]
 shader = ExtResource("1_028ys")
 shader_parameter/enable_fill = false
 shader_parameter/fill_color = Color(1, 1, 1, 1)
+shader_parameter/pic = ExtResource("2_e4ilx")
 shader_parameter/pic_scale = 1.0
 shader_parameter/pic_rot = 1.75
-shader_parameter/origin = Vector2(0, 0.049556505)
+shader_parameter/origin = Vector2(0, -0.049887333)
 shader_parameter/subdivisions = 116.91
 shader_parameter/round_alpha = true
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -54,9 +56,88 @@ animations = [{
 "speed": 48.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_2unwy"]
+offsets = PackedFloat32Array(0.7072539, 1)
+colors = PackedColorArray(0, 0, 0, 0.7254902, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_b5uuy"]
+gradient = SubResource("Gradient_2unwy")
+width = 32
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6dc7y"]
+particles_animation = true
+particles_anim_h_frames = 10
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_ve6t7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.31250003, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0sw1t"]
+curve = SubResource("Curve_ve6t7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jn435"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+color = Color(1, 0.83137256, 0.65882355, 1)
+alpha_curve = SubResource("CurveTexture_0sw1t")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="Curve" id="Curve_r80mp"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1, -0.5157232), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_yjb76"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_n2bux"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_il604"]
+curve_x = SubResource("Curve_r80mp")
+curve_y = SubResource("Curve_yjb76")
+curve_z = SubResource("Curve_n2bux")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ggtot"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_il604")
+color = Color(1, 0.83, 0.65999997, 1)
+alpha_curve = SubResource("CurveTexture_0sw1t")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_5ju33")
 sprite_frames = SubResource("SpriteFrames_fwakp")
 animation = &"default_fly"
-frame_progress = 0.65633285
+frame_progress = 0.19799304
 script = ExtResource("9_lx642")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4, 50)
+texture = SubResource("GradientTexture2D_b5uuy")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_6dc7y")
+position = Vector2(-25, 42)
+amount = 4
+texture = ExtResource("10_b6ji3")
+process_material = SubResource("ParticleProcessMaterial_jn435")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_6dc7y")
+position = Vector2(19, 39)
+amount = 4
+texture = ExtResource("10_b6ji3")
+process_material = SubResource("ParticleProcessMaterial_ggtot")
