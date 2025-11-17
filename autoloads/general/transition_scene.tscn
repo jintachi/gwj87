@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bn35grjolnbvs"]
+
+[ext_resource type="Script" uid="uid://cg5m7q65si34y" path="res://autoloads/general/scene_transition_node.gd" id="1_oana2"]
+[ext_resource type="Shader" uid="uid://b5etvmhdybpdt" path="res://shaders/circle_transition.gdshader" id="2_hj8n8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cqi5c"]
+shader = ExtResource("2_hj8n8")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/radius = 1.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4ti4s"]
+
+[node name="TransitionScene" type="Node"]
+script = ExtResource("1_oana2")
+duration = 0.5
+metadata/_custom_type_script = "uid://cg5m7q65si34y"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_cqi5c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_4ti4s")

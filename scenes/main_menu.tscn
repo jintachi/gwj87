@@ -1,0 +1,156 @@
+[gd_scene load_steps=12 format=3 uid="uid://bf6gykjcjcmok"]
+
+[ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
+[ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
+[ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="1_l6cm7"]
+[ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://sounds/wind_test.mp3" id="2_wu84c"]
+[ext_resource type="PackedScene" uid="uid://wepmsqh4axsa" path="res://scenes/playground.tscn" id="3_5dd4i"]
+[ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://sounds/radalarm_hi.mp3" id="3_8ln24"]
+[ext_resource type="Script" uid="uid://dwq3vy5o2binw" path="res://scripts/ui/options.gd" id="4_lgwnu"]
+[ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://sounds/equip.mp3" id="4_rtw2f"]
+[ext_resource type="Script" uid="uid://dhslpkm7j7o3r" path="res://scripts/ui/exit.gd" id="9_flqon"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vue75"]
+font_size = 120
+
+[sub_resource type="LabelSettings" id="LabelSettings_wu84c"]
+font_size = 20
+
+[node name="MainMenu" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.4817894, 0.48178953, 0.4817894, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.8
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "TITLE"
+label_settings = SubResource("LabelSettings_vue75")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Continue" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+script = ExtResource("1_jk1qb")
+
+[node name="New Game" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "New Game"
+script = ExtResource("1_8ln24")
+target_scene = ExtResource("3_5dd4i")
+
+[node name="Options" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Options"
+script = ExtResource("4_lgwnu")
+
+[node name="Audio" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Audio Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+text = "Audio"
+label_settings = SubResource("LabelSettings_wu84c")
+
+[node name="Master Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Master Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_l6cm7")
+bus_name = "Master"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Master Volume Slider"]
+stream = ExtResource("2_wu84c")
+parameters/looping = true
+
+[node name="Music Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+visible = false
+layout_mode = 2
+text = "Music Volume"
+
+[node name="Music Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+visible = false
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_l6cm7")
+bus_name = "OST"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Music Volume Slider"]
+stream = ExtResource("2_wu84c")
+parameters/looping = true
+
+[node name="SFX Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFX Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_l6cm7")
+bus_name = "SFX"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/SFX Volume Slider"]
+stream = ExtResource("3_8ln24")
+bus = &"SFX"
+parameters/looping = true
+
+[node name="UI Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+text = "UI Volume"
+
+[node name="UI Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_l6cm7")
+bus_name = "UI"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/UI Volume Slider"]
+stream = ExtResource("4_rtw2f")
+bus = &"UI"
+parameters/looping = true
+
+[node name="Ambient Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+text = "Ambient Volume"
+
+[node name="Ambient Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("1_l6cm7")
+bus_name = "Ambient"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Ambient Volume Slider"]
+stream = ExtResource("2_wu84c")
+bus = &"Ambient"
+parameters/looping = true
+
+[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+script = ExtResource("9_flqon")

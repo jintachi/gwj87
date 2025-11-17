@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://wepmsqh4axsa"]
+
+[ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_qchbg"]
+[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="2_kddj0"]
+[ext_resource type="Script" uid="uid://cm18cx1ktfan0" path="res://mechanics/effects/area_of_effect.gd" id="2_q8s1k"]
+[ext_resource type="Shader" uid="uid://b4qs845i3go35" path="res://shaders/color.gdshader" id="3_kddj0"]
+[ext_resource type="Script" uid="uid://bdwqj374ml3c6" path="res://mechanics/effects/ice_effect.gd" id="3_mm0a5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kddj0"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_q8s1k"]
+noise = SubResource("FastNoiseLite_kddj0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q8s1k"]
+shader = ExtResource("3_kddj0")
+shader_parameter/color = Color(0, 0.5354038, 0.96128076, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mm0a5"]
+size = Vector2(128, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mm0a5"]
+size = Vector2(128, 128)
+
+[sub_resource type="Resource" id="Resource_mm0a5"]
+script = ExtResource("2_kddj0")
+movement_speed = 100.0
+metadata/_custom_type_script = "uid://ca40jequl07s1"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_qchbg"]
+size = Vector2(32, 48)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kddj0"]
+radius = 16.0
+
+[node name="Main" type="Node"]
+
+[node name="Ground" type="Sprite2D" parent="."]
+position = Vector2(0, 24.500008)
+scale = Vector2(2.4765625, 1.5839844)
+texture = SubResource("NoiseTexture2D_q8s1k")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_q8s1k")
+position = Vector2(-194, 35)
+texture = SubResource("PlaceholderTexture2D_mm0a5")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("effect")]
+script = ExtResource("2_q8s1k")
+effect = NodePath("Dummy Effect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("RectangleShape2D_mm0a5")
+
+[node name="Dummy Effect" type="Node" parent="Sprite2D/Area2D"]
+script = ExtResource("3_mm0a5")
+metadata/_custom_type_script = "uid://cxogjiwn4jv4f"
+
+[node name="Player" type="CharacterBody2D" parent="."]
+motion_mode = 1
+script = ExtResource("1_qchbg")
+data = SubResource("Resource_mm0a5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture_repeat = 2
+texture = SubResource("PlaceholderTexture2D_qchbg")
+offset = Vector2(0, -24)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_kddj0")
