@@ -19,7 +19,7 @@ func save_data(data: SaveData, path: String = "savegame.save") -> void:
 	if !save_file:
 		saveError.emit(FileAccess.get_open_error())
 		return
-	
+
 	if save_file.store_string(JSON.stringify(JSON.from_native(data, true))):
 		gameSaved.emit()
 	else:
@@ -30,7 +30,7 @@ func load_data(path: String = "savegame.save") -> SaveData:
 	if not FileAccess.file_exists(full_path):
 		loadError.emit(Error.ERR_DOES_NOT_EXIST);
 		return
-	
+
 	var save_file = FileAccess.open(full_path, FileAccess.READ)
 	if !save_file:
 		saveError.emit(FileAccess.get_open_error())

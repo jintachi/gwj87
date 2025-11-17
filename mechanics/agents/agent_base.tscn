@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dclyay1owyvtb"]
+
+[ext_resource type="Script" uid="uid://cqjcjsy4twegm" path="res://mechanics/agents/agent_base.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b3qeceiqxlxvf" path="res://icon.svg" id="2_3vwvt"]
+
+[sub_resource type="Animation" id="Animation_3h8yi"]
+resource_name = "idle"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1d2od"]
+_data = {
+&"idle": SubResource("Animation_3h8yi")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8n2d4"]
+
+[node name="AgentBase" type="CharacterBody2D"]
+script = ExtResource("1_script")
+
+[node name="Root" type="Node2D" parent="."]
+
+[node name="Rig" type="Node2D" parent="Root"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Root/Rig"]
+texture = ExtResource("2_3vwvt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1d2od")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(6.360002, 6.360002)
+shape = SubResource("RectangleShape2D_8n2d4")

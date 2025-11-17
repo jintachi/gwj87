@@ -1,0 +1,121 @@
+[gd_resource type="BehaviorTree" load_steps=25 format=3 uid="uid://58440tv70xh3"]
+
+[ext_resource type="Script" uid="uid://b8c863vxa00h4" path="res://mechanics/ai/tasks/detect_player_vision_timed.gd" id="1_vision_timed"]
+[ext_resource type="Script" path="res://mechanics/ai/tasks/detect_player_audio_gauge.gd" id="2_audio_gauge"]
+[ext_resource type="Script" path="res://mechanics/ai/tasks/investigate_sound.gd" id="3_investigate"]
+[ext_resource type="Script" uid="uid://ccr43pgd4488l" path="res://demo/ai/tasks/get_first_in_group.gd" id="4_getplayer"]
+[ext_resource type="Script" uid="uid://dcjgktglb1slf" path="res://demo/ai/tasks/pursue.gd" id="5_pursue"]
+[ext_resource type="Script" uid="uid://b8k7nan2p4q5r" path="res://mechanics/ai/tasks/patrol.gd" id="6_patrol"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_stealth"]
+var/speed/name = &"speed"
+var/speed/type = 3
+var/speed/value = 300.0
+var/speed/hint = 1
+var/speed/hint_string = "10,1000,10"
+var/waypoints/name = &"waypoints"
+var/waypoints/type = 19
+var/waypoints/value = Array[Vector2]([Vector2(0, 0), Vector2(200, 0), Vector2(200, 200), Vector2(0, 200)])
+var/waypoints/hint = 0
+var/waypoints/hint_string = ""
+var/patrol_index/name = &"patrol_index"
+var/patrol_index/type = 2
+var/patrol_index/value = 0
+var/patrol_index/hint = 0
+var/patrol_index/hint_string = ""
+var/patrol_path/name = &"patrol_path"
+var/patrol_path/type = 24
+var/patrol_path/hint = 0
+var/patrol_path/hint_string = ""
+var/audio_gauge/name = &"audio_gauge"
+var/audio_gauge/type = 3
+var/audio_gauge/value = 0.0
+var/audio_gauge/hint = 1
+var/audio_gauge/hint_string = "0,1,0.01"
+var/sound_position/name = &"sound_position"
+var/sound_position/type = 5
+var/sound_position/value = Vector2(0, 0)
+var/sound_position/hint = 0
+var/sound_position/hint_string = ""
+var/detection_state/name = &"detection_state"
+var/detection_state/type = 4
+var/detection_state/value = &"Patrolling"
+var/detection_state/hint = 0
+var/detection_state/hint_string = ""
+var/current_state/name = &"current_state"
+var/current_state/type = 4
+var/current_state/value = &"Patrolling"
+var/current_state/hint = 0
+var/current_state/hint_string = ""
+
+[sub_resource type="BTAction" id="BTAction_vision_timed"]
+script = ExtResource("1_vision_timed")
+
+[sub_resource type="BTAction" id="BTAction_audio_gauge"]
+script = ExtResource("2_audio_gauge")
+
+[sub_resource type="BTSelector" id="BTSelector_detect"]
+custom_name = "Detect Player"
+children = [SubResource("BTAction_vision_timed"), SubResource("BTAction_audio_gauge")]
+
+[sub_resource type="BBNode" id="BBNode_anim"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_walk"]
+animation_player = SubResource("BBNode_anim")
+animation_name = &"walk"
+blend = 0.1
+
+[sub_resource type="BTAction" id="BTAction_getplayer"]
+script = ExtResource("4_getplayer")
+group = &"player"
+
+[sub_resource type="BTAction" id="BTAction_pursue"]
+script = ExtResource("5_pursue")
+
+[sub_resource type="BTSequence" id="BTSequence_engage"]
+custom_name = "Engage Player"
+children = [SubResource("BTSelector_detect"), SubResource("BTPlayAnimation_walk"), SubResource("BTAction_getplayer"), SubResource("BTAction_pursue")]
+
+[sub_resource type="BBNode" id="BBNode_30ygb"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xuius"]
+animation_player = SubResource("BBNode_30ygb")
+animation_name = &"walk"
+blend = 0.1
+
+[sub_resource type="BTAction" id="BTAction_investigate"]
+script = ExtResource("3_investigate")
+
+[sub_resource type="BTSequence" id="BTSequence_investigate"]
+custom_name = "Investigate Sound"
+children = [SubResource("BTPlayAnimation_xuius"), SubResource("BTAction_investigate")]
+
+[sub_resource type="BBNode" id="BBNode_anim_idle"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_idle"]
+animation_player = SubResource("BBNode_anim_idle")
+animation_name = &"idle"
+blend = 0.1
+
+[sub_resource type="BTAction" id="BTAction_patrol"]
+script = ExtResource("6_patrol")
+current_state_var = null
+
+[sub_resource type="BTSequence" id="BTSequence_patrol"]
+custom_name = "Patrol"
+children = [SubResource("BTPlayAnimation_idle"), SubResource("BTAction_patrol")]
+
+[sub_resource type="BTSelector" id="BTSelector_root"]
+custom_name = "Stealth Enemy Behavior"
+children = [SubResource("BTSequence_engage"), SubResource("BTSequence_investigate"), SubResource("BTSequence_patrol")]
+
+[resource]
+description = "Stealth game enemy behavior tree. Enemies patrol between waypoints and detect players through vision (2-second detection) or hearing (gauge system). When a player is detected, the enemy pursues them. When audio gauge reaches 1.0, enemy investigates the sound location."
+blackboard_plan = SubResource("BlackboardPlan_stealth")
+root_task = SubResource("BTSelector_root")
