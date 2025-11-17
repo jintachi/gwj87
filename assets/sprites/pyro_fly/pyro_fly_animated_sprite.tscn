@@ -15,10 +15,10 @@
 shader = ExtResource("1_028ys")
 shader_parameter/enable_fill = false
 shader_parameter/fill_color = Color(1, 1, 1, 1)
-shader_parameter/pic = ExtResource("2_e4ilx")
+shader_parameter/pic = ExtResource("3_gwn20")
 shader_parameter/pic_scale = 1.0
 shader_parameter/pic_rot = 1.75
-shader_parameter/origin = Vector2(0, -0.049887333)
+shader_parameter/origin = Vector2(0, -0.011882031)
 shader_parameter/subdivisions = 116.91
 shader_parameter/round_alpha = true
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -121,23 +121,24 @@ anim_speed_max = 1.0
 material = SubResource("ShaderMaterial_5ju33")
 sprite_frames = SubResource("SpriteFrames_fwakp")
 animation = &"default_fly"
-frame_progress = 0.19799304
+frame_progress = 0.9979915
+offset = Vector2(0, -48)
 script = ExtResource("9_lx642")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-4, 50)
+position = Vector2(-3, 3)
 texture = SubResource("GradientTexture2D_b5uuy")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_6dc7y")
-position = Vector2(-25, 42)
+position = Vector2(-24, -5)
 amount = 4
 texture = ExtResource("10_b6ji3")
 process_material = SubResource("ParticleProcessMaterial_jn435")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_6dc7y")
-position = Vector2(19, 39)
+position = Vector2(20, -8)
 amount = 4
 texture = ExtResource("10_b6ji3")
 process_material = SubResource("ParticleProcessMaterial_ggtot")
