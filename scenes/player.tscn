@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://buthufw0534k"]
+
+[ext_resource type="Texture2D" uid="uid://b3qeceiqxlxvf" path="res://icon.svg" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://ctjln7k48g1y1" path="res://scenes/player.gd" id="2_script"]
+[ext_resource type="Script" uid="uid://cxk6xd37ngw8k" path="res://scenes/player_audio_range.gd" id="3_audio_range"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o5qli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3vyb7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sgp6g"]
+radius = 64.0
+height = 128.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+rotation = 0.010877016
+script = ExtResource("2_script")
+speed = 300.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_o5qli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_sgp6g")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
+
+[node name="AudioRange" type="Node2D" parent="."]
+script = ExtResource("3_audio_range")
+
+[node name="SoundLevel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Sound Level: "

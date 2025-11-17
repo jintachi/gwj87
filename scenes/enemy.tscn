@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbivj0wlrxv7m"]
+
+[ext_resource type="BehaviorTree" uid="uid://58440tv70xh3" path="res://mechanics/ai/trees/stealth_enemy.tres" id="1_7p1mj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0wfyh"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_md0e3"]
+
+[node name="Enemy" type="RigidBody2D"]
+scale = Vector2(1, 0.9974493)
+physics_material_override = SubResource("PhysicsMaterial_o5qli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.6399994, 3.6399994)
+shape = SubResource("RectangleShape2D_0wfyh")
+
+[node name="Tree" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("1_7p1mj")
+blackboard_plan = SubResource("BlackboardPlan_md0e3")

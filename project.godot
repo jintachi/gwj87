@@ -52,6 +52,11 @@ debug={
 ]
 }
 
+[limbo_ai]
+
+behavior_tree/behavior_tree_default_dir="res://mechanics/ai/trees"
+behavior_tree/user_task_dirs=PackedStringArray("res://mechanics/ai/tasks")
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
