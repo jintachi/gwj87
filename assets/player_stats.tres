@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LivingEntityData" load_steps=2 format=3 uid="uid://c2oy1qdb1nyjc"]
+
+[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="1_0lyri"]
+
+[resource]
+script = ExtResource("1_0lyri")
+movement_speed = 100.0
+metadata/_custom_type_script = "uid://ca40jequl07s1"

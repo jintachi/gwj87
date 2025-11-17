@@ -1,62 +1,40 @@
 extends Node
 
-# TODO: Personalize save system for Moonlit Cafe
+signal gameLoaded
+signal gameSaved # for popups or similar
+signal loadError
+signal saveError
 
-#region Variables
-var max_save_amount : int = 5 ## The maximum amount of saves allowed
-#endregion
+var myData : SaveData
 
-#region Built-Ins
-func _ready() -> void:
-	pass
-#endregion
+func set_owner_recursive(node: Node, new_owner: Node):
+	for child in node.get_children():
+		set_owner_recursive(child, new_owner)
+	node.set_owner(new_owner)
 
-#region Public Methods
-## Saves the game to a file "savegame.save", requires that nodes in saveable group have the save() function
-## else those nodes will be skipped in the saving process.
-func save_game() -> void:
-	var save_file : FileAccess = FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	var save_nodes : Array[Node] = get_tree().get_nodes_in_group(&"saveable")
-	
-	for node in save_nodes:
-		if node.scene_file_path.is_empty():
-			push_warning("Saveable node '%s' is not an instanced scene, skipped" % node.name)
-			continue
-		
-		if !node.has_method("save"):
-			print("Saveable node '%s' is missing a save() function, skipped" % node.name)
-			continue
-		
-		var node_data = node.call("save")
-		var json_string = JSON.stringify(node_data)
-		
-		save_file.store_line(json_string)
-
-func load_game() -> void:
-	if not FileAccess.file_exists("user://savegame.save"):
+func save_data(data: SaveData, path: String = "savegame.save") -> void:
+	# if data is null, then throw!
+	data.save_all()
+	var save_file : FileAccess = FileAccess.open("user://"+path, FileAccess.WRITE)
+	if !save_file:
+		saveError.emit(FileAccess.get_open_error())
 		return
 	
-	var save_nodes = get_tree().get_nodes_in_group("saveable")
-	for i in save_nodes:
-		i.queue_free()
+	if save_file.store_string(JSON.stringify(JSON.from_native(data, true))):
+		gameSaved.emit()
+	else:
+		saveError.emit(Error.ERR_CANT_CREATE)
+
+func load_data(path: String = "savegame.save") -> SaveData:
+	var full_path = "user://"+path;
+	if not FileAccess.file_exists(full_path):
+		loadError.emit(Error.ERR_DOES_NOT_EXIST);
+		return
 	
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	while save_file.get_position() < save_file.get_length():
-		var json_string = save_file.get_line()
-		
-		var json = JSON.new()
-		var parse_result = json.parse(json_string)
-		if not parse_result == OK:
-			print("JSON Parse Error: %s in %s at line %s" % [json.get_error_message(), json_string, json.get_error_line()])
-			continue
-		
-		var node_data = json.data
-		
-		var new_object = load(node_data["filename"]).instantiate()
-		get_node(node_data["parent"]).add_child(new_object)
-		
-		for i in node_data.keys():
-			if i == "filename" or i == "parent":
-				continue
-			new_object.set(i, node_data[i])
-#endregion
+	var save_file = FileAccess.open(full_path, FileAccess.READ)
+	if !save_file:
+		saveError.emit(FileAccess.get_open_error())
+		return
+	var data = JSON.to_native(JSON.parse_string(save_file.get_as_text()), true)
+	gameLoaded.emit()
+	return data

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="IceEffect" load_steps=2 format=3 uid="uid://dcl8e5e0jbdld"]
+
+[ext_resource type="Script" uid="uid://bdwqj374ml3c6" path="res://mechanics/effects/ice_effect.gd" id="1_5g060"]
+
+[resource]
+script = ExtResource("1_5g060")
+metadata/_custom_type_script = "uid://bdwqj374ml3c6"
