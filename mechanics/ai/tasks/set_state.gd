@@ -22,11 +22,9 @@ func _generate_name() -> String:
 
 func _enter() -> void:
 	blackboard.set_var(state_var, state_name)
-	print("NPC State: Changed to %s" % state_name)
 
 
 func _tick(_delta: float) -> Status:
 	# Ensure state is set
 	blackboard.set_var(state_var, state_name)
 	return SUCCESS
-

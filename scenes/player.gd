@@ -6,6 +6,9 @@
 #*
 extends CharacterBody2D
 
+## Fixed interval between footstep sounds (in seconds).
+const FOOTSTEP_INTERVAL: float = 0.6
+
 ## Movement speed in pixels per second.
 @export var speed: float = 200.0
 
@@ -34,9 +37,6 @@ var _sound_events: Array[Dictionary] = []
 ## Time since last footstep sound.
 var _footstep_timer: float = 0.0
 
-## Time between footstep sounds (based on speed).
-var _footstep_interval: float = 0.5
-
 
 func _ready() -> void:
 	# Ensure player is in the player group for enemy detection
@@ -50,7 +50,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
 	_update_noise_level()
-	_handle_footsteps(delta)
+
+
+func _process(delta: float) -> void:
+	pass
 
 
 func _handle_movement(delta: float) -> void:
@@ -112,8 +115,6 @@ func _update_noise_level() -> void:
 		else:  # Standing still - silent
 			noise_level = 0.0
 
-	$SoundLevel.text = "Sound Level: " + str(noise_level)
-
 ## Get the current noise level (used by enemy hearing detection).
 func get_noise_level() -> float:
 	return noise_level
@@ -136,13 +137,18 @@ func get_movement_direction() -> Vector2:
 
 ## Emit a sound event (for AI detection).
 ## Call this when player makes sounds like footsteps, shooting, etc.
-func emit_sound(volume: float = 0.3, sound_pos: Vector2 = Vector2.ZERO) -> void:
+## volume: Awareness increase value (0-300 scale, typically 5-30)
+## sound_pos: Position where sound was emitted (defaults to player position)
+## radius: Maximum hearing range for this sound (defaults to 300.0)
+func emit_sound(value:float = 1, sound_pos: Vector2 = Vector2.ZERO, radius: float = 300.0) -> void:
 	if sound_pos == Vector2.ZERO:
 		sound_pos = global_position
 	_sound_events.append({
 		"position": sound_pos,
-		"volume": volume,
-		"time": Time.get_ticks_msec()
+		"value": value,
+		"radius": radius,
+		"time": Time.get_ticks_msec(),
+		"id": str(Time.get_ticks_msec()) + "_" + str(sound_pos)  # Unique ID for tracking
 	})
 	# Keep only recent sounds (last 1.0 seconds to give AI time to process)
 	var current_time: int = Time.get_ticks_msec()
@@ -150,36 +156,9 @@ func emit_sound(volume: float = 0.3, sound_pos: Vector2 = Vector2.ZERO) -> void:
 
 
 ## Get sound events for AI detection.
-## Returns array of dictionaries with "position" and "volume" keys.
+## Returns array of dictionaries with "position", "value", "radius", and "id" keys.
 func get_sound_events() -> Array:
 	return _sound_events.duplicate()
-
-
-## Handle automatic footstep sounds based on movement.
-func _handle_footsteps(delta: float) -> void:
-	var current_speed := velocity.length()
-
-	if current_speed > 10.0:  # Only emit sounds when moving
-		# Adjust footstep interval based on speed
-		if current_speed > 150.0:  # Running
-			_footstep_interval = 0.3
-		elif current_speed > 50.0:  # Walking
-			_footstep_interval = 0.5
-		else:  # Slow movement
-			_footstep_interval = 0.8
-
-		_footstep_timer += delta
-
-		if _footstep_timer >= _footstep_interval:
-			_footstep_timer = 0.0
-			# Emit footstep sound
-			var volume: float = 0.3 if is_stealth else 0.6
-			if current_speed > 150.0:
-				volume *= 1.5  # Louder when running
-			emit_sound(volume)
-	else:
-		_footstep_timer = 0.0
-
 
 func _init_input_actions() -> void:
 	# Create input actions if they don't exist
