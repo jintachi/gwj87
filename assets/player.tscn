@@ -1,0 +1,92 @@
+[gd_scene load_steps=18 format=3 uid="uid://ojj2jey21mo4"]
+
+[ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_nsdob"]
+[ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_yceh7"]
+[ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="3_uovkd"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="4_jeibo"]
+[ext_resource type="PackedScene" uid="uid://bs3qoxmweqlyb" path="res://bullet.tscn" id="5_cn88q"]
+[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/test_shooter.gd" id="6_nknpd"]
+[ext_resource type="Texture2D" uid="uid://4yw58lhqrvr3" path="res://assets/sprites/nomad/nomad.png" id="7_uovkd"]
+
+[sub_resource type="Resource" id="Resource_yceh7"]
+script = ExtResource("2_yceh7")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_t107e"]
+script = ExtResource("3_uovkd")
+item_slots = Array[ExtResource("2_yceh7")]([SubResource("Resource_yceh7")])
+size = 30
+metadata/_custom_type_script = "uid://bov44tgaen1t"
+
+[sub_resource type="Resource" id="Resource_eagek"]
+script = ExtResource("2_yceh7")
+slot_type = 1
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_k63md"]
+script = ExtResource("6_nknpd")
+bullet = ExtResource("5_cn88q")
+slot_type = 5
+metadata/_custom_type_script = "uid://cnibtsckb1myb"
+
+[sub_resource type="Resource" id="Resource_36yfi"]
+script = ExtResource("2_yceh7")
+slot_type = 5
+item = SubResource("Resource_k63md")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_wd7kj"]
+script = ExtResource("2_yceh7")
+slot_type = 2
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_qulnv"]
+script = ExtResource("2_yceh7")
+slot_type = 3
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_o2ks1"]
+script = ExtResource("2_yceh7")
+slot_type = 4
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmggy"]
+size = Vector2(24, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yceh7"]
+radius = 35.014282
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 7
+script = ExtResource("1_nsdob")
+general_inventory = SubResource("Resource_t107e")
+data = ExtResource("4_jeibo")
+head_item = SubResource("Resource_eagek")
+weapon_item = SubResource("Resource_36yfi")
+armor_item = SubResource("Resource_wd7kj")
+consumable_item = SubResource("Resource_qulnv")
+ammo_item = SubResource("Resource_o2ks1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture_repeat = 2
+texture = ExtResource("7_uovkd")
+offset = Vector2(0, -24)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(0, -32)
+zoom = Vector2(2, 2)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_jmggy")
+
+[node name="Pickup Area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup Area"]
+shape = SubResource("CircleShape2D_yceh7")
+debug_color = Color(0.7882353, 0.43137255, 0.07058824, 0.047058824)
