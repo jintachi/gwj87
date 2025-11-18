@@ -1,8 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://buthufw0534k"]
+[gd_scene load_steps=16 format=3 uid="uid://buthufw0534k"]
 
 [ext_resource type="Texture2D" uid="uid://b3qeceiqxlxvf" path="res://icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_qhqgy"]
+[ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_tuyoq"]
 [ext_resource type="Script" uid="uid://cxk6xd37ngw8k" path="res://scenes/player_audio_range.gd" id="3_audio_range"]
+[ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="3_fjrip"]
+[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="4_smehm"]
+
+[sub_resource type="Resource" id="Resource_ur7pv"]
+script = ExtResource("3_fjrip")
+metadata/_custom_type_script = "uid://bov44tgaen1t"
+
+[sub_resource type="Resource" id="Resource_y4r1p"]
+script = ExtResource("4_smehm")
+metadata/_custom_type_script = "uid://ca40jequl07s1"
+
+[sub_resource type="Resource" id="Resource_d2wvv"]
+script = ExtResource("2_tuyoq")
+slot_type = 5
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_3v2ag"]
+script = ExtResource("2_tuyoq")
+slot_type = 5
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_jej6c"]
+script = ExtResource("2_tuyoq")
+slot_type = 2
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_f1ej7"]
+script = ExtResource("2_tuyoq")
+slot_type = 3
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_oprun"]
+script = ExtResource("2_tuyoq")
+slot_type = 4
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o5qli"]
 animations = [{
@@ -22,6 +58,13 @@ height = 128.0
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 rotation = 0.010877016
 script = ExtResource("1_qhqgy")
+general_inventory = SubResource("Resource_ur7pv")
+data = SubResource("Resource_y4r1p")
+head_item = SubResource("Resource_d2wvv")
+weapon_item = SubResource("Resource_3v2ag")
+armor_item = SubResource("Resource_jej6c")
+consumable_item = SubResource("Resource_f1ej7")
+ammo_item = SubResource("Resource_oprun")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o5qli")
@@ -34,11 +77,3 @@ zoom = Vector2(0.75, 0.75)
 
 [node name="AudioRange" type="Node2D" parent="."]
 script = ExtResource("3_audio_range")
-<<<<<<< HEAD
-=======
-
-[node name="SoundLevel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-script = ExtResource("1_qhqgy")
->>>>>>> origin/fcolor04

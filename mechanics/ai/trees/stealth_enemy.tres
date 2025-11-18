@@ -120,27 +120,15 @@ var/patrol_index/hint_string = ""
 
 [sub_resource type="BTAction" id="BTAction_detect_sight"]
 script = ExtResource("1_3m7nb")
-awareness_var = null
-sight_cooldown_var = null
-awareness_increase_amount = null
-sight_cooldown_time = null
 
 [sub_resource type="BTAction" id="BTAction_detect_hearing"]
 script = ExtResource("2_sp4sj")
-awareness_var = null
-hearing_cooldown_var = null
-processed_sound_ids_var = null
-hearing_cooldown_time = null
 
 [sub_resource type="BTAction" id="BTAction_manage_awareness"]
 script = ExtResource("3_aware")
 
 [sub_resource type="BTAction" id="BTAction_manage_alert"]
 script = ExtResource("3_qkoct")
-awareness_var = null
-awareness_threshold_level_1 = null
-awareness_threshold_level_2 = null
-awareness_threshold_level_3 = null
 
 [sub_resource type="BTParallel" id="BTParallel_detection"]
 custom_name = "Detection System"

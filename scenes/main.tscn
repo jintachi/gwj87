@@ -1,13 +1,40 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf0e0l206u8xd"]
+[gd_scene load_steps=17 format=3 uid="uid://bf0e0l206u8xd"]
 
 [ext_resource type="PackedScene" uid="uid://buthufw0534k" path="res://scenes/player.tscn" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://b7a551uw81yi4" path="res://mechanics/agents/stealth_enemy.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://diyvgpcwpsqht" path="res://mechanics/platforms/moving_platform.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="3_tefeu"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="4_tefeu"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0wfyh"]
 blend_mode = 1
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sugp2"]
+
+[sub_resource type="Resource" id="Resource_o6xl0"]
+script = ExtResource("3_tefeu")
+metadata/_custom_type_script = "uid://bov44tgaen1t"
+
+[sub_resource type="Resource" id="Resource_tefeu"]
+script = ExtResource("2_tbgi4")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_tipki"]
+script = ExtResource("2_tbgi4")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_85g3d"]
+script = ExtResource("2_tbgi4")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_choun"]
+script = ExtResource("2_tbgi4")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_ya4ey"]
+script = ExtResource("2_tbgi4")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="ImageTexture" id="ImageTexture_o5qli"]
 
@@ -32,6 +59,13 @@ texture = SubResource("PlaceholderTexture2D_sugp2")
 z_index = 1
 position = Vector2(496, -2.0023435e-07)
 scale = Vector2(0.72084606, 0.72084606)
+general_inventory = SubResource("Resource_o6xl0")
+data = ExtResource("4_tefeu")
+head_item = SubResource("Resource_tefeu")
+weapon_item = SubResource("Resource_tipki")
+armor_item = SubResource("Resource_85g3d")
+consumable_item = SubResource("Resource_choun")
+ammo_item = SubResource("Resource_ya4ey")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-233, -117.99999)
