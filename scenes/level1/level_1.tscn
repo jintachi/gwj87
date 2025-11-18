@@ -101,4 +101,4 @@ max_range = 0.5
 min_range = 0.4
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.7220941
+frame_progress = 0.5870412
