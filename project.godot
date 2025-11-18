@@ -156,6 +156,11 @@ shoot_left={
 ]
 }
 
+[limbo_ai]
+
+behavior_tree/behavior_tree_default_dir="res://mechanics/ai/trees"
+behavior_tree/user_task_dirs=PackedStringArray("res://mechanics/ai/tasks")
+
 [physics]
 
 2d/default_gravity=0.0

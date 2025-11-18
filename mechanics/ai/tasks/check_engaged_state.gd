@@ -81,7 +81,6 @@ func _tick(delta: float) -> Status:
 					
 					if closest_player:
 						blackboard.set_var(target_var, closest_player)
-						print("Engaged State: Transitioned from Alert to Engaged via audio gauge, set target to %s" % closest_player.name)
 						return SUCCESS
 	
 	# Now check if we have a valid target
@@ -158,7 +157,6 @@ func _tick(delta: float) -> Status:
 		# Clear target and reset timer
 		blackboard.set_var(target_var, null)
 		blackboard.set_var(lose_target_timer_var, 0.0)
-		print("Engaged State: Lost target after %.1f seconds" % lose_timer)
 		return FAILURE
 	
 	# Still engaged but losing track

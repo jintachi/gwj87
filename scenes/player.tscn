@@ -35,8 +35,3 @@ zoom = Vector2(0.75, 0.75)
 
 [node name="AudioRange" type="Node2D" parent="."]
 script = ExtResource("3_audio_range")
-
-[node name="SoundLevel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Sound Level: "
