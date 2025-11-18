@@ -1,11 +1,18 @@
 extends Entity
 class_name LivingEntity
 
+signal sound
+
 var input_dir : Vector2
+var face_dir : Vector2
 var attack_dir : Vector2
 
 @export var data : LivingEntityData
 var computed_data : LivingEntityData
+
+@export var noise_level : float = 0.0
+@export var self_velocity : Vector2
+@export var external_velocity : Vector2
 
 @export var head_item : InventorySlot
 @export var weapon_item : InventorySlot
@@ -30,9 +37,21 @@ class ProcessVelocityData:
 class VelocityCallable extends LivingDefaultCallable:
 	func process(data: Variant) -> void:
 		var vel_data = data as ProcessVelocityData
-		vel_data.entity.velocity = vel_data.direction * vel_data.entity.computed_data.movement_speed
+		var entity = vel_data.entity
+		var direction = vel_data.direction
+		var stats = vel_data.entity.computed_data
+		var delta = vel_data.delta
+		
+		if not direction.is_zero_approx():
+			entity.face_dir = direction
+		entity.self_velocity = entity.self_velocity.move_toward(direction * stats.movement_speed, delta * stats.friction)
+		entity.velocity = entity.self_velocity + entity.external_velocity
 
 var process_velocity: VelocityCallable = VelocityCallable.new()
+
+class SoundEvent:
+	var position: Vector2
+	var level: float
 
 func move(direction: Vector2, delta: float) -> void:
 	var vel_data = ProcessVelocityData.new()
@@ -40,6 +59,11 @@ func move(direction: Vector2, delta: float) -> void:
 	vel_data.direction = direction
 	vel_data.delta = delta
 	process_velocity.trickle_down(vel_data)
+	
+	var sound_event = SoundEvent.new()
+	# sound...
+	
+	sound.emit(sound_event)
 
 func process_items(delta: float) -> void:
 	var item_data = InventoryItem.ItemProcessData.new()
