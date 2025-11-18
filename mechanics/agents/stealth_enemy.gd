@@ -26,7 +26,7 @@ var spawn_position: Vector2
 
 @onready var bt_player: BTPlayer = $BTPlayer
 @onready var current_state_label: Label = $CurrentState
-@onready var detection_level_label: Label = $DetectionLevel
+@onready var awareness_progress_bar: ProgressBar = $Awareness
 
 var _debug_tick_count: int = 0
 
@@ -286,27 +286,10 @@ func _update_labels() -> void:
 		
 		current_state_label.text = "Alert Level: %d (%s)" % [alert_level, state_name]
 	
-	# Update detection level label
-	if detection_level_label:
-		var player_visible: bool = false
-		if blackboard.has_var(&"player_visible"):
-			player_visible = blackboard.get_var(&"player_visible")
+	# Update awareness progress bar
+	if awareness_progress_bar:
+		var awareness: float = 0.0
+		if blackboard.has_var(&"awareness"):
+			awareness = blackboard.get_var(&"awareness")
 		
-		var player_audible: bool = false
-		if blackboard.has_var(&"player_audible"):
-			player_audible = blackboard.get_var(&"player_audible")
-		
-		var last_sight_time: float = 0.0
-		if blackboard.has_var(&"last_sight_time"):
-			last_sight_time = blackboard.get_var(&"last_sight_time")
-		
-		var last_hearing_time: float = 0.0
-		if blackboard.has_var(&"last_hearing_time"):
-			last_hearing_time = blackboard.get_var(&"last_hearing_time")
-		
-		var detection_text: String = "Sight: %s\nHearing: %s" % [
-			"YES" if player_visible else "NO (%.1fs)" % last_sight_time,
-			"YES" if player_audible else "NO (%.1fs)" % last_hearing_time
-		]
-		
-		detection_level_label.text = detection_text
+		awareness_progress_bar.value = awareness

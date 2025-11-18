@@ -41,25 +41,14 @@ func _enter() -> void:
 	_wait_timer = 0.0
 	_is_waiting = false
 	_update_state("Patrolling")
-	print("Patrol task: ENTERED - Starting patrol behavior")
 
 
 func _tick(_delta: float) -> Status:
-	# Debug: Verify task is being ticked
-	if not has_meta("tick_count"):
-		set_meta("tick_count", 0)
-	var tick_count: int = get_meta("tick_count")
-	tick_count += 1
-	set_meta("tick_count", tick_count)
-	if tick_count <= 20 or tick_count % 60 == 0:
-		print("Patrol: _tick() #%d" % tick_count)
-	
 	var waypoints: Array = []
 	if blackboard.has_var(waypoints_var):
 		waypoints = blackboard.get_var(waypoints_var)
 	
 	if waypoints.is_empty():
-		print("Patrol: No waypoints in blackboard!")
 		return FAILURE
 	
 	# Initialize patrol index if not set
@@ -95,30 +84,15 @@ func _tick(_delta: float) -> Status:
 		_wait_timer = 0.0
 		return RUNNING
 	
-	# Check alert level - if >= 1, don't patrol (cautious/investigate/engaged instead)
-	# Note: This should not run at alert level >= 1 due to selector, but check anyway
+	# Check alert level - exit early if alert level > 0
 	var alert_level: int = 0
 	if blackboard.has_var(&"alert_level"):
 		alert_level = blackboard.get_var(&"alert_level")
 
-	if alert_level >= 1:
-		# NPC is in cautious/investigating/engaged state, don't patrol
+	if alert_level > 0:
+		# NPC is in caution/tracking/engaged state, don't patrol
 		# Return SUCCESS immediately (task completes, doesn't interfere)
-		# Don't set movement - higher alert level tasks should be handling movement
-		if tick_count <= 20 or tick_count % 60 == 0:
-			print("Patrol: Alert level %d >= 1, returning SUCCESS (exiting, higher alert level tasks handle movement)" % alert_level)
-		# Return SUCCESS so task exits - higher alert level tasks will handle movement
 		return SUCCESS
-
-	# Check if NPC is detecting - if so, don't move (detection task handles stopping)
-	var is_detecting: bool = false
-	if blackboard.has_var(&"is_detecting"):
-		is_detecting = blackboard.get_var(&"is_detecting")
-
-	if is_detecting:
-		# NPC is detecting player, don't move (detection task handles stopping)
-		_update_state("Detecting player - paused patrol")
-		return RUNNING
 	
 	# Move towards the waypoint
 	var speed: float = 200.0

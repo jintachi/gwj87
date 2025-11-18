@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://b7a551uw81yi4"]
 
 [ext_resource type="PackedScene" uid="uid://dclyay1owyvtb" path="res://mechanics/agents/agent_base.tscn" id="1_base"]
-[ext_resource type="BehaviorTree" uid="uid://dhrvg8g1qu7to" path="res://mechanics/ai/trees/stealth_enemy_clean.tres" id="3_rji4c"]
+[ext_resource type="BehaviorTree" uid="uid://dhrvg8g1qu7to" path="res://mechanics/ai/trees/stealth_enemy.tres" id="3_rji4c"]
 [ext_resource type="Script" uid="uid://w7g8vvoo0k0g" path="res://mechanics/agents/stealth_enemy.gd" id="4_script"]
 [ext_resource type="Script" uid="uid://e0wesw5lqx4r" path="res://mechanics/agents/enemy_detection_range.gd" id="5_detection_range"]
 
@@ -48,14 +48,19 @@ offset_bottom = -40.0
 text = "State: Patrolling"
 horizontal_alignment = 1
 
-[node name="DetectionLevel" type="Label" parent="." index="5"]
+[node name="Awareness" type="ProgressBar" parent="." index="5"]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -50.0
-offset_top = -40.0
+offset_top = -91.0
 offset_right = 50.0
-offset_bottom = -20.0
-text = "Detection: Patrolling
-Audio: 0%"
-horizontal_alignment = 1
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="DetectionRange" type="Node2D" parent="." index="6"]
 script = ExtResource("5_detection_range")
