@@ -41,11 +41,7 @@ class VelocityCallable extends LivingDefaultCallable:
 		var direction = vel_data.direction
 		var stats = vel_data.entity.computed_data
 		var delta = vel_data.delta
-		
-		if not direction.is_zero_approx():
-			entity.face_dir = direction
-		entity.self_velocity = entity.self_velocity.move_toward(direction * stats.movement_speed, delta * stats.friction)
-		entity.velocity = entity.self_velocity + entity.external_velocity
+	
 
 var process_velocity: VelocityCallable = VelocityCallable.new()
 

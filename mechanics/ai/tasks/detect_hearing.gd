@@ -1,22 +1,21 @@
 #*
 #* detect_hearing.gd
 #* =============================================================================
-#* Hearing detection - checks if player is audible and increases awareness.
+#* Hearing detection - listens for SoundEvent signals from the player.
 #* =============================================================================
 #*
 @tool
 extends BTAction
-## Checks if player is audible through sound. [br]
-## Increases awareness based on sound value with distance falloff. [br]
-## Each sound event only increases awareness once. [br]
-## Sets blackboard variables for hearing detection status. [br]
+## Listens for SoundEvent signals from the player. [br]
+## If sound is within hearing range, increases awareness with 50% falloff at max range. [br]
+## If sound is outside hearing range, ignores it. [br]
 ## Returns [code]RUNNING[/code] always (doesn't block sequence).
 
 ## Name of the SceneTree group containing the player.
 @export var player_group: StringName = &"player"
 
 ## Maximum hearing range.
-@export var hearing_range: float = 300.0
+@export var hearing_range: float = 150.0
 
 ## Blackboard variable to store if player is audible (bool).
 @export var player_audible_var: StringName = &"player_audible"
@@ -30,14 +29,11 @@ extends BTAction
 ## Blackboard variable to store awareness (float, 0-300).
 @export var awareness_var: StringName = &"awareness"
 
-## Blackboard variable to store hearing cooldown timer (float).
-@export var hearing_cooldown_var: StringName = &"hearing_cooldown"
+## Reference to the player node.
+var _player: Node = null
 
-## Blackboard variable to store processed sound IDs (Array).
-@export var processed_sound_ids_var: StringName = &"processed_sound_ids"
-
-## Cooldown time in seconds between awareness increases from hearing.
-@export var hearing_cooldown_time: float = 0.2
+## Track if we're connected to the player's sound signal.
+var _is_connected: bool = false
 
 
 func _generate_name() -> String:
@@ -52,142 +48,113 @@ func _enter() -> void:
 		blackboard.set_var(last_hearing_time_var, 0.0)
 	if not blackboard.has_var(sound_position_var):
 		blackboard.set_var(sound_position_var, Vector2.ZERO)
-	if not blackboard.has_var(hearing_cooldown_var):
-		blackboard.set_var(hearing_cooldown_var, 0.0)
-	if not blackboard.has_var(processed_sound_ids_var):
-		blackboard.set_var(processed_sound_ids_var, [])
+	if not blackboard.has_var(awareness_var):
+		blackboard.set_var(awareness_var, 0.0)
+	
+	# Find and connect to player
+	_connect_to_player()
+
+
+func _exit() -> void:
+	# Disconnect from player when task exits
+	_disconnect_from_player()
 
 
 func _tick(delta: float) -> Status:
-	var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
+	# Update last hearing time
+	var last_hearing_time: float = 0.0
+	if blackboard.has_var(last_hearing_time_var):
+		last_hearing_time = blackboard.get_var(last_hearing_time_var)
 	
-	var is_audible: bool = false
-	var sound_pos: Vector2 = Vector2.ZERO
-	
-	if players.is_empty():
+	# Check if player is still valid and connected
+	if not is_instance_valid(_player) or not _is_connected:
 		blackboard.set_var(player_audible_var, false)
 		_handle_not_audible(delta)
+		# Try to reconnect
+		_connect_to_player()
 		return RUNNING
-
-	var player: Node2D = players[0] as Node2D
-	if not is_instance_valid(player):
+	
+	# Update last hearing time
+	last_hearing_time += delta
+	blackboard.set_var(last_hearing_time_var, last_hearing_time)
+	
+	# If no sounds have been heard for a short time (0.1 seconds), set player_audible to false
+	# This allows manage_awareness to start decay when player stops making sounds
+	if last_hearing_time > 0.1:
 		blackboard.set_var(player_audible_var, false)
-		_handle_not_audible(delta)
-		return RUNNING
-
-	var to_player: Vector2 = player.global_position - agent.global_position
-	var distance: float = to_player.length()
-
-	# Check range
-	if distance > hearing_range:
-		blackboard.set_var(player_audible_var, false)
-		_handle_not_audible(delta)
-		return RUNNING
 	
-	# Get processed sound IDs
-	var processed_sound_ids: Array = []
-	if blackboard.has_var(processed_sound_ids_var):
-		var stored_ids = blackboard.get_var(processed_sound_ids_var)
-		if stored_ids is Array:
-			processed_sound_ids = stored_ids
-	
-	# Check sound events - each sound event only increases awareness once
-	if player.has_method("get_sound_events"):
-		var sound_events: Array = player.get_sound_events()
-		
-		for sound_event in sound_events:
-			if not sound_event is Dictionary:
-				continue
-			
-			# Get sound ID (assume it has an 'id' field for tracking)
-			var sound_id = sound_event.get("id", null)
-			if sound_id == null:
-				# If no ID, use position as unique identifier
-				if sound_event.has("position"):
-					sound_id = str(sound_event.position)
-				else:
-					continue
-			
-			# Skip if already processed
-			if sound_id in processed_sound_ids:
-				continue
-			
-			# Process new sound event
-			# Support both "value" and "volume" keys for backward compatibility
-			var sound_value: float = sound_event.get("value", sound_event.get("volume", 10.0))
-			var sound_radius: float = sound_event.get("radius", hearing_range)
-			var event_position: Vector2 = sound_event.get("position", player.global_position)
-			
-			# Calculate distance falloff
-			var event_distance: float = agent.global_position.distance_to(event_position)
-			if event_distance > sound_radius:
-				continue  # Sound is outside its radius
-			
-			# Calculate falloff (linear from full value at distance 0 to 0 at sound_radius)
-			var falloff_factor: float = 1.0 - (event_distance / sound_radius)
-			falloff_factor = max(0.0, falloff_factor)  # Clamp to 0-1
-			
-			var awareness_increase: float = sound_value * falloff_factor
-			
-			# Update hearing cooldown
-			var hearing_cooldown: float = 0.0
-			if blackboard.has_var(hearing_cooldown_var):
-				hearing_cooldown = blackboard.get_var(hearing_cooldown_var)
-			
-			# Decrease cooldown timer
-			if hearing_cooldown > 0.0:
-				hearing_cooldown = max(0.0, hearing_cooldown - delta)
-				blackboard.set_var(hearing_cooldown_var, hearing_cooldown)
-			
-			# Increase awareness if cooldown has expired
-			if hearing_cooldown <= 0.0:
-				var awareness: float = 0.0
-				if blackboard.has_var(awareness_var):
-					awareness = blackboard.get_var(awareness_var)
-				
-				awareness += awareness_increase
-				awareness = min(awareness, 300.0)  # Cap at 300
-				blackboard.set_var(awareness_var, awareness)
-				
-				# Start cooldown
-				blackboard.set_var(hearing_cooldown_var, hearing_cooldown_time)
-			
-			# Mark sound as processed
-			processed_sound_ids.append(sound_id)
-			
-			# Update sound position
-			sound_pos = event_position
-			is_audible = true
-			
-			# Limit processed sounds array size (keep last 50)
-			if processed_sound_ids.size() > 50:
-				processed_sound_ids = processed_sound_ids.slice(-50)
-			
-			blackboard.set_var(processed_sound_ids_var, processed_sound_ids)
-	
-	# Check if player is making continuous noise
-	var noise_level: float = 0.0
-	if player.has_method("get_noise_level"):
-		noise_level = player.get_noise_level()
-	
-	if noise_level > 0.0:
-		is_audible = true
-		if sound_pos == Vector2.ZERO:
-			sound_pos = player.global_position
-		
-		# For continuous noise, treat it differently - just update position
-		# Awareness increase from continuous noise would be handled by sound events
-	
-	blackboard.set_var(player_audible_var, is_audible)
-
-	if is_audible:
-		blackboard.set_var(last_hearing_time_var, 0.0)
-		blackboard.set_var(sound_position_var, sound_pos)
-	else:
-		_handle_not_audible(delta)
-
 	# Return RUNNING to keep detection active continuously
 	return RUNNING
+
+
+## Connects to the player's sound signal.
+func _connect_to_player() -> void:
+	# Disconnect from previous player if any
+	_disconnect_from_player()
+	
+	# Find player
+	var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
+	if players.is_empty():
+		return
+	
+	_player = players[0]
+	if not is_instance_valid(_player):
+		return
+	
+	# Check if player has the sound signal (from LivingEntity)
+	if not _player.has_signal("sound"):
+		push_warning("Player does not have 'sound' signal")
+		return
+	
+	# Connect to sound signal (signal emits: position, level)
+	if _player.sound.connect(_on_player_sound) == OK:
+		_is_connected = true
+
+
+## Disconnects from the player's sound signal.
+func _disconnect_from_player() -> void:
+	if is_instance_valid(_player) and _is_connected:
+		if _player.has_signal("sound"):
+			_player.sound.disconnect(_on_player_sound)
+		_is_connected = false
+	_player = null
+
+
+## Called when player emits a sound event.
+## Signal emits: position (Vector2), level (float)
+func _on_player_sound(sound_position: Vector2, sound_level: float) -> void:
+	# If no position, use player position as fallback
+	if sound_position == Vector2.ZERO and is_instance_valid(_player):
+		sound_position = _player.global_position
+	
+	# Calculate distance to sound
+	var distance: float = agent.global_position.distance_to(sound_position)
+	
+	# If outside hearing range, ignore it
+	if distance > hearing_range:
+		return
+	
+	# Calculate awareness increase with 50% falloff at max hearing range
+	# At distance 0: awareness = level * 1.0
+	# At distance = hearing_range: awareness = level * 0.5
+	# Linear interpolation: awareness = level * (1.0 - 0.5 * (distance / hearing_range))
+	var distance_ratio: float = distance / hearing_range
+	var falloff_factor: float = 1.0 - (0.5 * distance_ratio)
+	var awareness_increase: float = sound_level * falloff_factor
+	
+	# Get current awareness and increase it
+	var awareness: float = 0.0
+	if blackboard.has_var(awareness_var):
+		awareness = blackboard.get_var(awareness_var)
+	
+	awareness += awareness_increase
+	awareness = min(awareness, 300.0)  # Cap at 300
+	blackboard.set_var(awareness_var, awareness)
+	
+	# Update blackboard variables
+	blackboard.set_var(player_audible_var, true)
+	blackboard.set_var(sound_position_var, sound_position)
+	blackboard.set_var(last_hearing_time_var, 0.0)  # Reset timer when sound is heard
 
 
 func _handle_not_audible(delta: float) -> void:

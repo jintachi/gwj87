@@ -1,19 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://buthufw0534k"]
+[gd_scene load_steps=13 format=3 uid="uid://buthufw0534k"]
 
-[ext_resource type="Texture2D" uid="uid://b3qeceiqxlxvf" path="res://icon.svg" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_qhqgy"]
 [ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_tuyoq"]
-[ext_resource type="Script" uid="uid://cxk6xd37ngw8k" path="res://scenes/player_audio_range.gd" id="3_audio_range"]
 [ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="3_fjrip"]
-[ext_resource type="Script" uid="uid://ca40jequl07s1" path="res://mechanics/entities/living_entity_data.gd" id="4_smehm"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="4_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="5_tuyoq"]
 
 [sub_resource type="Resource" id="Resource_ur7pv"]
 script = ExtResource("3_fjrip")
 metadata/_custom_type_script = "uid://bov44tgaen1t"
-
-[sub_resource type="Resource" id="Resource_y4r1p"]
-script = ExtResource("4_smehm")
-metadata/_custom_type_script = "uid://ca40jequl07s1"
 
 [sub_resource type="Resource" id="Resource_d2wvv"]
 script = ExtResource("2_tuyoq")
@@ -40,40 +35,34 @@ script = ExtResource("2_tuyoq")
 slot_type = 4
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_o5qli"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_3vyb7")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
+size = Vector2(20, 9.00006)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sgp6g"]
-radius = 64.0
-height = 128.0
-
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_sprite") groups=["player"]]
 rotation = 0.010877016
 script = ExtResource("1_qhqgy")
 general_inventory = SubResource("Resource_ur7pv")
-data = SubResource("Resource_y4r1p")
+anim_sprite = NodePath("AnimatedSprite2D")
+data = ExtResource("4_qlg0r")
 head_item = SubResource("Resource_d2wvv")
 weapon_item = SubResource("Resource_3v2ag")
 armor_item = SubResource("Resource_jej6c")
 consumable_item = SubResource("Resource_f1ej7")
 ammo_item = SubResource("Resource_oprun")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_o5qli")
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("5_tuyoq")]
+autoplay = "idle"
+frame_progress = 0.04153881
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_sgp6g")
+position = Vector2(0.21753602, 19.998816)
+shape = SubResource("RectangleShape2D_tuyoq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.75, 0.75)
+zoom = Vector2(1.25, 1.25)
 
-[node name="AudioRange" type="Node2D" parent="."]
-script = ExtResource("3_audio_range")
+[node name="CurrentSpeed" type="Label" parent="."]
+offset_left = -0.43507203
+offset_top = -39.99763
+offset_right = 39.564926
+offset_bottom = -16.997631

@@ -1,16 +1,22 @@
-[gd_scene load_steps=16 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=31 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="Texture2D" uid="uid://bhktpk7apu1ue" path="res://scenes/level1/Screenshot 2025-11-17 045536.png" id="1_g8hif"]
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Texture2D" uid="uid://fpuq3sga11e0" path="res://assets/tilesets/empty_tileset.png" id="2_jmggy"]
+[ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="3_8702e"]
 [ext_resource type="Script" uid="uid://c2tb7tc3ea3b5" path="res://scripts/temp_patrol.gd" id="3_iscdl"]
 [ext_resource type="Texture2D" uid="uid://d25gfltip6av" path="res://scenes/level1/start_room_floor.png" id="3_t107e"]
 [ext_resource type="Texture2D" uid="uid://cppdtint81sp6" path="res://scenes/level1/start_room_walls.png" id="4_eagek"]
+[ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="4_iscdl"]
 [ext_resource type="PackedScene" uid="uid://c0lfap4mc25lk" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite.tscn" id="4_wlolr"]
 [ext_resource type="Texture2D" uid="uid://dvp010yr5h5ww" path="res://scenes/level1/storage_stall.png" id="5_eagek"]
-[ext_resource type="PackedScene" uid="uid://buthufw0534k" path="res://scenes/player.tscn" id="7_36yfi"]
+[ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="5_wlolr"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="6_87jvc"]
+[ext_resource type="PackedScene" uid="uid://bs3qoxmweqlyb" path="res://bullet.tscn" id="7_jmggy"]
+[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/test_shooter.gd" id="8_v4nxl"]
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
 [ext_resource type="PackedScene" uid="uid://bw78xcrp6eq12" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
+[ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="17_wd7kj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v4nxl"]
 texture = ExtResource("2_jmggy")
@@ -259,6 +265,49 @@ texture = ExtResource("2_jmggy")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_v4nxl")
 
+[sub_resource type="Resource" id="Resource_t107e"]
+script = ExtResource("5_wlolr")
+size = 30
+metadata/_custom_type_script = "uid://bov44tgaen1t"
+
+[sub_resource type="Resource" id="Resource_eagek"]
+script = ExtResource("4_iscdl")
+slot_type = 1
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_k63md"]
+script = ExtResource("8_v4nxl")
+bullet = ExtResource("7_jmggy")
+slot_type = 5
+metadata/_custom_type_script = "uid://cnibtsckb1myb"
+
+[sub_resource type="Resource" id="Resource_36yfi"]
+script = ExtResource("4_iscdl")
+slot_type = 5
+item = SubResource("Resource_k63md")
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_wd7kj"]
+script = ExtResource("4_iscdl")
+slot_type = 2
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_qulnv"]
+script = ExtResource("4_iscdl")
+slot_type = 3
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_o2ks1"]
+script = ExtResource("4_iscdl")
+slot_type = 4
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_i5esn"]
+size = Vector2(32, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmggy"]
+size = Vector2(24, 20)
+
 [sub_resource type="Curve2D" id="Curve2D_8702e"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -168, -160, 0, 0, 0, 0, -352, -160, 0, 0, 0, 0, -352, 224, 0, 0, 0, 0, 128, 224, 0, 0, 0, 0, 128, 64, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, -160, 0, 0, 0, 0, -168, -160)
@@ -321,8 +370,31 @@ visible = false
 modulate = Color(1, 1, 1, 0.16078432)
 texture = ExtResource("1_g8hif")
 
-[node name="Player" parent="." instance=ExtResource("7_36yfi")]
-position = Vector2(417, 700)
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(344, 727)
+script = ExtResource("3_8702e")
+general_inventory = SubResource("Resource_t107e")
+data = ExtResource("6_87jvc")
+head_item = SubResource("Resource_eagek")
+weapon_item = SubResource("Resource_36yfi")
+armor_item = SubResource("Resource_wd7kj")
+consumable_item = SubResource("Resource_qulnv")
+ammo_item = SubResource("Resource_o2ks1")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture_repeat = 2
+texture = SubResource("PlaceholderTexture2D_i5esn")
+offset = Vector2(0, -24)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(0, -32)
+zoom = Vector2(2, 2)
+process_callback = 0
+position_smoothing_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_jmggy")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_8702e")
@@ -336,7 +408,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.0406119
+frame_progress = 0.7148654
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -348,7 +420,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.61110693
+frame_progress = 0.18921001
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -357,6 +429,7 @@ position = Vector2(368, 352)
 script = ExtResource("11_87jvc")
 waypoints = Array[Vector2]([Vector2(208, 64), Vector2(368, 64), Vector2(368, 352)])
 wait_time = 0.85
+loop = false
 
 [node name="DetectionArea" type="Area2D" parent="MovingPlatform"]
 collision_mask = 3
@@ -365,5 +438,11 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MovingPlatform/DetectionArea"]
 shape = SubResource("RectangleShape2D_detection")
 
-[node name="FlyerBot" parent="." instance=ExtResource("16_36yfi")]
-position = Vector2(-477, 718)
+[node name="PyroFlyOne" parent="." instance=ExtResource("16_36yfi")]
+position = Vector2(-480, 726)
+stats = ExtResource("17_wd7kj")
+
+[node name="AnimatedSprite2D" parent="PyroFlyOne" index="0"]
+frame_progress = 0.39546826
+
+[editable path="PyroFlyOne"]

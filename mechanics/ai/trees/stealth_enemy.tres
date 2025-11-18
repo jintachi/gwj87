@@ -3,19 +3,10 @@
 [ext_resource type="Script" uid="uid://ij4o3bchh0a2" path="res://mechanics/ai/tasks/detect_sight.gd" id="1_3m7nb"]
 [ext_resource type="Script" uid="uid://dv0xjjp85ipgo" path="res://mechanics/ai/tasks/detect_hearing.gd" id="2_sp4sj"]
 [ext_resource type="Script" uid="uid://dcc0uqo0krryb" path="res://mechanics/ai/tasks/manage_awareness.gd" id="3_aware"]
-[ext_resource type="Script" uid="uid://v3syuo1dplm7" path="res://mechanics/ai/tasks/manage_alert_level.gd" id="3_qkoct"]
-[ext_resource type="Script" uid="uid://b2mfj7boqx1r7" path="res://mechanics/ai/tasks/pursue_player.gd" id="4_pursue"]
-[ext_resource type="Script" uid="uid://dnqc8ctyf6xhd" path="res://mechanics/ai/tasks/attack_actions.gd" id="5_attack"]
-[ext_resource type="Script" uid="uid://crc4ouw03bb52" path="res://mechanics/ai/tasks/announce_to_enemies.gd" id="6_announce"]
 [ext_resource type="Script" uid="uid://b86exv7wgitoq" path="res://mechanics/ai/tasks/move_toward_target.gd" id="7_move_target"]
-[ext_resource type="Script" uid="uid://b8k7nan2p4q5r" path="res://mechanics/ai/tasks/patrol.gd" id="8_hlmcq"]
 [ext_resource type="Script" uid="uid://gtllocbb7qkj" path="res://mechanics/ai/tasks/look_toward_sound.gd" id="8_look_sound"]
-[ext_resource type="Script" uid="uid://l2kwvbnvgry5" path="res://mechanics/ai/tasks/idle.gd" id="9_dtpuv"]
 [ext_resource type="Script" uid="uid://pg7w6b48j2ro" path="res://mechanics/ai/tasks/move_toward_sound.gd" id="9_move_sound"]
 [ext_resource type="Script" uid="uid://4y4ukycnh6m8" path="res://mechanics/ai/tasks/look_toward_player.gd" id="10_look_player"]
-[ext_resource type="Script" uid="uid://dv6yj8bhvuap5" path="res://mechanics/ai/tasks/move_toward_player.gd" id="11_move_player"]
-[ext_resource type="Script" uid="uid://cvjbvkpkya3p6" path="res://mechanics/ai/tasks/manage_investigation_cooldown.gd" id="12_cooldown"]
-[ext_resource type="Script" uid="uid://1mfr6p7y6s3b" path="res://mechanics/ai/tasks/wander.gd" id="13_wander"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_clean"]
 var/alert_level/name = &"alert_level"
@@ -123,29 +114,480 @@ script = ExtResource("1_3m7nb")
 
 [sub_resource type="BTAction" id="BTAction_detect_hearing"]
 script = ExtResource("2_sp4sj")
+hearing_range = 300.0
 
 [sub_resource type="BTAction" id="BTAction_manage_awareness"]
 script = ExtResource("3_aware")
 
+[sub_resource type="GDScript" id="GDScript_xuius"]
+script/source = "#*
+#* manage_alert_level.gd
+#* =============================================================================
+#* Manages alert level (0-3) based on awareness thresholds.
+#* 0 = Passive, 1 = Caution, 2 = Tracking, 3 = Engaged
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Manages the alert level system based on awareness. [br]
+## Returns [code]RUNNING[/code] always (doesn't block sequence).
+
+## Blackboard variable that stores the alert level (int: 0-3).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Blackboard variable that stores awareness (float, 0-300).
+@export var awareness_var: StringName = &\"awareness\"
+
+## Awareness threshold to reach alert level 1.
+@export var awareness_threshold_level_1: float = 100.0
+
+## Awareness threshold to reach alert level 2.
+@export var awareness_threshold_level_2: float = 200.0
+
+## Awareness threshold to reach alert level 3.
+@export var awareness_threshold_level_3: float = 275.0
+
+
+func _generate_name() -> String:
+	return \"Manage Alert Level\"
+
+
+func _enter() -> void:
+	# Initialize alert level if not set
+	if not blackboard.has_var(alert_level_var):
+		blackboard.set_var(alert_level_var, 0)
+
+
+func _tick(_delta: float) -> Status:
+	# Get current alert level
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	else:
+		blackboard.set_var(alert_level_var, 0)
+	
+	# Get current awareness
+	var awareness: float = 0.0
+	if blackboard.has_var(awareness_var):
+		awareness = blackboard.get_var(awareness_var)
+	
+	# Increase alert level based on awareness thresholds
+	if awareness > awareness_threshold_level_3 and alert_level < 3:
+		alert_level = 3
+	elif awareness > awareness_threshold_level_2 and alert_level < 2:
+		alert_level = 2
+	elif awareness > awareness_threshold_level_1 and alert_level < 1:
+		alert_level = 1
+	
+	# Decrease alert level when awareness drops below thresholds
+	# Only decrease if awareness is below the threshold for the current level
+	if alert_level == 3 and awareness < awareness_threshold_level_3:
+		alert_level = 2
+	elif alert_level == 2 and awareness < awareness_threshold_level_2:
+		alert_level = 1
+	elif alert_level == 1 and awareness < awareness_threshold_level_1:
+		alert_level = 0
+	
+	# Update alert level
+	blackboard.set_var(alert_level_var, alert_level)
+	
+	return RUNNING
+"
+
 [sub_resource type="BTAction" id="BTAction_manage_alert"]
-script = ExtResource("3_qkoct")
+script = SubResource("GDScript_xuius")
 
 [sub_resource type="BTParallel" id="BTParallel_detection"]
 custom_name = "Detection System"
 children = [SubResource("BTAction_detect_sight"), SubResource("BTAction_detect_hearing"), SubResource("BTAction_manage_awareness"), SubResource("BTAction_manage_alert")]
 
+[sub_resource type="GDScript" id="GDScript_ieijp"]
+script/source = "#*
+#* attack_actions.gd
+#* =============================================================================
+#* Alert Level 3: Engaged - Attack actions (stubs for combat actions).
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Placeholder for attack actions. [br]
+## Returns [code]RUNNING[/code] while able to attack. [br]
+## Returns [code]SUCCESS[/code] if alert level != 3 (exits early).
+
+## Blackboard variable for alert level (int).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Blackboard variable for player visibility (bool).
+@export var player_visible_var: StringName = &\"player_visible\"
+
+## Target alert level required for this task (should be 3 for engaged).
+@export var required_alert_level: int = 3
+
+
+func _generate_name() -> String:
+	return \"Attack Actions (Stubs)\"
+
+
+func _enter() -> void:
+	pass
+
+
+func _tick(_delta: float) -> Status:
+	# Check alert level first - must be at required level to continue
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	
+	if alert_level != required_alert_level:
+		# Alert level changed, return SUCCESS immediately
+		return SUCCESS
+	
+	# Check if able to attack (placeholder check)
+	var able_to_attack: bool = _check_able_to_attack()
+	
+	if not able_to_attack:
+		# Unable to attack, let pursue_player handle movement
+		return RUNNING
+	
+	# Attack actions (stubs)
+	# These are placeholders for future implementation:
+	# - strafe
+	# - charge
+	# - backstep
+	# - shoot
+	# - melee
+	# - flank
+	# - hide
+	# - peak
+	# - reposition
+	
+	# For now, just return RUNNING
+	return RUNNING
+
+
+func _check_able_to_attack() -> bool:
+	# Placeholder: Check if player is in attack range
+	# For now, always return false so pursue_player handles movement
+	return false
+
+
+# Stub functions for attack actions (not implemented yet)
+func _strafe() -> void:
+	pass
+
+
+func _charge() -> void:
+	pass
+
+
+func _backstep() -> void:
+	pass
+
+
+func _shoot() -> void:
+	pass
+
+
+func _melee() -> void:
+	pass
+
+
+func _flank() -> void:
+	pass
+
+
+func _hide() -> void:
+	pass
+
+
+func _peak() -> void:
+	pass
+
+
+func _reposition() -> void:
+	pass
+"
+
 [sub_resource type="BTAction" id="BTAction_attack"]
-script = ExtResource("5_attack")
+script = SubResource("GDScript_ieijp")
+
+[sub_resource type="GDScript" id="GDScript_3m7nb"]
+script/source = "#*
+#* pursue_player.gd
+#* =============================================================================
+#* Alert Level 3: Engaged - Pursues the player while unable to attack.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Pursues player while unable to attack. [br]
+## Uses player position if visible/audible, otherwise uses last_known_player_location. [br]
+## Normal speed (no multiplier). [br]
+## Returns [code]RUNNING[/code] while pursuing. [br]
+## Returns [code]SUCCESS[/code] if alert level != 3 (exits early).
+
+## Blackboard variable for alert level (int).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Blackboard variable for desired speed (float).
+@export var speed_var: StringName = &\"speed\"
+
+## Blackboard variable for player visibility (bool).
+@export var player_visible_var: StringName = &\"player_visible\"
+
+## Blackboard variable for player audibility (bool).
+@export var player_audible_var: StringName = &\"player_audible\"
+
+## Blackboard variable for last sight position (Vector2).
+@export var last_sight_position_var: StringName = &\"last_sight_position\"
+
+## Blackboard variable for sound position (Vector2).
+@export var sound_position_var: StringName = &\"sound_position\"
+
+## Blackboard variable for last known player location (Vector2).
+@export var last_known_player_location_var: StringName = &\"last_known_player_location\"
+
+## Name of the SceneTree group containing the player.
+@export var player_group: StringName = &\"player\"
+
+## Target alert level required for this task (should be 3 for engaged).
+@export var required_alert_level: int = 3
+
+## How close to get to the target.
+@export var arrival_tolerance: float = 20.0
+
+
+func _generate_name() -> String:
+	return \"Pursue Player\"
+
+
+func _enter() -> void:
+	pass
+
+
+func _tick(_delta: float) -> Status:
+	# Check alert level first - must be at required level to continue
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	
+	if alert_level != required_alert_level:
+		# Alert level changed, return SUCCESS immediately
+		return SUCCESS
+	
+	# Get detection status
+	var player_visible: bool = false
+	if blackboard.has_var(player_visible_var):
+		player_visible = blackboard.get_var(player_visible_var)
+	
+	var player_audible: bool = false
+	if blackboard.has_var(player_audible_var):
+		player_audible = blackboard.get_var(player_audible_var)
+	
+	# Determine target position based on priority:
+	# 1. If player is visible: pursue actual player position (highest priority)
+	# 2. Else if player is audible: pursue sound position
+	# 3. Else: use last known player location
+	var target_pos: Vector2 = Vector2.ZERO
+	
+	if player_visible:
+		# Priority 1: Player is visible - pursue actual position
+		var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
+		if not players.is_empty():
+			var player: Node2D = players[0] as Node2D
+			if is_instance_valid(player):
+				target_pos = player.global_position
+				# Update last sight position
+				blackboard.set_var(last_sight_position_var, target_pos)
+	elif player_audible:
+		# Priority 2: Player is audible - pursue sound position
+		if blackboard.has_var(sound_position_var):
+			var sound_pos: Vector2 = blackboard.get_var(sound_position_var)
+			if sound_pos != Vector2.ZERO:
+				target_pos = sound_pos
+	else:
+		# Priority 3: Both lost - use last known location
+		if blackboard.has_var(last_known_player_location_var):
+			target_pos = blackboard.get_var(last_known_player_location_var)
+		
+		# Fallback to last sight position
+		if target_pos == Vector2.ZERO:
+			if blackboard.has_var(last_sight_position_var):
+				target_pos = blackboard.get_var(last_sight_position_var)
+	
+	if target_pos == Vector2.ZERO:
+		# No target available, stop
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	# Move toward target
+	var to_target: Vector2 = target_pos - agent.global_position
+	var distance: float = to_target.length()
+	
+	# Check if we've reached the target
+	if distance <= arrival_tolerance:
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	# Get speed (no multiplier for engaged mode)
+	var speed: float = 200.0
+	if blackboard.has_var(speed_var):
+		speed = blackboard.get_var(speed_var)
+	
+	# Pursue target - move towards them
+	var direction: Vector2 = to_target.normalized()
+	
+	agent.move(direction, _delta)
+	agent.update_facing()
+	
+	return RUNNING
+"
 
 [sub_resource type="BTAction" id="BTAction_pursue"]
-script = ExtResource("4_pursue")
+script = SubResource("GDScript_3m7nb")
 
 [sub_resource type="BTSelector" id="BTSelector_engaged"]
 custom_name = "Alert Level 3: Engaged"
 children = [SubResource("BTAction_attack"), SubResource("BTAction_pursue")]
 
+[sub_resource type="GDScript" id="GDScript_sp4sj"]
+script/source = "#*
+#* announce_to_enemies.gd
+#* =============================================================================
+#* Alert Level 2: Tracking - Announces player location to nearby enemies.
+#* Only original detecting enemy communicates, and only once per alert level 2 entry.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Shares last_known_player_location with nearby enemies. [br]
+## Only runs when enemy reaches alert level 2 from own detection. [br]
+## Returns [code]RUNNING[/code] always (doesn't block sequence). [br]
+## Returns [code]SUCCESS[/code] if alert level != 2 (exits early).
+
+## Blackboard variable for alert level (int).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Blackboard variable for last sight position (Vector2).
+@export var last_sight_position_var: StringName = &\"last_sight_position\"
+
+## Blackboard variable for last known player location (Vector2).
+@export var last_known_player_location_var: StringName = &\"last_known_player_location\"
+
+## Blackboard variable to track if communication was sent (bool).
+@export var communication_sent_var: StringName = &\"communication_sent\"
+
+## Blackboard variable for previous alert level (int).
+@export var previous_alert_level_var: StringName = &\"previous_alert_level\"
+
+## Name of the SceneTree group containing enemies.
+@export var enemy_group: StringName = &\"stealth_enemies\"
+
+## Communication radius in pixels.
+@export var communication_radius: float = 500.0
+
+## Target alert level required for this task (should be 2 for tracking).
+@export var required_alert_level: int = 2
+
+
+func _generate_name() -> String:
+	return \"Announce to Enemies  radius: %.0f\" % communication_radius
+
+
+func _enter() -> void:
+	# Initialize communication flag if not set
+	if not blackboard.has_var(communication_sent_var):
+		blackboard.set_var(communication_sent_var, false)
+	if not blackboard.has_var(previous_alert_level_var):
+		blackboard.set_var(previous_alert_level_var, 0)
+
+
+func _tick(_delta: float) -> Status:
+	# Check alert level first
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	
+	if alert_level != required_alert_level:
+		# Not at tracking level, reset communication flag
+		blackboard.set_var(communication_sent_var, false)
+		blackboard.set_var(previous_alert_level_var, alert_level)
+		return SUCCESS
+	
+	# Get previous alert level
+	var previous_alert_level: int = 0
+	if blackboard.has_var(previous_alert_level_var):
+		previous_alert_level = blackboard.get_var(previous_alert_level_var)
+	
+	# Only communicate if we just entered alert level 2 from our own detection
+	# (not from another enemy's communication)
+	var communication_sent: bool = false
+	if blackboard.has_var(communication_sent_var):
+		communication_sent = blackboard.get_var(communication_sent_var)
+	
+	# Check if we just entered alert level 2 (transitioned from level 1 or below)
+	var just_entered_level_2: bool = (alert_level == required_alert_level and previous_alert_level < required_alert_level)
+	
+	if just_entered_level_2 and not communication_sent:
+		# Get last known player location (prefer sight position)
+		var last_known_location: Vector2 = Vector2.ZERO
+		
+		if blackboard.has_var(last_sight_position_var):
+			last_known_location = blackboard.get_var(last_sight_position_var)
+		
+		if last_known_location == Vector2.ZERO:
+			# Fallback to sound position if no sight position
+			if blackboard.has_var(&\"sound_position\"):
+				last_known_location = blackboard.get_var(&\"sound_position\")
+		
+		if last_known_location != Vector2.ZERO:
+			# Set our own last known player location
+			blackboard.set_var(last_known_player_location_var, last_known_location)
+			
+			# Find nearby enemies in the same scene tree
+			var enemies: Array[Node] = agent.get_tree().get_nodes_in_group(enemy_group)
+			
+			for enemy_node in enemies:
+				if not is_instance_valid(enemy_node):
+					continue
+				
+				# Skip ourselves
+				if enemy_node == agent:
+					continue
+				
+				# Check distance
+				var distance: float = agent.global_position.distance_to(enemy_node.global_position)
+				if distance > communication_radius:
+					continue
+				
+				# Get enemy's blackboard (assuming enemy has BTPlayer)
+				var bt_player = enemy_node.get_node_or_null(\"BTPlayer\")
+				if bt_player and bt_player.has_method(\"get_blackboard\"):
+					var enemy_blackboard = bt_player.get_blackboard()
+					if enemy_blackboard:
+						# Share last known player location
+						enemy_blackboard.set_var(last_known_player_location_var, last_known_location)
+						
+						# Increase enemy's awareness to trigger alert level 2
+						# (they should already be close, so give them awareness to reach level 2)
+						if enemy_blackboard.has_var(&\"awareness\"):
+							var enemy_awareness: float = enemy_blackboard.get_var(&\"awareness\")
+							# Set awareness to just above threshold for level 2 (200)
+							enemy_awareness = max(enemy_awareness, 201.0)
+							enemy_awareness = min(enemy_awareness, 300.0)  # Cap at 300
+							enemy_blackboard.set_var(&\"awareness\", enemy_awareness)
+			
+			# Mark communication as sent
+			blackboard.set_var(communication_sent_var, true)
+	
+	# Update previous alert level
+	blackboard.set_var(previous_alert_level_var, alert_level)
+	
+	return RUNNING
+"
+
 [sub_resource type="BTAction" id="BTAction_announce"]
-script = ExtResource("6_announce")
+script = SubResource("GDScript_sp4sj")
 
 [sub_resource type="BTAction" id="BTAction_move_target"]
 script = ExtResource("7_move_target")
@@ -163,25 +605,354 @@ script = ExtResource("9_move_sound")
 [sub_resource type="BTAction" id="BTAction_look_player"]
 script = ExtResource("10_look_player")
 
+[sub_resource type="GDScript" id="GDScript_qkoct"]
+script/source = "#*
+#* move_toward_player.gd
+#* =============================================================================
+#* Alert Level 1: Caution - Moves slowly toward the player when visible.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Moves slowly (0.5x speed) toward player when visible. [br]
+## Returns [code]RUNNING[/code] while moving. [br]
+## Returns [code]SUCCESS[/code] if alert level != 1 (exits early).
+
+## Blackboard variable for alert level (int).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Blackboard variable for desired speed (float).
+@export var speed_var: StringName = &\"speed\"
+
+## Blackboard variable for player visibility (bool).
+@export var player_visible_var: StringName = &\"player_visible\"
+
+## Name of the SceneTree group containing the player.
+@export var player_group: StringName = &\"player\"
+
+## Target alert level required for this task (should be 1 for caution).
+@export var required_alert_level: int = 1
+
+## Speed multiplier for caution mode (0.5x).
+@export var caution_speed_multiplier: float = 0.5
+
+## How close to get to the player.
+@export var arrival_tolerance: float = 50.0
+
+
+func _generate_name() -> String:
+	return \"Move Toward Player\"
+
+
+func _enter() -> void:
+	pass
+
+
+func _tick(_delta: float) -> Status:
+	# Check alert level first - must be at required level to continue
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	
+	if alert_level != required_alert_level:
+		# Alert level changed, return SUCCESS immediately
+		return SUCCESS
+	
+	# Check if player is visible
+	var player_visible: bool = false
+	if blackboard.has_var(player_visible_var):
+		player_visible = blackboard.get_var(player_visible_var)
+	
+	if not player_visible:
+		# Player not visible, stop
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	# Get player
+	var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
+	if players.is_empty():
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	var player: Node2D = players[0] as Node2D
+	if not is_instance_valid(player):
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	# Move toward player
+	var to_player: Vector2 = player.global_position - agent.global_position
+	var distance: float = to_player.length()
+	
+	if distance < arrival_tolerance:
+		# Close enough, stop
+		agent.move(Vector2.ZERO, _delta)
+		return RUNNING
+	
+	# Get speed and apply multiplier
+	var speed: float = 200.0
+	if blackboard.has_var(speed_var):
+		speed = blackboard.get_var(speed_var)
+	
+	speed *= caution_speed_multiplier  # 0.5x speed
+	
+	var direction: Vector2 = to_player.normalized()
+	agent.move(direction, _delta)
+	agent.update_facing()
+	
+	return RUNNING
+
+"
+
 [sub_resource type="BTAction" id="BTAction_move_player"]
-script = ExtResource("11_move_player")
+script = SubResource("GDScript_qkoct")
+
+[sub_resource type="GDScript" id="GDScript_i5apq"]
+script/source = "#*
+#* manage_investigation_cooldown.gd
+#* =============================================================================
+#* Manages 1 second cooldown for investigation target changes.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Manages investigation cooldown timer. [br]
+## Returns [code]RUNNING[/code] always (doesn't block sequence).
+
+## Blackboard variable for investigation cooldown (float).
+@export var investigation_cooldown_var: StringName = &\"investigation_cooldown\"
+
+## Cooldown duration in seconds.
+@export var cooldown_duration: float = .2
+
+
+func _generate_name() -> String:
+	return \"Manage Investigation Cooldown\"
+
+
+func _enter() -> void:
+	# Initialize cooldown if not set
+	if not blackboard.has_var(investigation_cooldown_var):
+		blackboard.set_var(investigation_cooldown_var, 0.0)
+
+
+func _tick(delta: float) -> Status:
+	# Get current cooldown
+	var cooldown: float = 0.0
+	if blackboard.has_var(investigation_cooldown_var):
+		cooldown = blackboard.get_var(investigation_cooldown_var)
+	
+	# Decrease cooldown timer
+	if cooldown > 0.0:
+		cooldown = max(0.0, cooldown - delta)
+		blackboard.set_var(investigation_cooldown_var, cooldown)
+	
+	return RUNNING
+"
 
 [sub_resource type="BTAction" id="BTAction_cooldown"]
-script = ExtResource("12_cooldown")
+script = SubResource("GDScript_i5apq")
 cooldown_duration = 1.0
 
 [sub_resource type="BTParallel" id="BTParallel_caution"]
 custom_name = "Alert Level 1: Caution"
 children = [SubResource("BTAction_look_sound"), SubResource("BTAction_move_sound"), SubResource("BTAction_look_player"), SubResource("BTAction_move_player"), SubResource("BTAction_cooldown")]
 
+[sub_resource type="GDScript" id="GDScript_6txoj"]
+script/source = "#*
+#* patrol.gd
+#* =============================================================================
+#* Patrol task - checks if entity is patrolling.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Checks if the entity is patrolling. [br]
+## Returns [code]RUNNING[/code] if patrolling (waypoints available). [br]
+## Returns [code]FAILURE[/code] if not patrolling (no waypoints).
+
+## Blackboard variable that stores the array of waypoints (Array[Vector2]).
+@export var waypoints_var: StringName = &\"waypoints\"
+
+
+func _generate_name() -> String:
+	return \"Patrol\"
+
+
+func _tick(_delta: float) -> Status:
+	# Check if waypoints already exist in blackboard first
+	var waypoints: Array = []
+	if blackboard.has_var(waypoints_var):
+		waypoints = blackboard.get_var(waypoints_var)
+	
+	# If waypoints exist and are not empty, entity is patrolling
+	if not waypoints.is_empty():
+		return RUNNING
+	
+	# If no waypoints in blackboard, check if agent has _path_points property
+	if \"_path_points\" in agent:
+		var path_points: PackedVector2Array = agent.get(\"_path_points\")
+		
+		# Convert PackedVector2Array to Array[Vector2] for blackboard
+		if not path_points.is_empty():
+			waypoints = []
+			# Check if agent has patrol_path for global coordinate conversion
+			var patrol_path: Path2D = null
+			if \"patrol_path\" in agent:
+				patrol_path = agent.get(\"patrol_path\")
+			
+			for point in path_points:
+				# Convert to global position if patrol_path exists
+				if patrol_path != null:
+					var global_point: Vector2 = patrol_path.to_global(point)
+					waypoints.append(global_point)
+				else:
+					waypoints.append(point)
+			
+			# Set waypoints in blackboard
+			blackboard.set_var(waypoints_var, waypoints)
+			return RUNNING
+	
+	# No waypoints available, entity is not patrolling
+	return FAILURE
+"
+
 [sub_resource type="BTAction" id="BTAction_patrol"]
-script = ExtResource("8_hlmcq")
+script = SubResource("GDScript_6txoj")
+waypoints_var = null
+
+[sub_resource type="GDScript" id="GDScript_31crw"]
+script/source = "#*
+#* wander.gd
+#* =============================================================================
+#* Wander task - moves to random positions within wander_radius around NodePath waypoints.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Moves to random positions around NodePath waypoints. [br]
+## Returns [code]RUNNING[/code] while moving to a waypoint. [br]
+## Returns [code]SUCCESS[/code] when reaching a waypoint. [br]
+## Returns [code]SUCCESS[/code] if alert level > 0 (exits early).
+
+## Blackboard variable that stores the array of waypoints (Array[Vector2]).
+@export var waypoints_var: StringName = &\"waypoints\"
+
+## Blackboard variable that stores the current waypoint index (int).
+@export var current_waypoint_index_var: StringName = &\"patrol_index\"
+
+## Blackboard variable that stores desired speed (float).
+@export var speed_var: StringName = &\"speed\"
+
+## Blackboard variable for alert level (int).
+@export var alert_level_var: StringName = &\"alert_level\"
+
+## Radius around waypoint to pick random position.
+@export var wander_radius: float = 50.0
+
+## How close should the agent be to the target to consider it reached.
+@export var tolerance: float = 50.0
+
+var _current_target: Vector2 = Vector2.ZERO
+var _has_target: bool = false
+
+
+func _generate_name() -> String:
+	return \"Wander  radius: %.0f\" % wander_radius
+
+
+func _enter() -> void:
+	_has_target = false
+	_current_target = Vector2.ZERO
+
+
+func _tick(_delta: float) -> Status:
+	# Check alert level - exit early if alert level > 0
+	var alert_level: int = 0
+	if blackboard.has_var(alert_level_var):
+		alert_level = blackboard.get_var(alert_level_var)
+	
+	if alert_level > 0:
+		return SUCCESS
+	
+	var waypoints: Array = []
+	if blackboard.has_var(waypoints_var):
+		waypoints = blackboard.get_var(waypoints_var)
+	
+	if waypoints.is_empty():
+		return FAILURE
+	
+	# Initialize patrol index if not set
+	if not blackboard.has_var(current_waypoint_index_var):
+		blackboard.set_var(current_waypoint_index_var, 0)
+	
+	var current_index: int = 0
+	if blackboard.has_var(current_waypoint_index_var):
+		current_index = blackboard.get_var(current_waypoint_index_var)
+	
+	# Ensure index is valid
+	if current_index < 0 or current_index >= waypoints.size():
+		current_index = 0
+		blackboard.set_var(current_waypoint_index_var, 0)
+	
+	var current_waypoint: Vector2 = waypoints[current_index]
+	
+	# Pick a new random target if we don't have one or reached the current target
+	if not _has_target:
+		# Pick random position within wander_radius around current waypoint
+		var angle: float = randf() * TAU
+		var distance: float = randf() * wander_radius
+		_current_target = current_waypoint + Vector2(cos(angle), sin(angle)) * distance
+		_has_target = true
+	
+	var distance_to_target: float = agent.global_position.distance_to(_current_target)
+	
+	# Check if we've reached the target
+	if distance_to_target < tolerance:
+		# Move to next waypoint
+		current_index = (current_index + 1) % waypoints.size()
+		blackboard.set_var(current_waypoint_index_var, current_index)
+		_has_target = false  # Pick new random position around next waypoint
+		return RUNNING
+	
+	# Move towards the random target
+	var speed: float = 200.0
+	if blackboard.has_var(speed_var):
+		speed = blackboard.get_var(speed_var)
+	
+	var direction: Vector2 = agent.global_position.direction_to(_current_target)
+	agent.move(direction, _delta)
+	agent.update_facing()
+	
+	return RUNNING
+"
 
 [sub_resource type="BTAction" id="BTAction_wander"]
-script = ExtResource("13_wander")
+script = SubResource("GDScript_31crw")
+
+[sub_resource type="GDScript" id="GDScript_vikx8"]
+script/source = "#*
+#* idle.gd
+#* =============================================================================
+#* Simple idle behavior - agent stands still.
+#* =============================================================================
+#*
+@tool
+extends BTAction
+## Makes the agent idle (stand still). [br]
+## Returns [code]RUNNING[/code] always.
+
+func _generate_name() -> String:
+	return \"Idle\"
+
+
+func _tick(_delta: float) -> Status:
+	agent.move(Vector2.ZERO, _delta)
+	return RUNNING
+
+"
 
 [sub_resource type="BTAction" id="BTAction_idle"]
-script = ExtResource("9_dtpuv")
+script = SubResource("GDScript_vikx8")
 
 [sub_resource type="BTSelector" id="BTSelector_passive_behavior"]
 custom_name = "Passive Behavior"
