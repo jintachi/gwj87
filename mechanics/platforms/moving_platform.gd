@@ -44,6 +44,9 @@ var _initial_global_position: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+
+	position = Vector2.ZERO
+
 	# Connect Area2D signals for entity detection
 	if _detection_area:
 		_detection_area.body_entered.connect(_on_body_entered)
