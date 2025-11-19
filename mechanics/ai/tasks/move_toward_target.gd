@@ -54,7 +54,7 @@ func _tick(_delta: float) -> Status:
 	
 	if target_position == Vector2.ZERO:
 		# No target available, stop
-		agent.move(Vector2.ZERO)
+		agent.move(Vector2.ZERO, _delta)
 		return RUNNING
 	
 	# Move toward target
@@ -62,7 +62,7 @@ func _tick(_delta: float) -> Status:
 	
 	if distance_to_target < arrival_tolerance:
 		# Reached target
-		agent.move(Vector2.ZERO)
+		agent.move(Vector2.ZERO, _delta)
 		return RUNNING
 	
 	# Get speed and apply multiplier
@@ -73,9 +73,7 @@ func _tick(_delta: float) -> Status:
 	speed *= tracking_speed_multiplier  # 1.25x speed
 	
 	var direction: Vector2 = agent.global_position.direction_to(target_position)
-	var desired_velocity: Vector2 = direction * speed
-	agent.move(desired_velocity)
+	agent.move(direction, _delta)
 	agent.update_facing()
 	
 	return RUNNING
-

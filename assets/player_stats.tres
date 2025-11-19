@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_0lyri")
-movement_speed = 100.0
-friction = 10000.0
+movement_speed = 60.0
+friction = 15.0
 metadata/_custom_type_script = "uid://ca40jequl07s1"
