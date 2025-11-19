@@ -25,15 +25,12 @@ func _tick(_delta: float) -> Status:
 	var nodes: Array[Node] = agent.get_tree().get_nodes_in_group(group)
 	
 	if nodes.is_empty():
-		print("Get First in Group: No nodes found in group '%s'" % [group])
 		return FAILURE
 	
 	var target: Node = nodes[0]
 	if not is_instance_valid(target):
-		print("Get First in Group: Target node is invalid")
 		return FAILURE
 	
 	blackboard.set_var(target_var, target)
-	print("Get First in Group: Set target to %s at position %s" % [target.name, target.global_position])
 	return SUCCESS
 

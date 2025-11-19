@@ -1,18 +1,110 @@
-[gd_resource type="BehaviorTree" load_steps=31 format=3 uid="uid://58440tv70xh3"]
+[gd_resource type="BehaviorTree" load_steps=42 format=3 uid="uid://dhrvg8g1qu7to"]
 
-[ext_resource type="Script" uid="uid://b8c863vxa00h4" path="res://mechanics/ai/tasks/detect_player_vision_timed.gd" id="1_vision_timed"]
-[ext_resource type="Script" uid="uid://daea74wyb11i5" path="res://mechanics/ai/tasks/detect_player_audio_gauge.gd" id="2_audio_gauge"]
-[ext_resource type="Script" uid="uid://f0gn31qru6if" path="res://mechanics/ai/tasks/investigate_sound.gd" id="3_investigate"]
-[ext_resource type="Script" uid="uid://dkhy374ytsg14" path="res://mechanics/ai/tasks/pursue.gd" id="5_pursue"]
-[ext_resource type="Script" uid="uid://b8k7nan2p4q5r" path="res://mechanics/ai/tasks/patrol.gd" id="6_patrol"]
-[ext_resource type="Script" uid="uid://cbnhk8labahdq" path="res://mechanics/ai/tasks/check_engaged_state.gd" id="7_check_engaged"]
-[ext_resource type="Script" uid="uid://uqqkdwecr1mc" path="res://mechanics/ai/tasks/check_alert_state.gd" id="8_check_alert"]
-[ext_resource type="Script" uid="uid://d2vmjp87v5ogq" path="res://mechanics/ai/tasks/set_state.gd" id="9_set_state"]
+[ext_resource type="Script" uid="uid://ij4o3bchh0a2" path="res://mechanics/ai/tasks/detect_sight.gd" id="1_3m7nb"]
+[ext_resource type="Script" uid="uid://dv0xjjp85ipgo" path="res://mechanics/ai/tasks/detect_hearing.gd" id="2_sp4sj"]
+[ext_resource type="Script" uid="uid://dcc0uqo0krryb" path="res://mechanics/ai/tasks/manage_awareness.gd" id="3_aware"]
+[ext_resource type="Script" uid="uid://v3syuo1dplm7" path="res://mechanics/ai/tasks/manage_alert_level.gd" id="3_qkoct"]
+[ext_resource type="Script" uid="uid://b2mfj7boqx1r7" path="res://mechanics/ai/tasks/pursue_player.gd" id="4_pursue"]
+[ext_resource type="Script" uid="uid://dnqc8ctyf6xhd" path="res://mechanics/ai/tasks/attack_actions.gd" id="5_attack"]
+[ext_resource type="Script" uid="uid://crc4ouw03bb52" path="res://mechanics/ai/tasks/announce_to_enemies.gd" id="6_announce"]
+[ext_resource type="Script" uid="uid://b86exv7wgitoq" path="res://mechanics/ai/tasks/move_toward_target.gd" id="7_move_target"]
+[ext_resource type="Script" uid="uid://b8k7nan2p4q5r" path="res://mechanics/ai/tasks/patrol.gd" id="8_hlmcq"]
+[ext_resource type="Script" uid="uid://gtllocbb7qkj" path="res://mechanics/ai/tasks/look_toward_sound.gd" id="8_look_sound"]
+[ext_resource type="Script" uid="uid://l2kwvbnvgry5" path="res://mechanics/ai/tasks/idle.gd" id="9_dtpuv"]
+[ext_resource type="Script" uid="uid://pg7w6b48j2ro" path="res://mechanics/ai/tasks/move_toward_sound.gd" id="9_move_sound"]
+[ext_resource type="Script" uid="uid://4y4ukycnh6m8" path="res://mechanics/ai/tasks/look_toward_player.gd" id="10_look_player"]
+[ext_resource type="Script" uid="uid://dv6yj8bhvuap5" path="res://mechanics/ai/tasks/move_toward_player.gd" id="11_move_player"]
+[ext_resource type="Script" uid="uid://cvjbvkpkya3p6" path="res://mechanics/ai/tasks/manage_investigation_cooldown.gd" id="12_cooldown"]
+[ext_resource type="Script" uid="uid://1mfr6p7y6s3b" path="res://mechanics/ai/tasks/wander.gd" id="13_wander"]
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_stealth"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_clean"]
+var/alert_level/name = &"alert_level"
+var/alert_level/type = 2
+var/alert_level/value = 0
+var/alert_level/hint = 0
+var/alert_level/hint_string = ""
+var/awareness/name = &"awareness"
+var/awareness/type = 3
+var/awareness/value = 0.0
+var/awareness/hint = 1
+var/awareness/hint_string = "0.0,300.0,0.1"
+var/awareness_decay_timer/name = &"awareness_decay_timer"
+var/awareness_decay_timer/type = 3
+var/awareness_decay_timer/value = 0.0
+var/awareness_decay_timer/hint = 0
+var/awareness_decay_timer/hint_string = ""
+var/alert_level_3_timer/name = &"alert_level_3_timer"
+var/alert_level_3_timer/type = 3
+var/alert_level_3_timer/value = 0.0
+var/alert_level_3_timer/hint = 0
+var/alert_level_3_timer/hint_string = ""
+var/player_visible/name = &"player_visible"
+var/player_visible/type = 1
+var/player_visible/value = false
+var/player_visible/hint = 0
+var/player_visible/hint_string = ""
+var/player_audible/name = &"player_audible"
+var/player_audible/type = 1
+var/player_audible/value = false
+var/player_audible/hint = 0
+var/player_audible/hint_string = ""
+var/last_sight_time/name = &"last_sight_time"
+var/last_sight_time/type = 3
+var/last_sight_time/value = 0.0
+var/last_sight_time/hint = 0
+var/last_sight_time/hint_string = ""
+var/last_hearing_time/name = &"last_hearing_time"
+var/last_hearing_time/type = 3
+var/last_hearing_time/value = 0.0
+var/last_hearing_time/hint = 0
+var/last_hearing_time/hint_string = ""
+var/last_sight_position/name = &"last_sight_position"
+var/last_sight_position/type = 5
+var/last_sight_position/value = Vector2(0, 0)
+var/last_sight_position/hint = 0
+var/last_sight_position/hint_string = ""
+var/sound_position/name = &"sound_position"
+var/sound_position/type = 5
+var/sound_position/value = Vector2(0, 0)
+var/sound_position/hint = 0
+var/sound_position/hint_string = ""
+var/last_known_player_location/name = &"last_known_player_location"
+var/last_known_player_location/type = 5
+var/last_known_player_location/value = Vector2(0, 0)
+var/last_known_player_location/hint = 0
+var/last_known_player_location/hint_string = ""
+var/investigation_cooldown/name = &"investigation_cooldown"
+var/investigation_cooldown/type = 3
+var/investigation_cooldown/value = 0.0
+var/investigation_cooldown/hint = 0
+var/investigation_cooldown/hint_string = ""
+var/sight_cooldown/name = &"sight_cooldown"
+var/sight_cooldown/type = 3
+var/sight_cooldown/value = 0.0
+var/sight_cooldown/hint = 0
+var/sight_cooldown/hint_string = ""
+var/hearing_cooldown/name = &"hearing_cooldown"
+var/hearing_cooldown/type = 3
+var/hearing_cooldown/value = 0.0
+var/hearing_cooldown/hint = 0
+var/hearing_cooldown/hint_string = ""
+var/processed_sound_ids/name = &"processed_sound_ids"
+var/processed_sound_ids/type = 24
+var/processed_sound_ids/hint = 0
+var/processed_sound_ids/hint_string = ""
+var/communication_sent/name = &"communication_sent"
+var/communication_sent/type = 1
+var/communication_sent/value = false
+var/communication_sent/hint = 0
+var/communication_sent/hint_string = ""
+var/previous_alert_level/name = &"previous_alert_level"
+var/previous_alert_level/type = 2
+var/previous_alert_level/value = 0
+var/previous_alert_level/hint = 0
+var/previous_alert_level/hint_string = ""
 var/speed/name = &"speed"
 var/speed/type = 3
-var/speed/value = 300.0
+var/speed/value = 200.0
 var/speed/hint = 1
 var/speed/hint_string = "10,1000,10"
 var/waypoints/name = &"waypoints"
@@ -25,130 +117,101 @@ var/patrol_index/type = 2
 var/patrol_index/value = 0
 var/patrol_index/hint = 0
 var/patrol_index/hint_string = ""
-var/patrol_path/name = &"patrol_path"
-var/patrol_path/type = 24
-var/patrol_path/hint = 0
-var/patrol_path/hint_string = ""
-var/audio_gauge/name = &"audio_gauge"
-var/audio_gauge/type = 3
-var/audio_gauge/value = 0.0
-var/audio_gauge/hint = 1
-var/audio_gauge/hint_string = "0,1,0.01"
-var/sound_position/name = &"sound_position"
-var/sound_position/type = 5
-var/sound_position/value = Vector2(0, 0)
-var/sound_position/hint = 0
-var/sound_position/hint_string = ""
-var/detection_state/name = &"detection_state"
-var/detection_state/type = 4
-var/detection_state/value = &"Patrolling"
-var/detection_state/hint = 0
-var/detection_state/hint_string = ""
-var/current_state/name = &"current_state"
-var/current_state/type = 4
-var/current_state/value = &"Patrolling"
-var/current_state/hint = 0
-var/current_state/hint_string = ""
-var/investigation_cooldown/name = &"investigation_cooldown"
-var/investigation_cooldown/type = 3
-var/investigation_cooldown/value = 0.0
-var/investigation_cooldown/hint = 0
-var/investigation_cooldown/hint_string = ""
-var/lose_target_timer/name = &"lose_target_timer"
-var/lose_target_timer/type = 3
-var/lose_target_timer/value = 0.0
-var/lose_target_timer/hint = 0
-var/lose_target_timer/hint_string = ""
-var/npc_state/name = &"npc_state"
-var/npc_state/type = 4
-var/npc_state/value = &"Passive"
-var/npc_state/hint = 0
-var/npc_state/hint_string = ""
-var/target/name = &"target"
-var/target/type = 24
-var/target/hint = 0
-var/target/hint_string = ""
 
-[sub_resource type="BTAction" id="BTAction_check_engaged"]
-script = ExtResource("7_check_engaged")
+[sub_resource type="BTAction" id="BTAction_detect_sight"]
+script = ExtResource("1_3m7nb")
+awareness_var = null
+sight_cooldown_var = null
+awareness_increase_amount = null
+sight_cooldown_time = null
 
-[sub_resource type="BTAction" id="BTAction_set_engaged"]
-script = ExtResource("9_set_state")
-state_name = "Engaged"
+[sub_resource type="BTAction" id="BTAction_detect_hearing"]
+script = ExtResource("2_sp4sj")
+awareness_var = null
+hearing_cooldown_var = null
+processed_sound_ids_var = null
+hearing_cooldown_time = null
 
-[sub_resource type="BBNode" id="BBNode_anim"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
+[sub_resource type="BTAction" id="BTAction_manage_awareness"]
+script = ExtResource("3_aware")
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_walk"]
-animation_player = SubResource("BBNode_anim")
-animation_name = &"walk"
-blend = 0.1
+[sub_resource type="BTAction" id="BTAction_manage_alert"]
+script = ExtResource("3_qkoct")
+awareness_var = null
+awareness_threshold_level_1 = null
+awareness_threshold_level_2 = null
+awareness_threshold_level_3 = null
+
+[sub_resource type="BTParallel" id="BTParallel_detection"]
+custom_name = "Detection System"
+children = [SubResource("BTAction_detect_sight"), SubResource("BTAction_detect_hearing"), SubResource("BTAction_manage_awareness"), SubResource("BTAction_manage_alert")]
+
+[sub_resource type="BTAction" id="BTAction_attack"]
+script = ExtResource("5_attack")
 
 [sub_resource type="BTAction" id="BTAction_pursue"]
-script = ExtResource("5_pursue")
+script = ExtResource("4_pursue")
 
-[sub_resource type="BTSequence" id="BTSequence_engage"]
-custom_name = "Engaged State"
-children = [SubResource("BTAction_check_engaged"), SubResource("BTAction_set_engaged"), SubResource("BTPlayAnimation_walk"), SubResource("BTAction_pursue")]
+[sub_resource type="BTSelector" id="BTSelector_engaged"]
+custom_name = "Alert Level 3: Engaged"
+children = [SubResource("BTAction_attack"), SubResource("BTAction_pursue")]
 
-[sub_resource type="BTAction" id="BTAction_check_alert"]
-script = ExtResource("8_check_alert")
+[sub_resource type="BTAction" id="BTAction_announce"]
+script = ExtResource("6_announce")
 
-[sub_resource type="BTAction" id="BTAction_set_alert"]
-script = ExtResource("9_set_state")
-state_name = "Alert"
+[sub_resource type="BTAction" id="BTAction_move_target"]
+script = ExtResource("7_move_target")
 
-[sub_resource type="BBNode" id="BBNode_30ygb"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
+[sub_resource type="BTParallel" id="BTParallel_tracking"]
+custom_name = "Alert Level 2: Tracking"
+children = [SubResource("BTAction_announce"), SubResource("BTAction_move_target")]
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_xuius"]
-animation_player = SubResource("BBNode_30ygb")
-animation_name = &"walk"
-blend = 0.1
+[sub_resource type="BTAction" id="BTAction_look_sound"]
+script = ExtResource("8_look_sound")
 
-[sub_resource type="BTAction" id="BTAction_investigate"]
-script = ExtResource("3_investigate")
+[sub_resource type="BTAction" id="BTAction_move_sound"]
+script = ExtResource("9_move_sound")
 
-[sub_resource type="BTSequence" id="BTSequence_investigate"]
-custom_name = "Alert State"
-children = [SubResource("BTAction_check_alert"), SubResource("BTAction_set_alert"), SubResource("BTPlayAnimation_xuius"), SubResource("BTAction_investigate")]
+[sub_resource type="BTAction" id="BTAction_look_player"]
+script = ExtResource("10_look_player")
 
-[sub_resource type="BTAction" id="BTAction_set_passive"]
-script = ExtResource("9_set_state")
+[sub_resource type="BTAction" id="BTAction_move_player"]
+script = ExtResource("11_move_player")
 
-[sub_resource type="BBNode" id="BBNode_anim_idle"]
-saved_value = NodePath("AnimationPlayer")
-resource_name = "AnimationPlayer"
+[sub_resource type="BTAction" id="BTAction_cooldown"]
+script = ExtResource("12_cooldown")
+cooldown_duration = 1.0
 
-[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_idle"]
-animation_player = SubResource("BBNode_anim_idle")
-animation_name = &"idle"
-blend = 0.1
-
-[sub_resource type="BTAction" id="BTAction_audio_gauge"]
-script = ExtResource("2_audio_gauge")
-
-[sub_resource type="BTAction" id="BTAction_vision_timed"]
-script = ExtResource("1_vision_timed")
-
-[sub_resource type="BTSelector" id="BTSelector_detect"]
-custom_name = "Detect Player (Vision Only)"
-children = [SubResource("BTAction_vision_timed")]
+[sub_resource type="BTParallel" id="BTParallel_caution"]
+custom_name = "Alert Level 1: Caution"
+children = [SubResource("BTAction_look_sound"), SubResource("BTAction_move_sound"), SubResource("BTAction_look_player"), SubResource("BTAction_move_player"), SubResource("BTAction_cooldown")]
 
 [sub_resource type="BTAction" id="BTAction_patrol"]
-script = ExtResource("6_patrol")
+script = ExtResource("8_hlmcq")
+
+[sub_resource type="BTAction" id="BTAction_wander"]
+script = ExtResource("13_wander")
+
+[sub_resource type="BTAction" id="BTAction_idle"]
+script = ExtResource("9_dtpuv")
+
+[sub_resource type="BTSelector" id="BTSelector_passive_behavior"]
+custom_name = "Passive Behavior"
+children = [SubResource("BTAction_patrol"), SubResource("BTAction_wander"), SubResource("BTAction_idle")]
 
 [sub_resource type="BTSequence" id="BTSequence_passive"]
-custom_name = "Passive State"
-children = [SubResource("BTAction_set_passive"), SubResource("BTPlayAnimation_idle"), SubResource("BTAction_audio_gauge"), SubResource("BTSelector_detect"), SubResource("BTAction_patrol")]
+custom_name = "Alert Level 0: Passive"
+children = [SubResource("BTSelector_passive_behavior")]
 
-[sub_resource type="BTSelector" id="BTSelector_root"]
-custom_name = "Stealth Enemy Behavior (State-Based)"
-children = [SubResource("BTSequence_engage"), SubResource("BTSequence_investigate"), SubResource("BTSequence_passive")]
+[sub_resource type="BTParallel" id="BTParallel_alert_levels"]
+custom_name = "Alert Level Behavior"
+children = [SubResource("BTSelector_engaged"), SubResource("BTParallel_tracking"), SubResource("BTParallel_caution"), SubResource("BTSequence_passive")]
+
+[sub_resource type="BTParallel" id="BTParallel_root"]
+custom_name = "Root"
+children = [SubResource("BTParallel_detection"), SubResource("BTParallel_alert_levels")]
 
 [resource]
-description = "Stealth game enemy behavior tree. Enemies patrol between waypoints and detect players through vision (2-second detection) or hearing (gauge system). When a player is detected, the enemy pursues them. When audio gauge reaches 1.0, enemy investigates the sound location."
-blackboard_plan = SubResource("BlackboardPlan_stealth")
-root_task = SubResource("BTSelector_root")
+description = "Stealth enemy AI with awareness-based alert level system (0-3). 0=Passive, 1=Caution, 2=Tracking, 3=Engaged. Awareness-driven detection and behavior."
+blackboard_plan = SubResource("BlackboardPlan_clean")
+root_task = SubResource("BTParallel_root")
