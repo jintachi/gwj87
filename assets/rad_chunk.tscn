@@ -22,18 +22,26 @@ tooltip = NodePath("Label")
 metadata/_custom_type_script = "uid://2yahg147da1y"
 
 [node name="RadChunk2" type="Sprite2D" parent="."]
-position = Vector2(-1, -17)
+position = Vector2(0, -4)
 texture = ExtResource("2_ilpst")
+offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_eagek")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="RichTextLabel" parent="."]
 visible = false
 z_index = 1
 offset_left = -69.0
 offset_top = -62.0
 offset_right = 72.0
 offset_bottom = -39.0
+pivot_offset = Vector2(69, 11)
+bbcode_enabled = true
 text = "Press E to Interact"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1

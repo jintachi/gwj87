@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://didk0wom7ki8r" path="res://scenes/level1/small_storage_room_floor.png" id="6_wd7kj"]
 [ext_resource type="Texture2D" uid="uid://ypgrehccjwiq" path="res://scenes/level1/small_storage_room_walls.png" id="7_qulnv"]
 [ext_resource type="PackedScene" uid="uid://ojj2jey21mo4" path="res://assets/player.tscn" id="7_wlolr"]
+[ext_resource type="Texture2D" uid="uid://dxp7acxcsr07" path="res://scenes/sandstorm/sparkles2.png" id="8_36yfi"]
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
 [ext_resource type="Texture2D" uid="uid://btf5701xbhrs2" path="res://assets/sprites/rad dispenser.png" id="11_jmggy"]
 [ext_resource type="Texture2D" uid="uid://dxrtknp6ujnot" path="res://scenes/level1/half_storage_stall.png" id="11_o2ks1"]
@@ -19,13 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://cfb4u81tpku1j" path="res://assets/rad_chunk.tscn" id="13_v4nxl"]
 [ext_resource type="PackedScene" uid="uid://ccmxfyhbqmseb" path="res://scenes/level1/doors.tscn" id="14_t107e"]
 [ext_resource type="Shader" uid="uid://ctaycxvv7wy3i" path="res://scenes/sandstorm/sandstorm.gdshader" id="15_eagek"]
-[ext_resource type="Texture2D" uid="uid://dxp7acxcsr07" path="res://scenes/sandstorm/sparkles2.png" id="8_36yfi"]
-[ext_resource type="Shader" uid="uid://cpxyeby0bputw" path="res://scenes/glitch_overlay/glitch.gdshader" id="20_i5esn"]
-[ext_resource type="Texture2D" uid="uid://dvp010yr5h5ww" path="res://scenes/level1/storage_stall.png" id="5_eagek"]
-[ext_resource type="PackedScene" uid="uid://buthufw0534k" path="res://scenes/player.tscn" id="7_36yfi"]
-[ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
-[ext_resource type="PackedScene" uid="uid://bw78xcrp6eq12" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
-[ext_resource type="Script" path="res://scenes/level1/glitch_overlay.gd" id="21_pw0jy"]
+[ext_resource type="PackedScene" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
+[ext_resource type="Script" uid="uid://c2dyp0374d8dv" path="res://scenes/level1/glitch_overlay.gd" id="21_pw0jy"]
+[ext_resource type="Material" uid="uid://c02e874rq02b8" path="res://assets/materials/glitch_material.tres" id="21_ui0ie"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -315,20 +312,12 @@ shader_parameter/subdivisions = 128.0
 shader_parameter/speed = 12.0
 shader_parameter/tex_size = Vector2(256, 256)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pw0jy"]
-shader = ExtResource("20_i5esn")
-shader_parameter/shake_power = 0.0
-shader_parameter/shake_rate = 0.0
-shader_parameter/shake_speed = 5.0
-shader_parameter/shake_block_size = 10.0
-shader_parameter/shake_color_rate = 0.01
-
 [node name="Level1" type="Node2D"]
 y_sort_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("7_wlolr")]
 y_sort_enabled = true
-position = Vector2(384, 728)
+position = Vector2(-480, 440)
 
 [node name="Clip Mask Locker Room" type="Sprite2D" parent="."]
 clip_children = 1
@@ -430,7 +419,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.92632973
+frame_progress = 0.8684104
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -442,7 +431,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.92632973
+frame_progress = 0.8684104
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -499,7 +488,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GlitchOverlay" type="ColorRect" parent="CanvasLayer/Control"]
-material = SubResource("ShaderMaterial_pw0jy")
+material = ExtResource("21_ui0ie")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

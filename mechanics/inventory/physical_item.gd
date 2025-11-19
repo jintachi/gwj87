@@ -3,7 +3,7 @@ class_name PhysicalItem
 signal picked_up
 
 @export var item : InventoryItem
-@export var tooltip : Label
+@export var tooltip : RichTextLabel
 var tween : Tween
 
 func pick_up(player: Player) -> void:
@@ -20,7 +20,10 @@ func item_in_range(player: Player) -> void:
 		tween.tween_property(tooltip, "scale", Vector2(1.2, 1.2), 0.1)
 		tween.tween_property(tooltip, "scale", Vector2(1, 1), 0.4)
 		if player.general_inventory.has_free_slot(item):
-			tooltip.text = "Press E to pick up"
+			tooltip.clear()
+			tooltip.add_text("Press ")
+			KeyIcons.add_tags(tooltip, InputMap.action_get_events("primary_action")[0])
+			tooltip.add_text(" to pick up")
 		else:
 			tooltip.text = "Inventory full"
 	
