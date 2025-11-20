@@ -419,7 +419,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.8684104
+frame_progress = 0.98278713
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -431,7 +431,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.8684104
+frame_progress = 0.98278713
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -501,3 +501,5 @@ max_parameters = [0.0, 0.0, 0.0, 0.0, 0.0]
 
 [node name="FlyerBot" parent="." instance=ExtResource("16_36yfi")]
 position = Vector2(-477, 718)
+
+[editable path="Player"]

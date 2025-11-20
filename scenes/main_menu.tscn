@@ -1,20 +1,24 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf6gykjcjcmok"]
+[gd_scene load_steps=14 format=3 uid="uid://bf6gykjcjcmok"]
 
 [ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
 [ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
 [ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://sounds/wind_test.mp3" id="2_wu84c"]
-[ext_resource type="PackedScene" uid="uid://wepmsqh4axsa" path="res://scenes/playground.tscn" id="3_5dd4i"]
+[ext_resource type="PackedScene" uid="uid://bh7opspvxsrxw" path="res://scenes/level1/level_1.tscn" id="3_5dd4i"]
 [ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://sounds/radalarm_hi.mp3" id="3_8ln24"]
 [ext_resource type="Script" uid="uid://dwq3vy5o2binw" path="res://scripts/ui/options.gd" id="4_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://sounds/equip.mp3" id="4_rtw2f"]
 [ext_resource type="Script" uid="uid://dhslpkm7j7o3r" path="res://scripts/ui/exit.gd" id="9_flqon"]
+[ext_resource type="PackedScene" uid="uid://bhd47vxb6n0bl" path="res://assets/ui/input_action.tscn" id="10_5dd4i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vue75"]
 font_size = 120
 
 [sub_resource type="LabelSettings" id="LabelSettings_wu84c"]
 font_size = 20
+
+[sub_resource type="InputEventAction" id="InputEventAction_5dd4i"]
+action = &"up"
 
 [node name="MainMenu" type="Node"]
 
@@ -154,3 +158,7 @@ parameters/looping = true
 layout_mode = 2
 text = "Exit"
 script = ExtResource("9_flqon")
+
+[node name="Input Action" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_5dd4i")

@@ -73,8 +73,14 @@ static func add_tags(t: RichTextLabel, key: InputEvent) -> int:
 			1: return add_image(t, 78)
 			9: return add_image(t, 83) + add_image(t, 84)
 			10: return add_image(t, 85) + add_image(t, 86)
+	elif key is InputEventJoypadMotion:
+		match key.axis:
+			JOY_AXIS_LEFT_X: return add_image(t, 91) if key.axis_value > 0 else add_image(t, 93)
+			JOY_AXIS_LEFT_Y: return add_image(t, 92) if key.axis_value > 0 else add_image(t, 90)
+			JOY_AXIS_RIGHT_X: return add_image(t, 95) if key.axis_value > 0 else add_image(t, 97)
+			JOY_AXIS_RIGHT_Y: return add_image(t, 96) if key.axis_value > 0 else add_image(t, 94)
 	push_warning("Unhandled icon for device " + str(key))
-	return add_image(t, 71)
+	return add_image(t, 71) - 1
 
 static func add_image(t: RichTextLabel, index: int) -> int:
 	var w = 12

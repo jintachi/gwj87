@@ -22,7 +22,7 @@ func item_in_range(player: Player) -> void:
 		if player.general_inventory.has_free_slot(item):
 			tooltip.clear()
 			tooltip.add_text("Press ")
-			KeyIcons.add_tags(tooltip, InputMap.action_get_events("primary_action")[0])
+			KeyIcons.add_tags(tooltip, InputMap.action_get_events("primary_action")[1])
 			tooltip.add_text(" to pick up")
 		else:
 			tooltip.text = "Inventory full"
