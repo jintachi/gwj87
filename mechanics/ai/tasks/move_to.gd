@@ -30,27 +30,14 @@ func _enter() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	# Get target position from blackboard
-	var target_position: Vector2 = Vector2.ZERO
-	if blackboard.has_var(target_position_var):
-		target_position = blackboard.get_var(target_position_var)
+	var target_position: Vector2 = blackboard.get_var(target_position_var, Vector2.ZERO, false)
+	var speed: float = blackboard.get_var(speed_var, 200.0, false)
 	
-	# Get speed from blackboard (with default fallback)
-	var speed: float = 200.0
-	if blackboard.has_var(speed_var):
-		speed = blackboard.get_var(speed_var)
-	
-	# Check if target is valid
 	if target_position == Vector2.ZERO:
-		# No target available, stop movement
-		# Pass -1.0 as delta to use AI task path (velocity mode)
 		agent.move(Vector2.ZERO, -1.0)
 		return FAILURE
 	
-	# Calculate distance to target
 	var distance_to_target: float = agent.global_position.distance_to(target_position)
-	
-	# Check if we've reached the target
 	if distance_to_target < arrival_tolerance:
 		# Reached target, stop movement
 		# Pass -1.0 as delta to use AI task path (velocity mode)

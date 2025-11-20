@@ -50,41 +50,26 @@ func _generate_name() -> String:
 
 func _enter() -> void:
 	# Initialize awareness if not set
-	if not blackboard.has_var(awareness_var):
+	#if not blackboard.has_var(awareness_var):
 		blackboard.set_var(awareness_var, 0.0)
-	if not blackboard.has_var(awareness_decay_timer_var):
+	#if not blackboard.has_var(awareness_decay_timer_var):
 		blackboard.set_var(awareness_decay_timer_var, 0.0)
-	if not blackboard.has_var(alert_level_3_timer_var):
+	#if not blackboard.has_var(alert_level_3_timer_var):
 		blackboard.set_var(alert_level_3_timer_var, 0.0)
 
 
 func _tick(delta: float) -> Status:
 	# Get current awareness
-	var awareness: float = 0.0
-	if blackboard.has_var(awareness_var):
-		awareness = blackboard.get_var(awareness_var)
-	else:
-		blackboard.set_var(awareness_var, 0.0)
+	var awareness: float = 0.0	
+	awareness = blackboard.get_var(awareness_var)
 	
-	# Get alert level
-	var alert_level: int = 0
-	if blackboard.has_var(alert_level_var):
-		alert_level = blackboard.get_var(alert_level_var)
-	
-	# Get detection status
-	var is_visible: bool = false
-	if blackboard.has_var(player_visible_var):
-		is_visible = blackboard.get_var(player_visible_var)
-	
-	var is_audible: bool = false
-	if blackboard.has_var(player_audible_var):
-		is_audible = blackboard.get_var(player_audible_var)
+	var alert_level: int = blackboard.get_var(alert_level_var, 0, false)
+	var is_visible: bool = blackboard.get_var(player_visible_var, false, false)
+	var is_audible: bool = blackboard.get_var(player_audible_var, false, false)
 	
 	# Alert Level 3 special handling: Awareness stays at max for 10 seconds
 	if alert_level == 3:
-		var alert_3_timer: float = 0.0
-		if blackboard.has_var(alert_level_3_timer_var):
-			alert_3_timer = blackboard.get_var(alert_level_3_timer_var)
+		var alert_3_timer: float = blackboard.get_var(alert_level_3_timer_var, 0.0, false)
 		
 		# Reset timer if player is seen or heard
 		if is_visible or is_audible:
@@ -105,9 +90,7 @@ func _tick(delta: float) -> Status:
 		return RUNNING
 	
 	# For alert levels 0-2: Normal decay system
-	var decay_timer: float = 0.0
-	if blackboard.has_var(awareness_decay_timer_var):
-		decay_timer = blackboard.get_var(awareness_decay_timer_var)
+	var decay_timer: float = blackboard.get_var(awareness_decay_timer_var, 0.0, false)
 	
 	# Reset decay timer if player is seen or heard
 	if is_visible or is_audible:

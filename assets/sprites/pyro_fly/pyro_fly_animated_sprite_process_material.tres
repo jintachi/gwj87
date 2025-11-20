@@ -1,0 +1,16 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://cgpbfacrh4s3v"]
+
+[sub_resource type="Curve" id="Curve_ve6t7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.31250003, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0sw1t"]
+curve = SubResource("Curve_ve6t7")
+
+[resource]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+color = Color(1, 0.83137256, 0.65882355, 1)
+alpha_curve = SubResource("CurveTexture_0sw1t")
+anim_speed_min = 1.0
+anim_speed_max = 1.0

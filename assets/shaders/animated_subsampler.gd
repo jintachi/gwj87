@@ -21,8 +21,13 @@ func play_hitflash() -> void:
 	tween.chain().tween_interval(0.05)
 	tween.chain().tween_callback(func():mat.set_shader_parameter("enable_fill", false))
 
-
 func _ready() -> void:
+	for child in get_children():
+		if child is CanvasItem:
+			TransitionScene.preload_material(child.material)
+		if child is GPUParticles2D:
+			TransitionScene.preload_material(child.process_material)
+			
 	mat = material
 	debug_hitflash.connect(play_hitflash)
 	frame_changed.connect(

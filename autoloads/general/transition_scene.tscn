@@ -18,6 +18,12 @@ metadata/_custom_type_script = "uid://cg5m7q65si34y"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
 
+[node name="Material Preloader" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 material = SubResource("ShaderMaterial_cqi5c")
 anchors_preset = 15

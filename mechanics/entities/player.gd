@@ -41,10 +41,10 @@ func get_attack_input() -> void:
 	
 func process_items(delta: float) -> void:
 	super(delta)
-	var data = InventoryItem.ItemProcessData.new()
-	data.entity = self
-	data.delta = delta
-	general_inventory.process_items(data)
+	var item_data = InventoryItem.ItemProcessData.new()
+	item_data.entity = self
+	item_data.delta = delta
+	general_inventory.process_items(item_data)
 
 func get_move_input() -> void:
 	input_dir = Input.get_vector("left", "right", "up", "down")

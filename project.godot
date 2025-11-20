@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="GameJamTemplate"
-config/version="2025.6.2-template.b132d5"
+config/name="Stealth Game"
+config/version="0.0.1"
 run/main_scene="uid://bf6gykjcjcmok"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="uid://nbj0g8p2241s"
 
 [autoload]
@@ -187,5 +189,10 @@ behavior_tree/user_task_dirs=PackedStringArray("res://mechanics/ai/tasks")
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
+
+[threading]
+
+worker_pool/max_threads=1

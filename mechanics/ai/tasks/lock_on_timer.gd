@@ -22,18 +22,13 @@ func _generate_name() -> String:
 
 
 func _enter() -> void:
-	# Initialize timer when task starts
 	if not blackboard.has_var(lock_on_timer_var):
 		blackboard.set_var(lock_on_timer_var, 0.0)
-	
-	# Start timer
 	blackboard.set_var(lock_on_timer_var, lock_on_duration)
 
 
 func _tick(delta: float) -> Status:
-	var timer: float = 0.0
-	if blackboard.has_var(lock_on_timer_var):
-		timer = blackboard.get_var(lock_on_timer_var)
+	var timer: float = blackboard.get_var(lock_on_timer_var, 0.0, false)
 	
 	# Decrease timer
 	timer -= delta
@@ -50,4 +45,3 @@ func _tick(delta: float) -> Status:
 func _exit() -> void:
 	# Reset timer when task exits
 	blackboard.set_var(lock_on_timer_var, 0.0)
-
