@@ -1,3 +1,4 @@
+extends Control
 class_name KeyIcons
 const KEYS : Texture2D = preload("uid://kk25b3rbsav0")
 
@@ -91,3 +92,21 @@ static func add_image(t: RichTextLabel, index: int) -> int:
 	var key_name = str(index)
 	t.add_image(KEYS, 0, 0, c, INLINE_ALIGNMENT_CENTER, Rect2(x, y, 12, 12), key_name, false, "", false, false, key_name)
 	return 0
+
+var last_device_is_joystick : bool = false
+var last_device : int = 0
+signal last_device_changed
+
+func _input(event: InputEvent) -> void:
+	var is_joystick : bool = event is InputEventJoypadMotion or event is InputEventJoypadButton
+	if last_device != event.device or is_joystick != last_device_is_joystick:
+		last_device_is_joystick = is_joystick
+		last_device_changed.emit()
+		last_device = event.device
+
+static func last_input_device(action: StringName) -> InputEvent:
+	for event in InputMap.action_get_events(action):
+		var event_for_joysticks = event is InputEventJoypadButton or event is InputEventJoypadMotion
+		if (event.device == KeyIconsInstance.last_device or event.device == -1) and event_for_joysticks == KeyIconsInstance.last_device_is_joystick:
+			return event
+	return InputMap.action_get_events(action)[0]

@@ -56,7 +56,7 @@ func kill() -> void:
 func _process(delta: float) -> void:
 	get_attack_input()
 	process_items(delta)
-	if Input.is_action_just_pressed("primary_action"):
+	if Input.is_action_just_pressed("interact"):
 		interact()
 
 func _physics_process(delta: float) -> void:

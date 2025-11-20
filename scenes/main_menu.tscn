@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bf6gykjcjcmok"]
+[gd_scene load_steps=19 format=3 uid="uid://bf6gykjcjcmok"]
 
 [ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
 [ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
@@ -19,6 +19,21 @@ font_size = 20
 
 [sub_resource type="InputEventAction" id="InputEventAction_5dd4i"]
 action = &"up"
+
+[sub_resource type="InputEventAction" id="InputEventAction_lgwnu"]
+action = &"left"
+
+[sub_resource type="InputEventAction" id="InputEventAction_flqon"]
+action = &"down"
+
+[sub_resource type="InputEventAction" id="InputEventAction_1ajci"]
+action = &"right"
+
+[sub_resource type="InputEventAction" id="InputEventAction_rcqid"]
+action = &"interact"
+
+[sub_resource type="InputEventAction" id="InputEventAction_7b55j"]
+action = &"dash"
 
 [node name="MainMenu" type="Node"]
 
@@ -159,6 +174,34 @@ layout_mode = 2
 text = "Exit"
 script = ExtResource("9_flqon")
 
-[node name="Input Action" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+follow_focus = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="Up" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_5dd4i")
+
+[node name="Left" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_lgwnu")
+
+[node name="Down" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_flqon")
+
+[node name="Right" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_1ajci")
+
+[node name="Interact" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_rcqid")
+
+[node name="Dash" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+layout_mode = 2
+action = SubResource("InputEventAction_7b55j")

@@ -11,6 +11,16 @@ func pick_up(player: Player) -> void:
 	picked_up.emit()
 	queue_free()
 
+func set_pickup_tooltip() -> void:
+	tooltip.clear()
+	tooltip.add_text("Press ")
+	KeyIcons.add_tags(tooltip, KeyIcons.last_input_device("interact"))
+	tooltip.add_text(" to pick up")
+
+func set_inventory_full_tooltip() -> void:
+	tooltip.clear()
+	tooltip.add_text("Inventory Full!")
+
 func item_in_range(player: Player) -> void:
 	if tooltip:
 		tooltip.visible = true
@@ -20,13 +30,12 @@ func item_in_range(player: Player) -> void:
 		tween.tween_property(tooltip, "scale", Vector2(1.2, 1.2), 0.1)
 		tween.tween_property(tooltip, "scale", Vector2(1, 1), 0.4)
 		if player.general_inventory.has_free_slot(item):
-			tooltip.clear()
-			tooltip.add_text("Press ")
-			KeyIcons.add_tags(tooltip, InputMap.action_get_events("primary_action")[1])
-			tooltip.add_text(" to pick up")
+			KeyIconsInstance.last_device_changed.connect(set_pickup_tooltip)
+			set_pickup_tooltip()
 		else:
-			tooltip.text = "Inventory full"
-	
+			set_inventory_full_tooltip()
+
 func item_out_of_range(player: Player) -> void:
+	KeyIconsInstance.last_device_changed.disconnect(set_pickup_tooltip)
 	if tooltip:
 		tooltip.visible = false
