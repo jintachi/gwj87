@@ -11,6 +11,6 @@ void fragment() {
 	float discrete_time = floor(TIME * 20.0) * 0.1;
 	COLOR = texture(TEXTURE, vec2(uv.x + discrete_time * scroll_vector.x, uv.y - discrete_time * scroll_vector.y));
 	if (COLOR.a > 0.0){
-		COLOR = vec4(0.2,0.0,0.1,1.0);
+		COLOR = vec4(0.2,0.0,0.1,0.2);
 	}
 }

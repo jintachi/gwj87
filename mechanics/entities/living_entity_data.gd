@@ -3,7 +3,6 @@ class_name LivingEntityData
 
 @export_category("Health")
 
-@export var health : float = 100.0
 @export var max_health : float = 100.0
 @export var base_armor : float = 0.0
 

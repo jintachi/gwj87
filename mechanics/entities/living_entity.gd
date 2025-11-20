@@ -7,6 +7,7 @@ var input_dir : Vector2
 var face_dir : Vector2
 var attack_dir : Vector2
 
+@export var health : float = 100.0
 @export var data : LivingEntityData
 var computed_data : LivingEntityData
 
@@ -22,6 +23,12 @@ var computed_data : LivingEntityData
 
 func _ready() -> void:
 	recompute_effects()
+	health = computed_data.max_health
+	head_item = head_item.duplicate(true)
+	weapon_item = weapon_item.duplicate(true)
+	armor_item = armor_item.duplicate(true)
+	consumable_item = consumable_item.duplicate(true)
+	ammo_item = ammo_item.duplicate(true)
 
 func recompute_effects() -> void:
 	computed_data = data.duplicate(true)
@@ -37,11 +44,18 @@ class ProcessVelocityData:
 class VelocityCallable extends LivingDefaultCallable:
 	func process(data: Variant) -> void:
 		var vel_data = data as ProcessVelocityData
-		var entity = vel_data.entity
-		var direction = vel_data.direction
-		var stats = vel_data.entity.computed_data
-		var delta = vel_data.delta
-	
+		var entity : LivingEntity = vel_data.entity
+		var direction : Vector2 = vel_data.direction
+		var stats : LivingEntityData = vel_data.entity.computed_data
+		var delta : float = vel_data.delta
+		
+		if not direction.is_zero_approx():
+			entity.face_dir = direction
+		entity.self_velocity = entity.self_velocity.move_toward(direction * stats.movement_speed, delta * stats.friction)
+		
+		#todo add acceleration curves
+		
+		entity.velocity = entity.self_velocity + entity.external_velocity
 
 var process_velocity: VelocityCallable = VelocityCallable.new()
 
@@ -56,10 +70,19 @@ func move(direction: Vector2, delta: float) -> void:
 	vel_data.delta = delta
 	process_velocity.trickle_down(vel_data)
 	
-	var sound_event = SoundEvent.new()
+	#var sound_event = SoundEvent.new()
 	# sound...
 	
-	sound.emit(sound_event)
+	#sound.emit(sound_event)
+
+func take_damage(damage: float) -> void:
+	health -= damage
+	print(health)
+	if health <= 0:
+		kill() 
+
+func kill() -> void:
+	queue_free()
 
 func process_items(delta: float) -> void:
 	var item_data = InventoryItem.ItemProcessData.new()

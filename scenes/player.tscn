@@ -61,8 +61,10 @@ shape = SubResource("RectangleShape2D_tuyoq")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.25, 1.25)
 
-[node name="CurrentSpeed" type="Label" parent="."]
-offset_left = -0.43507203
-offset_top = -39.99763
-offset_right = 39.564926
-offset_bottom = -16.997631
+[node name="AudioRange" type="Node2D" parent="."]
+script = ExtResource("3_audio_range")
+
+[node name="SoundLevel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("1_qhqgy")

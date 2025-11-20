@@ -161,6 +161,13 @@ crouch={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Default"
+2d_physics/layer_2="HighObject"
+2d_physics/layer_3="PlayerOnly"
+2d_physics/layer_4="Items"
+
 [limbo_ai]
 
 behavior_tree/behavior_tree_default_dir="res://mechanics/ai/trees"

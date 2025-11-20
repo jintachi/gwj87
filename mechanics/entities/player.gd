@@ -1,21 +1,44 @@
 class_name Player extends LivingEntity
 
 static var instance : Player
-
+@onready var pickup_area: Area2D = $"Pickup Area"
 @export var general_inventory : Inventory
 @export var anim_sprite : AnimatedSprite2D
-
-var _sound_events: Array[Dictionary] = []
 var _footstep_timer: float = 0.0
 var _footstep_interval: float = .5
 var _step_volume: float = 20.0
 var _crouch_toggle : bool = false
 
+var extra_interactions : Array[Callable]
+@export var general_inventory : Inventory
 
 func _ready() -> void:
 	super()
+	general_inventory = general_inventory.duplicate(true)
 	instance = self
-	
+	pickup_area.body_entered.connect(item_in_range)
+	pickup_area.body_exited.connect(item_out_of_range)
+
+func item_in_range(body: Node2D) -> void:
+	if body is PhysicalItem:
+		body.item_in_range(self)
+
+func item_out_of_range(body: Node2D) -> void:
+	if body is PhysicalItem:
+		body.item_out_of_range(self)
+
+func interact() -> void:
+	var items_in_range : Array[Node2D] = pickup_area.get_overlapping_bodies()
+	if len(items_in_range) > 0:
+		if items_in_range[0] is PhysicalItem:
+			(items_in_range[0] as PhysicalItem).pick_up(self)
+	elif len(extra_interactions) > 0:
+		extra_interactions[0].call(self)
+		
+		var last_index = extra_interactions.size() - 1
+		extra_interactions[0] = extra_interactions[last_index]
+		extra_interactions.resize(last_index)
+
 func get_attack_input() -> void:
 	attack_dir = Input.get_vector("shoot_left", "shoot_right", "shoot_up", "shoot_down")
 	
@@ -29,6 +52,10 @@ func process_items(delta: float) -> void:
 func get_move_input() -> void:
 	input_dir = Input.get_vector("left", "right", "up", "down")
 
+func kill() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	TransitionScene.reload()
+
 func _handle_crouch_toggle() -> void:
 	if Input.is_action_just_pressed("crouch"):
 		_crouch_toggle = not _crouch_toggle
@@ -36,6 +63,8 @@ func _handle_crouch_toggle() -> void:
 func _process(delta: float) -> void:
 	get_attack_input()
 	process_items(delta)
+	if Input.is_action_just_pressed("primary_action"):
+		interact()
 	_handle_crouch_toggle()
 
 func _physics_process(delta: float) -> void:
@@ -62,6 +91,8 @@ func _handle_movement(input_dir:Vector2,delta: float) -> void:
 		velocity = velocity.lerp(Vector2.ZERO, data.friction * delta)
 	
 	_handle_footsteps(delta)
+	move(input_dir, delta)
+	move_and_slide()
 
 func _handle_footsteps(delta: float) -> void:
 	var current_speed = data.movement_speed*velocity.length()*delta
