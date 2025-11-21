@@ -15,6 +15,9 @@ func process_items(item_process_data: InventoryItem.ItemProcessData) -> void:
 		if item_slot.item:
 			item_slot.item.item_process(item_process_data)
 
+func has_item(type: Variant) -> bool:
+	return item_slots.any(func(slot: InventorySlot) -> bool: return slot.item == type)
+
 func has_free_slot(item: InventoryItem) -> bool:
 	for slot in item_slots:
 		if slot.can_accept(item):

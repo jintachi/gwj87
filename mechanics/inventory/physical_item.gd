@@ -6,9 +6,21 @@ signal picked_up
 @export var tooltip : RichTextLabel
 var tween : Tween
 
+@onready var pickup: AudioStreamPlayer2D = $Pickup
+@onready var place: AudioStreamPlayer2D = $Place
+
+func _ready() -> void:
+	if place:
+		place.play()
+
 func pick_up(player: Player) -> void:
 	if not player.general_inventory.try_add(item, player): return
 	picked_up.emit()
+	if pickup:
+		remove_child(pickup)
+		add_sibling(pickup)
+		pickup.finished.connect(pickup.queue_free)
+		pickup.play()
 	queue_free()
 
 func set_pickup_tooltip() -> void:

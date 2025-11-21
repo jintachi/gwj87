@@ -4,9 +4,9 @@
 [ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_yceh7"]
 [ext_resource type="Script" uid="uid://bov44tgaen1t" path="res://mechanics/inventory/inventory.gd" id="3_uovkd"]
 [ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="4_jeibo"]
-[ext_resource type="PackedScene" uid="uid://bs3qoxmweqlyb" path="res://bullet.tscn" id="5_cn88q"]
-[ext_resource type="Script" uid="uid://cnibtsckb1myb" path="res://mechanics/inventory/test_shooter.gd" id="6_nknpd"]
-[ext_resource type="Texture2D" uid="uid://4yw58lhqrvr3" path="res://assets/sprites/nomad/nomad.png" id="7_uovkd"]
+[ext_resource type="AudioStream" uid="uid://cssnlc4tqligd" path="res://assets/sounds/step_loud_1.mp3" id="6_yceh7"]
+[ext_resource type="AudioStream" uid="uid://bfohgbxm8ty8m" path="res://assets/sounds/step_loud_2.mp3" id="7_uovkd"]
+[ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="7_yceh7"]
 
 [sub_resource type="Resource" id="Resource_yceh7"]
 script = ExtResource("2_yceh7")
@@ -23,16 +23,9 @@ script = ExtResource("2_yceh7")
 slot_type = 1
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
-[sub_resource type="Resource" id="Resource_k63md"]
-script = ExtResource("6_nknpd")
-bullet = ExtResource("5_cn88q")
-slot_type = 5
-metadata/_custom_type_script = "uid://cnibtsckb1myb"
-
 [sub_resource type="Resource" id="Resource_36yfi"]
 script = ExtResource("2_yceh7")
 slot_type = 5
-item = SubResource("Resource_k63md")
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
 [sub_resource type="Resource" id="Resource_wd7kj"]
@@ -56,6 +49,13 @@ size = Vector2(24, 20)
 [sub_resource type="CircleShape2D" id="CircleShape2D_yceh7"]
 radius = 35.014282
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jeibo"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 2
+stream_0/stream = ExtResource("6_yceh7")
+stream_1/stream = ExtResource("7_uovkd")
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 5
 script = ExtResource("1_nsdob")
@@ -70,11 +70,9 @@ ammo_item = SubResource("Resource_o2ks1")
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-y_sort_enabled = true
-texture_repeat = 2
-texture = ExtResource("7_uovkd")
-offset = Vector2(0, -24)
+[node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
+position = Vector2(-1, -29)
+frame_progress = 0.12026376
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)
@@ -93,3 +91,9 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pickup Area"]
 shape = SubResource("CircleShape2D_yceh7")
 debug_color = Color(0.7882353, 0.43137255, 0.07058824, 0.047058824)
+
+[node name="Footsteps" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_jeibo")
+bus = &"SFX"
+
+[editable path="AnimatedSprite2D"]

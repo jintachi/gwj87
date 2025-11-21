@@ -9,6 +9,10 @@ var _footstep_interval: float = 0.5
 var extra_interactions : Array[Callable]
 @export var general_inventory : Inventory
 
+@onready var animation: NomadAnimation = $AnimatedSprite2D
+@onready var footsteps: AudioStreamPlayer2D = $Footsteps
+
+
 func _ready() -> void:
 	super()
 	general_inventory = general_inventory.duplicate(true)
@@ -45,6 +49,10 @@ func process_items(delta: float) -> void:
 	item_data.entity = self
 	item_data.delta = delta
 	general_inventory.process_items(item_data)
+	if not general_inventory.has_item(RadChunk):
+		health = minf(health + delta, computed_data.max_health)
+		if animation.radiation_amount > 0:
+			animation.radiation_amount -= 0.02
 
 func get_move_input() -> void:
 	input_dir = Input.get_vector("left", "right", "up", "down")
@@ -54,10 +62,14 @@ func kill() -> void:
 	TransitionScene.reload()
 
 func _process(delta: float) -> void:
-	get_attack_input()
+	#get_attack_input()
 	process_items(delta)
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	if input_dir.is_zero_approx():
+		animation.animation = "idle"
+	else:
+		animation.animation = "walk"
 
 func _physics_process(delta: float) -> void:
 	get_move_input()
@@ -81,6 +93,7 @@ func _handle_footsteps(delta: float) -> void:
 
 		if _footstep_timer >= _footstep_interval:
 			_footstep_timer = 0.0
+			footsteps.play()
 			# Emit footstep sound
 			if current_speed > 150.0:
 				#volume *= 1.5  # Louder when running
