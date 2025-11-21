@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=4 uid="uid://cyxn6p8wthtj7"]
+
+[ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="1_20gr2"]
+[ext_resource type="Texture2D" uid="uid://8wr74v1pqfsm" path="res://scenes/level1/grate_texture.png" id="2_u0f0o"]
+[ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="2_u8bvj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u0f0o"]
+shader = ExtResource("1_20gr2")
+shader_parameter/tex = ExtResource("2_u0f0o")
+shader_parameter/tiling = 1.333
+shader_parameter/ratio = 0.75
+shader_parameter/subdivisions = 192.0
+shader_parameter/tex_size = Vector2(256, 192)
+shader_parameter/offset = Vector2(1.016, 1.016)
+shader_parameter/color_shift = Color(0.6025726, 0.46112937, 0.274535, 1)
+shader_parameter/color_weight = 0.145
+
+[node name="MetalGrate" type="TileMapLayer"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u0f0o")
+tile_map_data = PackedByteArray("AAD/////AwAAAAAAAAAAAP//AwABAAAAAAABAP//AwABAAAAAAACAP//AwABAAAAAAADAP//AwABAAAAAAAEAP//AwABAAAAAAAFAP//AwABAAAAAAAGAP//AwACAAAAAAAGAAAAAwACAAEAAAAGAAEAAwACAAEAAAAGAAIAAwACAAEAAAAFAAEAAwAFAAMAAAAFAAIAAwAFAAIAAAAEAAIAAwABAAIAAAADAAIAAwABAAIAAAACAAIAAwABAAIAAAABAAIAAwABAAIAAAAAAAIAAwAAAAIAAAAAAAEAAwAFAAIAAAD//wEAAwAAAAIAAAD//wAAAwAAAAEAAAAEAAAAAwABAAIAAAAEAAEAAwABAAAAAAAFAAAAAwAFAAIAAAACAAAAAwAEAAIAAAACAAEAAwAEAAMAAAADAAAAAwABAAIAAAADAAEAAwABAAAAAAABAAAAAwABAAEAAAABAAEAAwABAAEAAAAAAAAAAwABAAEAAAAGAAMAAwACAAEAAAAFAAMAAwAAAAEAAAAGAAQAAwACAAIAAAAFAAQAAwAAAAIAAAA=")
+tile_set = ExtResource("2_u8bvj")

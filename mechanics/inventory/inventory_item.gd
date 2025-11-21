@@ -8,7 +8,7 @@ var inventorySlot : InventorySlot
 @export var icon : Texture2D
 @export var slot_type : InventorySlot.Type
 
-func item_added(new_inventory: InventorySlot) -> void:
+func item_added(new_inventory: InventorySlot, entity: Entity) -> void:
 	inventorySlot = new_inventory
 	
 func item_removed() -> void:

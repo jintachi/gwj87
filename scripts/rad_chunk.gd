@@ -1,0 +1,2 @@
+extends PhysicalItem
+class_name RadChunk

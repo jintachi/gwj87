@@ -1,0 +1,141 @@
+[gd_scene load_steps=14 format=3 uid="uid://b6f5jrkre4v4"]
+
+[ext_resource type="Texture2D" uid="uid://jqecikub2xv3" path="res://scripts/ui/radiation_display.png" id="1_4e6jw"]
+[ext_resource type="Shader" uid="uid://cxreg3yy47gi2" path="res://scripts/ui/radiation_display.gdshader" id="1_h7swp"]
+[ext_resource type="Shader" uid="uid://cuj34asa5dt53" path="res://assets/shaders/outline.gdshader" id="1_n3jrs"]
+[ext_resource type="Texture2D" uid="uid://krgxx7hiakf1" path="res://scripts/ui/radiation_display_decals.png" id="4_pjfnx"]
+[ext_resource type="Texture2D" uid="uid://b0cdy63hrsjq" path="res://scripts/ui/wifi_display.png" id="5_8ywya"]
+[ext_resource type="Shader" uid="uid://b5elgi1tl8evs" path="res://scripts/ui/signal_display.gdshader" id="6_plebq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjfnx"]
+shader = ExtResource("1_n3jrs")
+shader_parameter/enable_fill = false
+shader_parameter/fill_color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 4.00000019
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8qa7q"]
+frequency = 0.0138
+fractal_type = 3
+fractal_octaves = 1
+fractal_lacunarity = 2.88
+fractal_gain = 0.4
+fractal_ping_pong_strength = 2.45
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4e6jw"]
+noise = SubResource("FastNoiseLite_8qa7q")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1qrac"]
+shader = ExtResource("1_h7swp")
+shader_parameter/subdivisions = 128.0
+shader_parameter/noise = SubResource("NoiseTexture2D_4e6jw")
+shader_parameter/noise_strength = 0.02
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_plebq"]
+shader = ExtResource("1_n3jrs")
+shader_parameter/enable_fill = false
+shader_parameter/fill_color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/width = 3.0000001425
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg0lj"]
+shader = ExtResource("6_plebq")
+shader_parameter/subdivisions = 32.0
+shader_parameter/radius = 1.0
+shader_parameter/band_mod = 0.235
+shader_parameter/signal_strength = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_plebq"]
+font_size = 64
+font_color = Color(0.57254905, 0.9372549, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RadiationDisplay" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.65, 0.65)
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="RadiationDisplay"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="RadiationDisplay/HBoxContainer"]
+material = SubResource("ShaderMaterial_pjfnx")
+layout_mode = 2
+texture = ExtResource("1_4e6jw")
+
+[node name="MarginContainer" type="MarginContainer" parent="RadiationDisplay/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 54
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 52
+
+[node name="ColorRect" type="ColorRect" parent="RadiationDisplay/HBoxContainer/TextureRect/MarginContainer"]
+material = SubResource("ShaderMaterial_1qrac")
+layout_mode = 2
+color = Color(0.009024745, 0.06756736, 0.05024203, 1)
+
+[node name="MarginContainer2" type="MarginContainer" parent="RadiationDisplay/HBoxContainer/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="RadiationDisplay/HBoxContainer/TextureRect/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("4_pjfnx")
+
+[node name="MarginContainer" type="MarginContainer" parent="RadiationDisplay/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+
+[node name="TextureRect" type="TextureRect" parent="RadiationDisplay/HBoxContainer/MarginContainer"]
+material = SubResource("ShaderMaterial_plebq")
+layout_mode = 2
+texture = ExtResource("5_8ywya")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RadiationDisplay/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = -48
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="RadiationDisplay/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="RadiationDisplay/HBoxContainer/MarginContainer/VBoxContainer/CenterContainer"]
+material = SubResource("ShaderMaterial_lg0lj")
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="RadiationDisplay/HBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="Label" type="Label" parent="RadiationDisplay/HBoxContainer/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "56"
+label_settings = SubResource("LabelSettings_plebq")
+horizontal_alignment = 1
+vertical_alignment = 1
