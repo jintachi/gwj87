@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dsau0f63u7mr0"
-path="res://.godot/imported/bike.mp3-81f84a2ab6d094b03ffc6c1cefc4b6b1.mp3str"
+path="res://.godot/imported/bike.mp3-0a5a940c39e252fe218e276a2bb15a5d.mp3str"
 
 [deps]
 
-source_file="res://sounds/bike.mp3"
-dest_files=["res://.godot/imported/bike.mp3-81f84a2ab6d094b03ffc6c1cefc4b6b1.mp3str"]
+source_file="res://assets/sounds/bike.mp3"
+dest_files=["res://.godot/imported/bike.mp3-0a5a940c39e252fe218e276a2bb15a5d.mp3str"]
 
 [params]
 

@@ -1,17 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhd47vxb6n0bl"]
+[gd_scene load_steps=4 format=3 uid="uid://bhd47vxb6n0bl"]
 
 [ext_resource type="Script" uid="uid://dfsc4mj41gh3" path="res://scripts/ui/input/key_bind_ui.gd" id="1_xluuk"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_5dd4i"]
 action = &"up"
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xluuk"]
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.103743516, 0.103743546, 0.10374347, 1)
+
 [node name="Input Action" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+offset_right = 430.0
+offset_bottom = 30.0
 script = ExtResource("1_xluuk")
 action = SubResource("InputEventAction_5dd4i")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 16
 text = "Up"
 
 [node name="Primary" type="Button" parent="."]
@@ -29,6 +38,8 @@ grow_vertical = 2
 tooltip_text = "W (Physical)"
 focus_mode = 0
 mouse_filter = 1
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xluuk")
 bbcode_enabled = true
 text = "W"
 fit_content = true
@@ -51,7 +62,8 @@ grow_vertical = 2
 tooltip_text = "Joypad Motion on Axis 1 (Left Stick Y-Axis, Joystick 0 Y-Axis) with Value -1.00"
 focus_mode = 0
 mouse_filter = 1
-theme_override_font_sizes/normal_font_size = 7
+theme_override_font_sizes/normal_font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_xluuk")
 bbcode_enabled = true
 text = "W"
 fit_content = true

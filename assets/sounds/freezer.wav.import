@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://baokpwwf4pwri"
-path="res://.godot/imported/freezer.wav-a888487eed8eb72a31f9e3d077c21670.sample"
+path="res://.godot/imported/freezer.wav-3137c1abe3deb089dc912248afa36fe8.sample"
 
 [deps]
 
-source_file="res://sounds/freezer.wav"
-dest_files=["res://.godot/imported/freezer.wav-a888487eed8eb72a31f9e3d077c21670.sample"]
+source_file="res://assets/sounds/freezer.wav"
+dest_files=["res://.godot/imported/freezer.wav-3137c1abe3deb089dc912248afa36fe8.sample"]
 
 [params]
 

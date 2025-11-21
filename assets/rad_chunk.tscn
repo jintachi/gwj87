@@ -31,7 +31,6 @@ position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_eagek")
 
 [node name="Label" type="RichTextLabel" parent="."]
-visible = false
 z_index = 1
 offset_left = -69.0
 offset_top = -62.0

@@ -1,15 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://bf6gykjcjcmok"]
+[gd_scene load_steps=22 format=3 uid="uid://bf6gykjcjcmok"]
 
 [ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
 [ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
 [ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="1_l6cm7"]
-[ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://sounds/wind_test.mp3" id="2_wu84c"]
+[ext_resource type="Theme" uid="uid://dxevoiog3ubve" path="res://assets/ui/game_theme.tres" id="1_lgwnu"]
+[ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://assets/sounds/wind_test.mp3" id="2_wu84c"]
 [ext_resource type="PackedScene" uid="uid://bh7opspvxsrxw" path="res://scenes/level1/level_1.tscn" id="3_5dd4i"]
-[ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://sounds/radalarm_hi.mp3" id="3_8ln24"]
+[ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://assets/sounds/radalarm_hi.mp3" id="3_8ln24"]
 [ext_resource type="Script" uid="uid://dwq3vy5o2binw" path="res://scripts/ui/options.gd" id="4_lgwnu"]
-[ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://sounds/equip.mp3" id="4_rtw2f"]
+[ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://assets/sounds/equip.mp3" id="4_rtw2f"]
 [ext_resource type="Script" uid="uid://dhslpkm7j7o3r" path="res://scripts/ui/exit.gd" id="9_flqon"]
 [ext_resource type="PackedScene" uid="uid://bhd47vxb6n0bl" path="res://assets/ui/input_action.tscn" id="10_5dd4i"]
+[ext_resource type="Script" uid="uid://geqwt7786eqi" path="res://autoloads/audio/music_request.gd" id="12_rcqid"]
+[ext_resource type="AudioStream" uid="uid://c3coqyqsluiqm" path="res://assets/sounds/spotted.mp3" id="13_1ajci"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vue75"]
 font_size = 120
@@ -45,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.4817894, 0.48178953, 0.4817894, 1)
+color = Color(0.025910461, 0.04558961, 0.097272344, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = -1
@@ -54,13 +57,14 @@ anchor_right = 0.8
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_lgwnu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "TITLE"
+text = "THE BEST GAME EVER"
 label_settings = SubResource("LabelSettings_vue75")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -181,6 +185,8 @@ follow_focus = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="Up" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
@@ -205,3 +211,8 @@ action = SubResource("InputEventAction_rcqid")
 [node name="Dash" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_7b55j")
+
+[node name="MusicRequest" type="Node" parent="."]
+script = ExtResource("12_rcqid")
+music = ExtResource("13_1ajci")
+metadata/_custom_type_script = "uid://geqwt7786eqi"

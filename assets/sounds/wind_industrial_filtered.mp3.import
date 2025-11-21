@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dgm2p0b15n5vd"
-path="res://.godot/imported/wind_industrial_filtered.mp3-913aacc345296691d16d07dc46769c0c.mp3str"
+path="res://.godot/imported/wind_industrial_filtered.mp3-7e23720fec56b57feba15b70f2e24a1b.mp3str"
 
 [deps]
 
-source_file="res://sounds/wind_industrial_filtered.mp3"
-dest_files=["res://.godot/imported/wind_industrial_filtered.mp3-913aacc345296691d16d07dc46769c0c.mp3str"]
+source_file="res://assets/sounds/wind_industrial_filtered.mp3"
+dest_files=["res://.godot/imported/wind_industrial_filtered.mp3-7e23720fec56b57feba15b70f2e24a1b.mp3str"]
 
 [params]
 

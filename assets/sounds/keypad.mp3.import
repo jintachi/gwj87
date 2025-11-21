@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dbvosuswg713y"
-path="res://.godot/imported/keypad.mp3-e65d798be751289eb0c517fdea5da95c.mp3str"
+path="res://.godot/imported/keypad.mp3-46dd6c424fa3a9cf5b7c81c3f5de7cc2.mp3str"
 
 [deps]
 
-source_file="res://sounds/keypad.mp3"
-dest_files=["res://.godot/imported/keypad.mp3-e65d798be751289eb0c517fdea5da95c.mp3str"]
+source_file="res://assets/sounds/keypad.mp3"
+dest_files=["res://.godot/imported/keypad.mp3-46dd6c424fa3a9cf5b7c81c3f5de7cc2.mp3str"]
 
 [params]
 

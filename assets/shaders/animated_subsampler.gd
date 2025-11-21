@@ -12,7 +12,6 @@ signal debug_hitflash
 
 
 func play_hitflash() -> void:
-	var mat = material
 	var tween = get_tree().create_tween()
 	tween.tween_callback(func():mat.set_shader_parameter("enable_fill", true))
 	tween.chain().tween_callback(func():mat.set_shader_parameter("fill_color", Color.WHITE))
@@ -22,11 +21,12 @@ func play_hitflash() -> void:
 	tween.chain().tween_callback(func():mat.set_shader_parameter("enable_fill", false))
 
 func _ready() -> void:
-	for child in get_children():
-		if child is CanvasItem:
-			TransitionScene.preload_material(child.material)
-		if child is GPUParticles2D:
-			TransitionScene.preload_material(child.process_material)
+	if not Engine.is_editor_hint():
+		for child in get_children():
+			if child is CanvasItem:
+				SceneTransitionNode.preload_material(child.material)
+			if child is GPUParticles2D:
+				SceneTransitionNode.preload_material(child.process_material)
 			
 	mat = material
 	debug_hitflash.connect(play_hitflash)

@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://3sbu80ruphmo"
-path="res://.godot/imported/step_quiet_2.mp3-c08eedf58ec85ab9c04e972b684351b6.mp3str"
+path="res://.godot/imported/step_quiet_2.mp3-948b360404a0222aac0d8e7f3260870d.mp3str"
 
 [deps]
 
-source_file="res://sounds/step_quiet_2.mp3"
-dest_files=["res://.godot/imported/step_quiet_2.mp3-c08eedf58ec85ab9c04e972b684351b6.mp3str"]
+source_file="res://assets/sounds/step_quiet_2.mp3"
+dest_files=["res://.godot/imported/step_quiet_2.mp3-948b360404a0222aac0d8e7f3260870d.mp3str"]
 
 [params]
 

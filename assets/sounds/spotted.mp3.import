@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://c3coqyqsluiqm"
-path="res://.godot/imported/spotted.mp3-d4e98c76e7d2dc7e4dd388e6ede47b49.mp3str"
+path="res://.godot/imported/spotted.mp3-fa9b5f1295fadb53284e6a1afae1a6d3.mp3str"
 
 [deps]
 
-source_file="res://sounds/spotted.mp3"
-dest_files=["res://.godot/imported/spotted.mp3-d4e98c76e7d2dc7e4dd388e6ede47b49.mp3str"]
+source_file="res://assets/sounds/spotted.mp3"
+dest_files=["res://.godot/imported/spotted.mp3-fa9b5f1295fadb53284e6a1afae1a6d3.mp3str"]
 
 [params]
 

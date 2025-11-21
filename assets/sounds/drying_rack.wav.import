@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://b0d03n63h6d4v"
-path="res://.godot/imported/drying_rack.wav-974e5acfcf8cd2c48371e2a417f27cb7.sample"
+path="res://.godot/imported/drying_rack.wav-fba30af0fb3b435a42229ba91c0e6171.sample"
 
 [deps]
 
-source_file="res://sounds/drying_rack.wav"
-dest_files=["res://.godot/imported/drying_rack.wav-974e5acfcf8cd2c48371e2a417f27cb7.sample"]
+source_file="res://assets/sounds/drying_rack.wav"
+dest_files=["res://.godot/imported/drying_rack.wav-fba30af0fb3b435a42229ba91c0e6171.sample"]
 
 [params]
 

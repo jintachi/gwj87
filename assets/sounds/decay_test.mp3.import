@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bvv1typjy2ewj"
-path="res://.godot/imported/decay_test.mp3-21d639e6eb988ea09e20ddfec5fc82b8.mp3str"
+path="res://.godot/imported/decay_test.mp3-f815d4925536dfd2f356c930a59817e2.mp3str"
 
 [deps]
 
-source_file="res://sounds/decay_test.mp3"
-dest_files=["res://.godot/imported/decay_test.mp3-21d639e6eb988ea09e20ddfec5fc82b8.mp3str"]
+source_file="res://assets/sounds/decay_test.mp3"
+dest_files=["res://.godot/imported/decay_test.mp3-f815d4925536dfd2f356c930a59817e2.mp3str"]
 
 [params]
 

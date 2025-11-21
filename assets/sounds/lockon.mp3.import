@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dikdryldgyqpp"
-path="res://.godot/imported/lockon.mp3-a6fb92d24154dcd2679edbae504e8f0b.mp3str"
+path="res://.godot/imported/lockon.mp3-7bfeff66eedae0662aa934381636a193.mp3str"
 
 [deps]
 
-source_file="res://sounds/lockon.mp3"
-dest_files=["res://.godot/imported/lockon.mp3-a6fb92d24154dcd2679edbae504e8f0b.mp3str"]
+source_file="res://assets/sounds/lockon.mp3"
+dest_files=["res://.godot/imported/lockon.mp3-7bfeff66eedae0662aa934381636a193.mp3str"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://coxtt0ao4adpm"
-path="res://.godot/imported/blast_door.mp3-a11f177ac0c690e4278cf2fafacea433.mp3str"
+path="res://.godot/imported/blast_door.mp3-695b182ad0b00ae28475e65e4c452ed0.mp3str"
 
 [deps]
 
-source_file="res://sounds/blast_door.mp3"
-dest_files=["res://.godot/imported/blast_door.mp3-a11f177ac0c690e4278cf2fafacea433.mp3str"]
+source_file="res://assets/sounds/blast_door.mp3"
+dest_files=["res://.godot/imported/blast_door.mp3-695b182ad0b00ae28475e65e4c452ed0.mp3str"]
 
 [params]
 

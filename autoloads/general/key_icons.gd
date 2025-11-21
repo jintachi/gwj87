@@ -90,7 +90,7 @@ static func add_image(t: RichTextLabel, index: int) -> int:
 	var y = floori((index * w) / 180.0) * h
 	var c = Color(1, 1, 1, 1)
 	var key_name = str(index)
-	t.add_image(KEYS, 0, 0, c, INLINE_ALIGNMENT_CENTER, Rect2(x, y, 12, 12), key_name, false, "", false, false, key_name)
+	t.add_image(KEYS, 24, 24, c, INLINE_ALIGNMENT_CENTER, Rect2(x, y, 12, 12), key_name, false, "", false, false, key_name)
 	return 0
 
 var last_device_is_joystick : bool = false

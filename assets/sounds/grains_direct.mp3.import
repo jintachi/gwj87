@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bt7ksl2fsrpbs"
-path="res://.godot/imported/grains_direct.mp3-352657b53b247072180731fae215aaa2.mp3str"
+path="res://.godot/imported/grains_direct.mp3-64b048aae145b6e2d8a88020f99b3240.mp3str"
 
 [deps]
 
-source_file="res://sounds/grains_direct.mp3"
-dest_files=["res://.godot/imported/grains_direct.mp3-352657b53b247072180731fae215aaa2.mp3str"]
+source_file="res://assets/sounds/grains_direct.mp3"
+dest_files=["res://.godot/imported/grains_direct.mp3-64b048aae145b6e2d8a88020f99b3240.mp3str"]
 
 [params]
 

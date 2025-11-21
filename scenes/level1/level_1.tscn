@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=35 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
@@ -22,6 +22,8 @@
 [ext_resource type="PackedScene" uid="uid://btjmjs4gy4ybm" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
 [ext_resource type="Script" uid="uid://c2dyp0374d8dv" path="res://scenes/level1/glitch_overlay.gd" id="21_pw0jy"]
 [ext_resource type="Material" uid="uid://c02e874rq02b8" path="res://assets/materials/glitch_material.tres" id="21_ui0ie"]
+[ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
+[ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -281,7 +283,7 @@ texture = ExtResource("2_jmggy")
 13:11/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_t107e"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 3
 sources/0 = SubResource("TileSetAtlasSource_v4nxl")
 
 [sub_resource type="Curve2D" id="Curve2D_8702e"]
@@ -418,7 +420,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.7199103
+frame_progress = 0.33334267
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -430,7 +432,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.7199103
+frame_progress = 0.33334267
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -464,6 +466,7 @@ spawn_curve_y = SubResource("Curve_v4nxl")
 texture_repeat = 2
 material = SubResource("ShaderMaterial_36yfi")
 position = Vector2(-168, -504)
+color = Color(1, 1, 1, 0.3254902)
 offset = Vector2(-619.30585, 1455)
 texture = ExtResource("8_36yfi")
 polygon = PackedVector2Array(83.30585, -54.99994, 1347.3059, -54.99994, 1819.3059, 513.00006, -532.69415, 513.00006, -532.69415, -1495, 371.30585, -1495, 371.30585, -1127, 851.30585, -1127, 851.30585, -1399, 371.30585, -1399, 371.30585, -1495, 1819.3059, -1495, 1819.3059, -390.99994, 1819.3059, 513.00006, 1347.3059, -54.99994, 1491.3059, -374.99994, 1491.3059, -1079, 1187.3059, -1079, 1187.3059, -662.99994, 1243.3059, -662.99994, 1243.3059, -534.99994, 1187.3059, -534.99994, 1187.3059, -358.99994, 947.30585, -358.99994, 947.30585, -646.99994, 83.30585, -646.99994)
@@ -501,8 +504,23 @@ metadata/_edit_use_anchors_ = true
 [node name="FlyerBot" parent="." instance=ExtResource("16_36yfi")]
 position = Vector2(-477, 718)
 
-[node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.9966498
+[node name="Area2D" type="Area2D" parent="."]
+input_pickable = false
+script = ExtResource("23_ui0ie")
+debug = null
+inset_length = 60.0
+mask = 2
+filter = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Area2D"]
+position = Vector2(-176.7865, -184)
+stream = ExtResource("24_dcewl")
+autoplay = true
+max_distance = 200.0
+panning_strength = 0.1
+bus = &"Ambient"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-576, 304, 168, 304, 168, 592, 400, 592, 400, -128, 168, -184, -576, -184)
 
 [editable path="Player"]
-[editable path="FlyerBot"]

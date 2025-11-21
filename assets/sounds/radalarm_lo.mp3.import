@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bcejqkinlurpm"
-path="res://.godot/imported/radalarm_lo.mp3-e99ea323e1ff5a3780a53e8695c609e6.mp3str"
+path="res://.godot/imported/radalarm_lo.mp3-86043b7c177089be1dd42f2ac02884fa.mp3str"
 
 [deps]
 
-source_file="res://sounds/radalarm_lo.mp3"
-dest_files=["res://.godot/imported/radalarm_lo.mp3-e99ea323e1ff5a3780a53e8695c609e6.mp3str"]
+source_file="res://assets/sounds/radalarm_lo.mp3"
+dest_files=["res://.godot/imported/radalarm_lo.mp3-86043b7c177089be1dd42f2ac02884fa.mp3str"]
 
 [params]
 

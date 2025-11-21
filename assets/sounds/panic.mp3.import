@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cbqj5p4vowtjv"
-path="res://.godot/imported/panic.mp3-2e1d1d98439f02a80842eb542f3452eb.mp3str"
+path="res://.godot/imported/panic.mp3-d8619a172e7d57acf2fac57013f986db.mp3str"
 
 [deps]
 
-source_file="res://sounds/panic.mp3"
-dest_files=["res://.godot/imported/panic.mp3-2e1d1d98439f02a80842eb542f3452eb.mp3str"]
+source_file="res://assets/sounds/panic.mp3"
+dest_files=["res://.godot/imported/panic.mp3-d8619a172e7d57acf2fac57013f986db.mp3str"]
 
 [params]
 

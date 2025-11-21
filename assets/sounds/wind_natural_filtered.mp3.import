@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cpvokx1hpoetr"
-path="res://.godot/imported/wind_natural_filtered.mp3-16129be311d9ec8588761967a7a72044.mp3str"
+path="res://.godot/imported/wind_natural_filtered.mp3-27f1ba986bb54c7d84fb2dfbf399d1f0.mp3str"
 
 [deps]
 
-source_file="res://sounds/wind_natural_filtered.mp3"
-dest_files=["res://.godot/imported/wind_natural_filtered.mp3-16129be311d9ec8588761967a7a72044.mp3str"]
+source_file="res://assets/sounds/wind_natural_filtered.mp3"
+dest_files=["res://.godot/imported/wind_natural_filtered.mp3-27f1ba986bb54c7d84fb2dfbf399d1f0.mp3str"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ext7l6sqcoa"
-path="res://.godot/imported/enemy_death.mp3-7369dffb59c5a19c3bd2c0f696a8035d.mp3str"
+path="res://.godot/imported/enemy_death.mp3-dabb8cdc7a2cfbe08864d7fcb6074365.mp3str"
 
 [deps]
 
-source_file="res://sounds/enemy_death.mp3"
-dest_files=["res://.godot/imported/enemy_death.mp3-7369dffb59c5a19c3bd2c0f696a8035d.mp3str"]
+source_file="res://assets/sounds/enemy_death.mp3"
+dest_files=["res://.godot/imported/enemy_death.mp3-dabb8cdc7a2cfbe08864d7fcb6074365.mp3str"]
 
 [params]
 

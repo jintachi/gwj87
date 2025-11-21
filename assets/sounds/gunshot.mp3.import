@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://c1bew2unvwnjq"
-path="res://.godot/imported/gunshot.mp3-9d66a6c73bb3a61e6d9502615ca232d1.mp3str"
+path="res://.godot/imported/gunshot.mp3-fed326f60671a32816af07c9c7fcdf6c.mp3str"
 
 [deps]
 
-source_file="res://sounds/gunshot.mp3"
-dest_files=["res://.godot/imported/gunshot.mp3-9d66a6c73bb3a61e6d9502615ca232d1.mp3str"]
+source_file="res://assets/sounds/gunshot.mp3"
+dest_files=["res://.godot/imported/gunshot.mp3-fed326f60671a32816af07c9c7fcdf6c.mp3str"]
 
 [params]
 
