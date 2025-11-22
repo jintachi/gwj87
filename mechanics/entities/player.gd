@@ -99,10 +99,11 @@ func get_move_input() -> void:
 
 func kill() -> void:
 	#process_mode = Node.PROCESS_MODE_DISABLED
-	extra_interactions[0].call(self)
-	var last_index = extra_interactions.size() - 1
-	extra_interactions[0] = extra_interactions[last_index]
-	extra_interactions.resize(last_index)
+	if extra_interactions.size() != 0:
+		extra_interactions[0].call(self)
+		var last_index = extra_interactions.size() - 1
+		extra_interactions[0] = extra_interactions[last_index]
+		extra_interactions.resize(last_index)
 	health = computed_data.max_health
 	health_changed.emit(health, health)
 	TransitionScene.reload(checkpoint_position, self)
