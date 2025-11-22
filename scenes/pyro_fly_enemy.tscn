@@ -1,19 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://btjmjs4gy4ybm"]
+[gd_scene load_steps=9 format=3 uid="uid://btjmjs4gy4ybm"]
 
 [ext_resource type="Script" uid="uid://bhhn1o3x5m5gb" path="res://mechanics/entities/flyer_bot.gd" id="1_r1vjh"]
 [ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="2_k2yyp"]
 [ext_resource type="PackedScene" uid="uid://c0lfap4mc25lk" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite.tscn" id="2_ypqjj"]
-[ext_resource type="AudioStream" uid="uid://dikdryldgyqpp" path="res://assets/sounds/lockon.mp3" id="3_8qbxn"]
-[ext_resource type="AudioStream" uid="uid://df2win0nr8x55" path="res://assets/sounds/drone.mp3" id="4_gb57k"]
 [ext_resource type="BehaviorTree" uid="uid://dv4k24du8qcrm" path="res://mechanics/ai/trees/pyro_fly_enemy.tres" id="4_k2yyp"]
-[ext_resource type="Script" uid="uid://ccvgwp706fvbm" path="res://mechanics/entities/hearing_range_visual.gd" id="5_hearing_visual"]
-[ext_resource type="AudioStream" uid="uid://dgnoshpjl5e7y" path="res://assets/sounds/laser.mp3" id="5_pxmu6"]
+[ext_resource type="Script" path="res://mechanics/entities/hearing_range_visual.gd" id="5_hearing_visual"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqiff"]
 size = Vector2(34, 18)
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_yqiff"]
-binding/waypoints = NodePath("../PatrolPath")
+binding/waypoints = NodePath("../PatrolPath:curve")
 
 [sub_resource type="Curve2D" id="Curve2D_ypqjj"]
 bake_interval = 50.0
@@ -22,12 +19,13 @@ _data = {
 }
 point_count = 8
 
-[node name="FlyerBot_Hearing" type="CharacterBody2D" node_paths=PackedStringArray("patrol_path")]
+[node name="FlyerBot" type="CharacterBody2D" node_paths=PackedStringArray("patrol_path")]
 script = ExtResource("1_r1vjh")
 patrol_path = NodePath("PatrolPath")
 stats = ExtResource("2_k2yyp")
 
 [node name="HearingRangeVisual" type="Node2D" parent="."]
+visible = false
 light_mask = 1023
 visibility_layer = 1023
 script = ExtResource("5_hearing_visual")
@@ -38,7 +36,7 @@ center_alpha = 0.75
 edge_alpha = 0.05
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("2_ypqjj")]
-frame_progress = 0.64019126
+frame_progress = 0.8579072
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 2)
@@ -68,20 +66,5 @@ show_percentage = false
 [node name="PatrolPath" type="Path2D" parent="."]
 position = Vector2(480, -726)
 curve = SubResource("Curve2D_ypqjj")
-
-[node name="DroneSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_gb57k")
-volume_db = -33.0
-max_distance = 350.0
-
-[node name="LockOnSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_8qbxn")
-volume_db = -33.0
-max_distance = 350.0
-
-[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_pxmu6")
-volume_db = -33.0
-max_distance = 350.0
 
 [editable path="AnimatedSprite2D"]

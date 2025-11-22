@@ -57,9 +57,10 @@ streams_count = 2
 stream_0/stream = ExtResource("6_yceh7")
 stream_1/stream = ExtResource("7_uovkd")
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uovkd"]
 size = Vector2(20, 32)
+
+[node name="Player" type="CharacterBody2D"]
 collision_layer = 5
 script = ExtResource("1_nsdob")
 general_inventory = SubResource("Resource_t107e")
@@ -75,11 +76,8 @@ current = true
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
 position = Vector2(-1, -29)
-animation = &"crouch_idle"
-frame_progress = 0.29765493
-
-[node name="GPUParticles2D" parent="AnimatedSprite2D" index="1"]
-position = Vector2(5, -3)
+animation = &"idle"
+frame_progress = 0.40588635
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)
