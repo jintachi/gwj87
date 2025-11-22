@@ -11,9 +11,10 @@ var extra_interactions : Array[Callable]
 
 @onready var animation: NomadAnimation = $AnimatedSprite2D
 @onready var footsteps: AudioStreamPlayer2D = $Footsteps
+@onready var radiation_display = $CanvasLayer/RadiationDisplay
 
 var checkpoint_position
-var max_health
+@export var regen_multiplier = 2.0
 
 
 func _ready() -> void:
@@ -24,7 +25,10 @@ func _ready() -> void:
 	pickup_area.body_exited.connect(item_out_of_range)
 
 	checkpoint_position = global_position
-	max_health = health
+	health_changed.connect(
+		func(current, max):
+			radiation_display.update_health_display(health, computed_data.max_health)
+	)
 
 func item_in_range(body: Node2D) -> void:
 	if body is PhysicalItem:
@@ -55,8 +59,9 @@ func process_items(delta: float) -> void:
 	item_data.entity = self
 	item_data.delta = delta
 	general_inventory.process_items(item_data)
-	if not general_inventory.has_item(RadChunk):
-		health = minf(health + delta, computed_data.max_health)
+	if not general_inventory.has_item(RadChunk) && health <= computed_data.max_health:
+		health = minf(health + delta * regen_multiplier, computed_data.max_health)
+		health_changed.emit(health, computed_data.max_health)
 		if animation.radiation_amount > 0:
 			animation.radiation_amount -= 0.02
 
@@ -69,7 +74,8 @@ func kill() -> void:
 	var last_index = extra_interactions.size() - 1
 	extra_interactions[0] = extra_interactions[last_index]
 	extra_interactions.resize(last_index)
-	health = max_health
+	health = computed_data.max_health
+	health_changed.emit(health, health)
 	TransitionScene.reload(checkpoint_position, self)
 
 func _process(delta: float) -> void:

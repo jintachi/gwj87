@@ -2,6 +2,7 @@ extends Entity
 class_name LivingEntity
 
 signal sound
+signal health_changed(new_health: float, max_health: float)
 
 var input_dir : Vector2
 var face_dir : Vector2
@@ -76,8 +77,8 @@ func move(direction: Vector2, delta: float) -> void:
 	#sound.emit(sound_event)
 
 func take_damage(damage: float) -> void:
+	health_changed.emit(health - damage, computed_data.max_health)
 	health -= damage
-	print(health)
 	if health <= 0:
 		kill() 
 

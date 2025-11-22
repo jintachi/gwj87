@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ojj2jey21mo4"]
+[gd_scene load_steps=19 format=3 uid="uid://ojj2jey21mo4"]
 
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_nsdob"]
 [ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_yceh7"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cssnlc4tqligd" path="res://assets/sounds/step_loud_1.mp3" id="6_yceh7"]
 [ext_resource type="AudioStream" uid="uid://bfohgbxm8ty8m" path="res://assets/sounds/step_loud_2.mp3" id="7_uovkd"]
 [ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="7_yceh7"]
+[ext_resource type="PackedScene" uid="uid://b6f5jrkre4v4" path="res://scripts/ui/radiation_display.tscn" id="8_uovkd"]
 
 [sub_resource type="Resource" id="Resource_yceh7"]
 script = ExtResource("2_yceh7")
@@ -73,7 +74,7 @@ current = true
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
 position = Vector2(-1, -29)
 animation = &"idle"
-frame_progress = 0.7759088
+frame_progress = 0.24059714
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)
@@ -96,5 +97,9 @@ debug_color = Color(0.7882353, 0.43137255, 0.07058824, 0.047058824)
 [node name="Footsteps" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_jeibo")
 bus = &"SFX"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RadiationDisplay" parent="CanvasLayer" instance=ExtResource("8_uovkd")]
 
 [editable path="AnimatedSprite2D"]
