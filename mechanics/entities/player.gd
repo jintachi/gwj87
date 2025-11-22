@@ -86,6 +86,8 @@ func kill() -> void:
 	health = computed_data.max_health
 	health_changed.emit(health, health)
 	TransitionScene.reload(checkpoint_position, self)
+	for e in get_tree().get_nodes_in_group("enemies") :
+		e.blackboard.set_var(&"awareness", 0.0)
 
 func _handle_crouch_toggle() -> void:
 	_crouch_toggle = not _crouch_toggle

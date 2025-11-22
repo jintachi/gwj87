@@ -53,4 +53,25 @@ func _tick(_delta: float) -> Status:
 	agent.move(velocity, -1.0)
 	agent.update_facing()
 	
+	# Update sprite scale based on movement direction
+	_update_sprite_scale(velocity)
+	
 	return RUNNING
+
+
+## Updates sprite horizontal scale based on movement direction.
+func _update_sprite_scale(velocity: Vector2) -> void:
+	# Find sprite node (AnimatedSprite2D or Sprite2D)
+	var sprite: Node2D = agent.get_node_or_null("AnimatedSprite2D")
+	if not sprite:
+		sprite = agent.get_node_or_null("Root/Rig/Sprite2D")
+	if not sprite:
+		sprite = agent.get_node_or_null("Sprite2D")
+	
+	if sprite:
+		# Set scale.x to -1 when moving left, 1 when moving right
+		if velocity.x < -0.1:
+			sprite.scale.x = -1.0
+		elif velocity.x > 0.1:
+			sprite.scale.x = 1.0
+		# If velocity.x is near 0, keep current scale

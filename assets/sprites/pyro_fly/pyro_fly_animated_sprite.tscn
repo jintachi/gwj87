@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c0lfap4mc25lk"]
+[gd_scene load_steps=26 format=3 uid="uid://c0lfap4mc25lk"]
 
 [ext_resource type="Shader" uid="uid://ct3wgrieor2fr" path="res://assets/shaders/subsampler_outline.gdshader" id="1_028ys"]
 [ext_resource type="Texture2D" uid="uid://do0pyn2wlnnr3" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0000.png" id="2_e4ilx"]
@@ -12,15 +12,16 @@
 [ext_resource type="Material" uid="uid://dcxwdg53ruhb" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite_material.tres" id="10_b5uuy"]
 [ext_resource type="Texture2D" uid="uid://dwyosvs38pv3o" path="res://assets/environment_particles/dust_particles/spritesheet.png" id="10_b6ji3"]
 [ext_resource type="Material" uid="uid://cgpbfacrh4s3v" path="res://assets/sprites/pyro_fly/pyro_fly_animated_sprite_process_material.tres" id="12_6dc7y"]
+[ext_resource type="Texture2D" uid="uid://l5tk2cbsof4u" path="res://assets/sprites/pyro_fly/Light.png" id="13_6dc7y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5ju33"]
 shader = ExtResource("1_028ys")
 shader_parameter/enable_fill = false
 shader_parameter/fill_color = Color(1, 1, 1, 1)
-shader_parameter/pic = ExtResource("4_iilgk")
+shader_parameter/pic = ExtResource("6_y8bv7")
 shader_parameter/pic_scale = 1.0
 shader_parameter/pic_rot = 1.75
-shader_parameter/origin = Vector2(0, -0.04979959)
+shader_parameter/origin = Vector2(0, 0.048468627)
 shader_parameter/subdivisions = 116.91
 shader_parameter/round_alpha = true
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -105,11 +106,13 @@ alpha_curve = SubResource("CurveTexture_0sw1t")
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_6dc7y"]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_5ju33")
 sprite_frames = SubResource("SpriteFrames_fwakp")
 animation = &"default_fly"
-frame_progress = 0.9992811
+frame_progress = 0.26508483
 offset = Vector2(0, -48)
 script = ExtResource("9_lx642")
 
@@ -130,3 +133,25 @@ position = Vector2(20, -8)
 amount = 4
 texture = ExtResource("10_b6ji3")
 process_material = SubResource("ParticleProcessMaterial_ggtot")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(158.00002, -2)
+rotation = 0.2617994
+scale = Vector2(0.379015, -0.12585616)
+color = Color(1, 1, 0, 0.3529412)
+energy = 1.5
+range_item_cull_mask = 31
+shadow_enabled = true
+shadow_item_cull_mask = 31
+texture = ExtResource("13_6dc7y")
+offset = Vector2(0, -380)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -7
+offset_left = -108.0
+offset_top = -186.0
+offset_right = 306.0
+offset_bottom = 98.0
+texture = SubResource("CanvasTexture_6dc7y")
+metadata/_edit_lock_ = true

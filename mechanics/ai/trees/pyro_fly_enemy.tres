@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=36 format=3 uid="uid://dv4k24du8qcrm"]
+[gd_resource type="BehaviorTree" load_steps=39 format=3 uid="uid://dv4k24du8qcrm"]
 
 [ext_resource type="Script" uid="uid://c2abtr7uiu0st" path="res://mechanics/ai/tasks/set_next_waypoint.gd" id="2_set_waypoint"]
 [ext_resource type="Script" uid="uid://c8yam2n4p5q6r" path="res://mechanics/ai/tasks/move_to.gd" id="3_move_to"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bxybolbkghyf6" path="res://mechanics/ai/tasks/kill_player.gd" id="9_f3fqj"]
 [ext_resource type="Script" uid="uid://ctlxwdj50cujx" path="res://mechanics/ai/tasks/lock_on_timer.gd" id="9_lock_on"]
 [ext_resource type="Script" uid="uid://hcicj0vl0oce" path="res://mechanics/ai/tasks/attack_player.gd" id="10_attack"]
+[ext_resource type="Script" uid="uid://ij4o3bchh0a2" path="res://mechanics/ai/tasks/detect_sight.gd" id="12_8ry40"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_p76lb"]
 var/waypoints/name = &"waypoints"
@@ -42,6 +43,21 @@ var/lock_on_timer/type = 3
 var/lock_on_timer/value = 0.0
 var/lock_on_timer/hint = 0
 var/lock_on_timer/hint_string = ""
+var/player_visible/name = &"player_visible"
+var/player_visible/type = 1
+var/player_visible/value = false
+var/player_visible/hint = 0
+var/player_visible/hint_string = "true;false"
+var/last_sight_time/name = &"last_sight_time"
+var/last_sight_time/type = 3
+var/last_sight_time/value = 0.0
+var/last_sight_time/hint = 0
+var/last_sight_time/hint_string = ""
+var/last_sight_position/name = &"last_sight_position"
+var/last_sight_position/type = 5
+var/last_sight_position/value = Vector2(0, 0)
+var/last_sight_position/hint = 0
+var/last_sight_position/hint_string = ""
 
 [sub_resource type="BTAction" id="BTAction_set_waypoint"]
 script = ExtResource("2_set_waypoint")
@@ -125,8 +141,17 @@ hearing_range = 200.0
 duration = 0.2
 children = [SubResource("BTAction_gpm82")]
 
+[sub_resource type="BTAction" id="BTAction_8ilgn"]
+script = ExtResource("12_8ry40")
+vision_range = 200.0
+vision_angle = 15.0
+
+[sub_resource type="BTCooldown" id="BTCooldown_8ry40"]
+duration = 0.2
+children = [SubResource("BTAction_8ilgn")]
+
 [sub_resource type="BTParallel" id="BTParallel_gpm82"]
-children = [SubResource("BTSelector_root"), SubResource("BTAction_jypi1"), SubResource("BTCooldown_jypi1")]
+children = [SubResource("BTSelector_root"), SubResource("BTAction_jypi1"), SubResource("BTCooldown_jypi1"), SubResource("BTCooldown_8ry40")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_p76lb")

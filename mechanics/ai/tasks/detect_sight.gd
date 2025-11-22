@@ -7,7 +7,6 @@
 @tool
 extends BTAction
 ## Checks if player is visible through sight. [br]
-## Increases awareness when player is visible (with cooldown). [br]
 ## Sets blackboard variables for sight detection status. [br]
 ## Returns [code]RUNNING[/code] always (doesn't block sequence).
 
@@ -35,8 +34,6 @@ extends BTAction
 ## Blackboard variable to store awareness (float, 0-300).
 @export var awareness_var: StringName = &"awareness"
 
-## Blackboard variable to store sight cooldown timer (float).
-@export var sight_cooldown_var: StringName = &"sight_cooldown"
 
 ## Awareness increase amount when player is visible.
 @export var awareness_increase_amount: float = 10.0
@@ -57,8 +54,6 @@ func _enter() -> void:
 		blackboard.set_var(last_sight_time_var, 0.0)
 	if not blackboard.has_var(last_sight_position_var):
 		blackboard.set_var(last_sight_position_var, Vector2.ZERO)
-	if not blackboard.has_var(sight_cooldown_var):
-		blackboard.set_var(sight_cooldown_var, 0.0)
 
 
 func _tick(delta: float) -> Status:
@@ -138,28 +133,13 @@ func _tick(delta: float) -> Status:
 	blackboard.set_var(last_sight_time_var, 0.0)
 	blackboard.set_var(last_sight_position_var, sight_position)
 	
-	# Update sight cooldown
-	var sight_cooldown: float = 0.0
-	if blackboard.has_var(sight_cooldown_var):
-		sight_cooldown = blackboard.get_var(sight_cooldown_var)
+	var awareness: float = 0.0
+	if blackboard.has_var(awareness_var):
+		awareness = blackboard.get_var(awareness_var)
 	
-	# Decrease cooldown timer
-	if sight_cooldown > 0.0:
-		sight_cooldown = max(0.0, sight_cooldown - delta)
-		blackboard.set_var(sight_cooldown_var, sight_cooldown)
-	
-	# Increase awareness if cooldown has expired (don't actively look, just increase awareness)
-	if sight_cooldown <= 0.0:
-		var awareness: float = 0.0
-		if blackboard.has_var(awareness_var):
-			awareness = blackboard.get_var(awareness_var)
-		
-		awareness += awareness_increase_amount
-		awareness = min(awareness, 300.0)  # Cap at 300
-		blackboard.set_var(awareness_var, awareness)
-		
-		# Start cooldown
-		blackboard.set_var(sight_cooldown_var, sight_cooldown_time)
+	awareness += awareness_increase_amount
+	awareness = min(awareness, 300.0)  # Cap at 300
+	blackboard.set_var(awareness_var, awareness)
 	
 	# Return RUNNING to keep detection active continuously
 	return RUNNING
