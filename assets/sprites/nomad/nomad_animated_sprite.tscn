@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://blvgfrn7vqqah"]
+[gd_scene load_steps=51 format=3 uid="uid://blvgfrn7vqqah"]
 
 [ext_resource type="Shader" uid="uid://cuj34asa5dt53" path="res://assets/shaders/outline.gdshader" id="1_a068p"]
 [ext_resource type="Texture2D" uid="uid://e7x1jx628o85" path="res://assets/sprites/nomad/nomad_frames/frame0016.png" id="2_pbqkw"]
@@ -31,21 +31,13 @@
 [ext_resource type="Texture2D" uid="uid://p0yabn1b68a" path="res://assets/sprites/nomad/nomad_frames/frame0013.png" id="29_xain3"]
 [ext_resource type="Texture2D" uid="uid://dlu2xywlm7psn" path="res://assets/sprites/nomad/nomad_frames/frame0014.png" id="30_356rm"]
 [ext_resource type="Texture2D" uid="uid://k6ljybv58usr" path="res://assets/sprites/nomad/nomad_frames/frame0015.png" id="31_ej0mt"]
-[ext_resource type="Texture2D" uid="uid://ikb8d5h6hsv6" path="res://assets/sprites/nomad/nomad_frames/frame0031.png" id="32_47cc2"]
-[ext_resource type="Texture2D" uid="uid://btepi0slegmep" path="res://assets/sprites/nomad/nomad_frames/frame0032.png" id="33_ibor2"]
-[ext_resource type="Texture2D" uid="uid://kn6opxk5c8c2" path="res://assets/sprites/nomad/nomad_frames/frame0033.png" id="34_dnpsd"]
-[ext_resource type="Texture2D" uid="uid://bgilhswp2m25p" path="res://assets/sprites/nomad/nomad_frames/frame0034.png" id="35_1a8b0"]
-[ext_resource type="Texture2D" uid="uid://ck7p1uaoecvus" path="res://assets/sprites/nomad/nomad_frames/frame0035.png" id="36_55dyc"]
-[ext_resource type="Texture2D" uid="uid://dpwrlxcsp1so7" path="res://assets/sprites/nomad/nomad_frames/frame0036.png" id="37_v0vgw"]
-[ext_resource type="Texture2D" uid="uid://bjr2l3l5trdkg" path="res://assets/sprites/nomad/nomad_frames/frame0037.png" id="38_hmyvi"]
-[ext_resource type="Texture2D" uid="uid://cp1eukg7hm6ss" path="res://assets/sprites/nomad/nomad_frames/frame0038.png" id="39_vpjc1"]
-[ext_resource type="Texture2D" uid="uid://yx2g530xiphc" path="res://assets/sprites/nomad/nomad_frames/frame0039.png" id="40_yh0aa"]
-[ext_resource type="Texture2D" uid="uid://d0grkhnwrtequ" path="res://assets/sprites/nomad/nomad_frames/frame0040.png" id="41_7s0dh"]
-[ext_resource type="Texture2D" uid="uid://d15hb2skjqskh" path="res://assets/sprites/nomad/nomad_frames/frame0041.png" id="42_7fhsq"]
-[ext_resource type="Texture2D" uid="uid://4i5fixprv5ua" path="res://assets/sprites/nomad/nomad_frames/frame0042.png" id="43_d7kbr"]
-[ext_resource type="Texture2D" uid="uid://d3v3s35va464y" path="res://assets/sprites/nomad/nomad_frames/frame0043.png" id="44_soc0m"]
-[ext_resource type="Texture2D" uid="uid://dyn2ouc4rkc2b" path="res://assets/sprites/nomad/nomad_frames/frame0044.png" id="45_fdh4b"]
-[ext_resource type="Texture2D" uid="uid://cbtu8slyoubjq" path="res://assets/sprites/nomad/nomad_frames/frame0045.png" id="46_8qllj"]
+[ext_resource type="Texture2D" uid="uid://b3nsn0bugcapw" path="res://assets/sprites/nomad/nomad_frames/frame0046.png" id="32_85vyw"]
+[ext_resource type="Texture2D" uid="uid://degnqjub6lglq" path="res://assets/sprites/nomad/nomad_frames/frame0047.png" id="33_ayvhw"]
+[ext_resource type="Texture2D" uid="uid://kq0w4l7pman7" path="res://assets/sprites/nomad/nomad_frames/frame0048.png" id="34_oh54n"]
+[ext_resource type="Texture2D" uid="uid://cwyt246bb1q7t" path="res://assets/sprites/nomad/nomad_frames/frame0049.png" id="35_86p0n"]
+[ext_resource type="Texture2D" uid="uid://bq3687h74jck4" path="res://assets/sprites/nomad/nomad_frames/frame0050.png" id="36_dtoso"]
+[ext_resource type="Texture2D" uid="uid://cu7kqkwbugctt" path="res://assets/sprites/nomad/nomad_frames/frame0051.png" id="37_xogpb"]
+[ext_resource type="Texture2D" uid="uid://gsjrex6ti1dx" path="res://assets/sprites/nomad/nomad_frames/frame0052.png" id="38_u18wl"]
 [ext_resource type="Script" uid="uid://brq342s508rav" path="res://assets/sprites/nomad/nomad_animated_sprite.gd" id="46_dtoso"]
 [ext_resource type="AudioStream" uid="uid://cev2202iqiqcn" path="res://assets/sprites/nomad/radalarm_lo.mp3" id="47_y5a7b"]
 [ext_resource type="AudioStream" uid="uid://rxroqcnrrcvg" path="res://assets/sprites/nomad/radalarm_med.mp3" id="48_a068p"]
@@ -173,53 +165,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("32_47cc2")
+"texture": ExtResource("32_85vyw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("33_ibor2")
+"texture": ExtResource("33_ayvhw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("34_dnpsd")
+"texture": ExtResource("34_oh54n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("35_1a8b0")
+"texture": ExtResource("35_86p0n")
 }, {
 "duration": 1.0,
-"texture": ExtResource("36_55dyc")
+"texture": ExtResource("36_dtoso")
 }, {
 "duration": 1.0,
-"texture": ExtResource("37_v0vgw")
+"texture": ExtResource("37_xogpb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("38_hmyvi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("39_vpjc1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("40_yh0aa")
-}, {
-"duration": 1.0,
-"texture": ExtResource("41_7s0dh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("42_7fhsq")
-}, {
-"duration": 1.0,
-"texture": ExtResource("43_d7kbr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("44_soc0m")
-}, {
-"duration": 1.0,
-"texture": ExtResource("45_fdh4b")
-}, {
-"duration": 1.0,
-"texture": ExtResource("46_8qllj")
+"texture": ExtResource("38_u18wl")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 20.0
+"speed": 32.0
 }]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_86p0n"]
@@ -253,8 +221,9 @@ alpha_curve = SubResource("CurveTexture_dtoso")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_d77k0")
 sprite_frames = SubResource("SpriteFrames_04bfb")
-animation = &"idle"
-frame_progress = 0.43221173
+animation = &"walk"
+frame = 5
+frame_progress = 0.4274406
 script = ExtResource("46_dtoso")
 rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]
 

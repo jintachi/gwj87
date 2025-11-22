@@ -69,6 +69,10 @@ func _process(delta: float) -> void:
 	if input_dir.is_zero_approx():
 		animation.animation = "idle"
 	else:
+		if input_dir.x < 0:
+			animation.scale.x = -1
+		else:
+			animation.scale.x = 1
 		animation.animation = "walk"
 
 func _physics_process(delta: float) -> void:
