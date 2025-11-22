@@ -37,5 +37,4 @@ func open_doors() -> void:
 			mat_2.set_shader_parameter("clip_amount", value),
 		0.0, -.60, 5
 	).set_trans(Tween.TRANS_EXPO)
-
-	static_body_2d.process_mode = Node.PROCESS_MODE_DISABLED
+	tween.finished.connect(func():static_body_2d.process_mode = Node.PROCESS_MODE_DISABLED,)

@@ -18,9 +18,17 @@ var loud_step_vol : float = 0.0
 var quiet_step_vol : float = 0.0
 @onready var radiation_display = $CanvasLayer/RadiationDisplay
 
+@onready var radiation_detector = $RadiationDetector
+var on_radiation_source
+@export var radiation_rate : float = 0.08;
+var current_radiation : float
+@onready var radiation_display = $CanvasLayer/RadiationDisplay
 var checkpoint_position
 var _crouch_toggle:bool = false
-@export var regen_multiplier = 2.0
+@export var regen_multiplier = 4.0
+@export var hit_period = 0.65
+@export var radiation_tick_damage = 3.0
+var hit_timer : Timer
 
 
 func _ready() -> void:
@@ -36,6 +44,28 @@ func _ready() -> void:
 	health_changed.connect(
 		func(current, max):
 			radiation_display.update_health_display(health, computed_data.max_health)
+	)
+	radiation_detector.area_entered.connect(
+		func(value):
+			if !on_radiation_source:
+				on_radiation_source = true
+	)
+	radiation_detector.area_exited.connect(
+		func(value):
+			if radiation_detector.get_overlapping_areas().is_empty():
+				on_radiation_source = false
+	)
+	hit_timer = Timer.new()
+	hit_timer.autostart = false
+	hit_timer.one_shot = true
+	hit_timer.wait_time = 1.0
+	add_child(hit_timer)
+	hit_timer.timeout.connect(
+		func():
+			health -= radiation_tick_damage
+			health_changed.emit(health, computed_data.max_health)
+			if health <= 0:
+				self.kill() 
 	)
 
 func item_in_range(body: Node2D) -> void:
@@ -67,7 +97,7 @@ func process_items(delta: float) -> void:
 	item_data.entity = self
 	item_data.delta = delta
 	general_inventory.process_items(item_data)
-	if not general_inventory.has_item(RadChunk) && health <= computed_data.max_health:
+	if not general_inventory.has_item(RadChunk) && current_radiation < 0.25 && health <= computed_data.max_health:
 		health = minf(health + delta * regen_multiplier, computed_data.max_health)
 		health_changed.emit(health, computed_data.max_health)
 		if animation.radiation_amount > 0:
@@ -116,6 +146,16 @@ func _process(delta: float) -> void:
 			animation.animation = "crouch_walk"
 
 func _physics_process(delta: float) -> void:
+
+	if on_radiation_source && current_radiation < 1:
+		current_radiation = min(1.0, current_radiation + radiation_rate * delta)
+		radiation_display.update_radiation_display(current_radiation)
+	elif !on_radiation_source && current_radiation > 0:
+		current_radiation = max(0.0, current_radiation - radiation_rate * 2.0 * delta)
+		radiation_display.update_radiation_display(current_radiation)
+	if hit_timer.is_stopped() and current_radiation >= 0.4:
+		hit_timer.start()
+
 	get_move_input()
 	_handle_footsteps(delta)
 	if _crouch_toggle : ## TRUE == Crouching
