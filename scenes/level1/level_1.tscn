@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=46 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
@@ -17,19 +17,23 @@
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="9_euaoc"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="10_lqknr"]
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
-[ext_resource type="Texture2D" uid="uid://btf5701xbhrs2" path="res://assets/sprites/rad dispenser.png" id="11_jmggy"]
 [ext_resource type="Texture2D" uid="uid://dxrtknp6ujnot" path="res://scenes/level1/half_storage_stall.png" id="11_o2ks1"]
 [ext_resource type="Texture2D" uid="uid://j36un6oqvwnk" path="res://scenes/level1/door_arch.png" id="11_v5rty"]
 [ext_resource type="Script" uid="uid://btc5utlsyna8i" path="res://scripts/rad_dispenser.gd" id="12_v4nxl"]
 [ext_resource type="Script" uid="uid://ba8kxxuceb2ts" path="res://scenes/level1/fall_hazard.gd" id="14_6jbmo"]
 [ext_resource type="PackedScene" uid="uid://ccmxfyhbqmseb" path="res://scenes/level1/doors.tscn" id="14_t107e"]
+[ext_resource type="Texture2D" uid="uid://cdcwcwir8mdf3" path="res://assets/sprites/crate.png" id="15_a7lbm"]
 [ext_resource type="Shader" uid="uid://ctaycxvv7wy3i" path="res://scenes/sandstorm/sandstorm.gdshader" id="15_eagek"]
 [ext_resource type="PackedScene" uid="uid://btjmjs4gy4ybm" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
+[ext_resource type="Texture2D" uid="uid://3vx6b3elgsxp" path="res://assets/sprites/metal_crate.png" id="16_rcl1p"]
+[ext_resource type="Texture2D" uid="uid://b16duxxl3ywnl" path="res://assets/sprites/metal_panel.png" id="17_jp34l"]
 [ext_resource type="Texture2D" uid="uid://rk8e7r5ih3b1" path="res://assets/sprites/moving_platform.png" id="19_6a6ra"]
+[ext_resource type="Script" uid="uid://d0ecixjm05wu8" path="res://scripts/object_dimmer.gd" id="19_rcl1p"]
 [ext_resource type="Script" uid="uid://c2dyp0374d8dv" path="res://scenes/level1/glitch_overlay.gd" id="21_pw0jy"]
 [ext_resource type="Material" uid="uid://c02e874rq02b8" path="res://assets/materials/glitch_material.tres" id="21_ui0ie"]
 [ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
+[ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="24_vglon"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -292,6 +296,12 @@ texture = ExtResource("2_jmggy")
 physics_layer_0/collision_layer = 3
 sources/0 = SubResource("TileSetAtlasSource_v4nxl")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jp34l"]
+size = Vector2(90, 82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vglon"]
+size = Vector2(90, 20)
+
 [sub_resource type="Curve2D" id="Curve2D_8702e"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -168, -160, 0, 0, 0, 0, -352, -160, 0, 0, 0, 0, -352, 224, 0, 0, 0, 0, 128, 224, 0, 0, 0, 0, 128, 64, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, -160, 0, 0, 0, 0, -168, -160)
@@ -475,6 +485,24 @@ polygon = PackedVector2Array(-384, -176, -576, -176, -576, 272, -264, 272, -264,
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="VoidArea"]
 polygon = PackedVector2Array(-160, 256, -160, 288, -104, 288, -104, 272, 160, 272, 160, 592, 400, 592, 400, 416, 448, 416, 448, 392, 384, 392, 384, 320, 448, 320, 448, 296, 392, 296, 392, -192, 32, -192, 32, 32, 192, 32, 192, 96, 160, 96, 160, 256)
 
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="Crate" type="Sprite2D" parent="Decorations"]
+position = Vector2(-224, 712)
+texture = ExtResource("15_a7lbm")
+
+[node name="MetalCrate" type="Sprite2D" parent="Decorations"]
+position = Vector2(-264, 712)
+texture = ExtResource("16_rcl1p")
+
+[node name="MetalCrate2" type="Sprite2D" parent="Decorations"]
+position = Vector2(-304, 712)
+texture = ExtResource("16_rcl1p")
+
+[node name="MetalPanel" type="Sprite2D" parent="Decorations"]
+position = Vector2(32, 720)
+texture = ExtResource("17_jp34l")
+
 [node name="map_paints" type="Node2D" parent="."]
 y_sort_enabled = true
 
@@ -496,19 +524,95 @@ position = Vector2(-576, 633)
 position = Vector2(622, 149)
 texture = ExtResource("11_o2ks1")
 
+[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall" node_paths=PackedStringArray("target")]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("19_rcl1p")
+target = NodePath("..")
+dim_alpha = 0.6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall/Area2D"]
+shape = SubResource("RectangleShape2D_jp34l")
+debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall/StaticBody2D"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_vglon")
+
 [node name="HalfStallWall2" type="Sprite2D" parent="map_paints"]
 position = Vector2(622, 21)
 texture = ExtResource("11_o2ks1")
+
+[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall2" node_paths=PackedStringArray("target")]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("19_rcl1p")
+target = NodePath("..")
+dim_alpha = 0.6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall2/Area2D"]
+shape = SubResource("RectangleShape2D_jp34l")
+debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall2"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall2/StaticBody2D"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_vglon")
 
 [node name="HalfStallWall3" type="Sprite2D" parent="map_paints"]
 position = Vector2(465, 21)
 texture = ExtResource("11_o2ks1")
 flip_h = true
 
+[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall3" node_paths=PackedStringArray("target")]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("19_rcl1p")
+target = NodePath("..")
+dim_alpha = 0.6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall3/Area2D"]
+shape = SubResource("RectangleShape2D_jp34l")
+debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall3"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall3/StaticBody2D"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_vglon")
+
 [node name="HalfStallWall4" type="Sprite2D" parent="map_paints"]
 position = Vector2(465, 149)
 texture = ExtResource("11_o2ks1")
 flip_h = true
+
+[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall4" node_paths=PackedStringArray("target")]
+collision_layer = 3
+collision_mask = 4
+script = ExtResource("19_rcl1p")
+target = NodePath("..")
+dim_alpha = 0.6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall4/Area2D"]
+shape = SubResource("RectangleShape2D_jp34l")
+debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall4"]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall4/StaticBody2D"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_vglon")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_8702e")
@@ -522,7 +626,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.0021119528
+frame_progress = 0.50837183
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -534,7 +638,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.0021119528
+frame_progress = 0.50837183
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -563,7 +667,7 @@ texture = ExtResource("19_6a6ra")
 
 [node name="RadDispenser" type="Sprite2D" parent="."]
 position = Vector2(-481, 348)
-texture = ExtResource("11_jmggy")
+texture = ExtResource("24_vglon")
 offset = Vector2(0, 21.695)
 script = ExtResource("12_v4nxl")
 spawn_curve_width = SubResource("Curve_jmggy")
@@ -612,7 +716,7 @@ y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.5130893
+frame_progress = 0.57951194
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
