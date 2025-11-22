@@ -36,17 +36,8 @@ func _enter() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	# Find player
-	var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
-	if players.is_empty():
-		return FAILURE
-	
-	var player: Node2D = players[0] as Node2D
-	if not is_instance_valid(player):
-		return FAILURE
-	
 	# Calculate distance to player
-	var player_pos: Vector2 = player.global_position
+	var player_pos: Vector2 = Player.instance.global_position
 	var agent_pos: Vector2 = agent.global_position
 	var distance: float = agent_pos.distance_to(player_pos)
 	
@@ -63,4 +54,3 @@ func _tick(_delta: float) -> Status:
 			return SUCCESS
 		else:
 			return FAILURE
-

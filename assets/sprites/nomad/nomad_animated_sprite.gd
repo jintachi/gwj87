@@ -1,5 +1,6 @@
 @tool
 extends AnimatedSprite2D
+class_name NomadAnimation
 
 signal radiation_amount_change
 
@@ -31,6 +32,13 @@ func play_hitflash() -> void:
 	tween.chain().tween_callback(func():mat.set_shader_parameter("enable_fill", false))
 
 func _ready():
+	if not Engine.is_editor_hint():
+		for child in get_children():
+			if child is CanvasItem:
+				SceneTransitionNode.preload_material(child.material)
+			if child is GPUParticles2D:
+				SceneTransitionNode.preload_material(child.process_material)
+	
 	debug_hitflash.connect(play_hitflash)
 	animation_changed.connect(
 		func():

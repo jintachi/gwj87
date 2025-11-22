@@ -22,11 +22,9 @@ func _generate_name() -> String:
 
 func _tick(_delta: float) -> Status:
 	# Get waypoints to know the size
-	var waypoints: Array = []
-	if blackboard.has_var(waypoints_var):
-		waypoints = blackboard.get_var(waypoints_var)
+	var waypoints: Curve2D = blackboard.get_var(waypoints_var)
 	
-	if waypoints.is_empty():
+	if waypoints.point_count == 0:
 		return FAILURE
 	
 	# Get current index
@@ -35,8 +33,7 @@ func _tick(_delta: float) -> Status:
 		current_index = blackboard.get_var(current_waypoint_index_var)
 	
 	# Increment and wrap around
-	current_index = (current_index + 1) % waypoints.size()
+	current_index = (current_index + 1) % waypoints.get_baked_points().size()
 	blackboard.set_var(current_waypoint_index_var, current_index)
 	
 	return SUCCESS
-

@@ -16,7 +16,6 @@ func apply_alpha(a: float): target.modulate.a = a
 
 func inc(_body: Node2D):
 	counter += 1
-	print(counter)
 	if counter != 1: return
 	if tween:
 		tween.kill()
@@ -24,7 +23,6 @@ func inc(_body: Node2D):
 	tween.tween_method(apply_alpha, target.modulate.a, dim_alpha, dim_transition_duration)
 func dec(_body: Node2D): 
 	counter -= 1
-	print(counter)
 	if counter != 0: return
 	if tween:
 		tween.kill()

@@ -13,8 +13,7 @@
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_p76lb"]
 var/waypoints/name = &"waypoints"
-var/waypoints/type = 19
-var/waypoints/value = Array[Vector2]([])
+var/waypoints/type = 24
 var/waypoints/hint = 0
 var/waypoints/hint_string = ""
 var/patrol_index/name = &"patrol_index"
@@ -104,6 +103,7 @@ custom_name = "Root Selector"
 children = [SubResource("BTSequence_patrol")]
 
 [sub_resource type="BTAction" id="BTAction_jypi1"]
+custom_name = "awareness_task"
 script = ExtResource("4_5rr2v")
 decay_rate_below_200 = 20.0
 decay_rate_above_200 = 19.0

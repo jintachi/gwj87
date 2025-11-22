@@ -27,26 +27,14 @@ func _enter() -> void:
 
 func _tick(_delta: float) -> Status:
 	# Check if lock-on timer has completed
-	var timer: float = 1.0  # Default to not ready
-	if blackboard.has_var(lock_on_timer_var):
-		timer = blackboard.get_var(lock_on_timer_var)
+	var timer: float = blackboard.get_var(lock_on_timer_var, 1.0, false)
 	
 	# Only attack if lock-on is complete
 	if timer > 0.0:
 		return RUNNING
-	
-	# Find player
-	var players: Array[Node] = agent.get_tree().get_nodes_in_group(player_group)
-	if players.is_empty():
-		return FAILURE
-	
-	var player: Node2D = players[0] as Node2D
-	if not is_instance_valid(player):
-		return FAILURE
-	
 	# Perform attack (placeholder - implement actual attack logic here)
 	# For now, just return SUCCESS to indicate attack was performed
-	_do_attack(player)
+	_do_attack(Player.instance)
 	
 	return SUCCESS
 

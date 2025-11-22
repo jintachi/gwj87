@@ -26,11 +26,9 @@ func _generate_name() -> String:
 
 func _tick(_delta: float) -> Status:
 	# Get waypoints from blackboard
-	var waypoints: Array = []
-	if blackboard.has_var(waypoints_var):
-		waypoints = blackboard.get_var(waypoints_var)
+	var waypoints: Curve2D = blackboard.get_var(waypoints_var)
 	
-	if waypoints.is_empty():
+	if waypoints.point_count == 0:
 		return FAILURE
 	
 	# Initialize patrol index if not set
@@ -41,16 +39,16 @@ func _tick(_delta: float) -> Status:
 	if blackboard.has_var(current_waypoint_index_var):
 		current_index = blackboard.get_var(current_waypoint_index_var)
 	
+	var points = waypoints.get_baked_points()
 	# Ensure index is valid
-	if current_index < 0 or current_index >= waypoints.size():
+	if current_index < 0 or current_index >= points.size():
 		current_index = 0
 		blackboard.set_var(current_waypoint_index_var, 0)
 	
 	# Get current waypoint
-	var current_waypoint: Vector2 = waypoints[current_index]
+	var current_waypoint: Vector2 = points[current_index]
 	
 	# Set as target position
 	blackboard.set_var(target_position_var, current_waypoint)
 	
 	return SUCCESS
-

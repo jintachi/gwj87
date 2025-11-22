@@ -26,9 +26,7 @@ func _enter() -> void:
 
 
 func _tick(_delta: float) -> Status:
-	var awareness: float = 0.0
-	if blackboard.has_var(awareness_var):
-		awareness = blackboard.get_var(awareness_var)
+	var awareness: float = blackboard.get_var(awareness_var, 0.0, false)
 	
 	if awareness >= awareness_threshold:
 		return SUCCESS

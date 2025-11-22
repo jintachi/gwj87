@@ -1,16 +1,21 @@
-class_name Player extends LivingEntity
+extends LivingEntity
+class_name Player
 
 static var instance : Player
 @onready var pickup_area: Area2D = $"Pickup Area"
-@export var general_inventory : Inventory
-@export var anim_sprite : AnimatedSprite2D
 var _footstep_timer: float = 0.0
-var _footstep_interval: float = .5
-var _step_volume: float = 20.0
-var _crouch_toggle : bool = false
+var _footstep_interval: float = 0.5
 
 var extra_interactions : Array[Callable]
 @export var general_inventory : Inventory
+
+@onready var animation: NomadAnimation = $AnimatedSprite2D
+@onready var footsteps: AudioStreamPlayer2D = $Footsteps
+@onready var radiation_display = $CanvasLayer/RadiationDisplay
+
+var checkpoint_position
+@export var regen_multiplier = 2.0
+
 
 func _ready() -> void:
 	super()
@@ -18,6 +23,12 @@ func _ready() -> void:
 	instance = self
 	pickup_area.body_entered.connect(item_in_range)
 	pickup_area.body_exited.connect(item_out_of_range)
+
+	checkpoint_position = global_position
+	health_changed.connect(
+		func(current, max):
+			radiation_display.update_health_display(health, computed_data.max_health)
+	)
 
 func item_in_range(body: Node2D) -> void:
 	if body is PhysicalItem:
@@ -44,88 +55,74 @@ func get_attack_input() -> void:
 	
 func process_items(delta: float) -> void:
 	super(delta)
-	var data = InventoryItem.ItemProcessData.new()
-	data.entity = self
-	data.delta = delta
-	general_inventory.process_items(data)
+	var item_data = InventoryItem.ItemProcessData.new()
+	item_data.entity = self
+	item_data.delta = delta
+	general_inventory.process_items(item_data)
+	if not general_inventory.has_item(RadChunk) && health <= computed_data.max_health:
+		health = minf(health + delta * regen_multiplier, computed_data.max_health)
+		health_changed.emit(health, computed_data.max_health)
+		if animation.radiation_amount > 0:
+			animation.radiation_amount -= 0.02
 
 func get_move_input() -> void:
 	input_dir = Input.get_vector("left", "right", "up", "down")
 
 func kill() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-	TransitionScene.reload()
+	#process_mode = Node.PROCESS_MODE_DISABLED
+	extra_interactions[0].call(self)
+	var last_index = extra_interactions.size() - 1
+	extra_interactions[0] = extra_interactions[last_index]
+	extra_interactions.resize(last_index)
+	health = computed_data.max_health
+	health_changed.emit(health, health)
+	TransitionScene.reload(checkpoint_position, self)
 
 func _handle_crouch_toggle() -> void:
 	if Input.is_action_just_pressed("crouch"):
 		_crouch_toggle = not _crouch_toggle
 
 func _process(delta: float) -> void:
-	get_attack_input()
+	#get_attack_input()
 	process_items(delta)
-	if Input.is_action_just_pressed("primary_action"):
+	if Input.is_action_just_pressed("interact"):
 		interact()
-	_handle_crouch_toggle()
+	if input_dir.is_zero_approx():
+		animation.animation = "idle"
+	else:
+		if input_dir.x < 0:
+			animation.scale.x = -1
+		else:
+			animation.scale.x = 1
+		animation.animation = "walk"
 
 func _physics_process(delta: float) -> void:
 	get_move_input()
-	_handle_movement(input_dir, delta)
-	move_and_slide()
-		
-func _handle_movement(input_dir:Vector2,delta: float) -> void:
-	# Use input direction from arguments
-	var input_vector := input_dir
-
-	# Calculate desired velocity and accel
-	var desired_velocity := input_vector * data.movement_speed
-	
-	if not _crouch_toggle :
-		desired_velocity /= data.sneak_speed_multiplier
-	
-	var acceleration := data.movement_speed * delta
-	
-	# Apply acceleration or friction
-	if input_vector.length() > 0.0:
-		velocity = velocity.lerp(desired_velocity, acceleration * delta)
-	else:
-		velocity = velocity.lerp(Vector2.ZERO, data.friction * delta)
-	
 	_handle_footsteps(delta)
 	move(input_dir, delta)
 	move_and_slide()
 
 func _handle_footsteps(delta: float) -> void:
-	var current_speed = data.movement_speed*velocity.length()*delta
-	#$CurrentSpeed.text = str(round(current_speed))
-	if current_speed > 15.0:  # Only emit sounds when moving
+	var current_speed := velocity.length()
+
+	if current_speed > 10.0:  # Only emit sounds when moving
 		# Adjust footstep interval based on speed
-		if _crouch_toggle:
-			anim_sprite.play("crouch_walk")
-		else :
-			anim_sprite.play("walk")
-		if current_speed > 120.0:  # Running
+		if current_speed > 150.0:  # Running
 			_footstep_interval = 0.3
-		elif current_speed > 85.0:  # Walking
+		elif current_speed > 50.0:  # Walking
 			_footstep_interval = 0.5
 		else:  # Slow movement
-			_footstep_interval = .8
-			
+			_footstep_interval = 0.8
+
 		_footstep_timer += delta
 
 		if _footstep_timer >= _footstep_interval:
-			if current_speed<=80 :
-				sound.emit(global_position, _step_volume)
-				print("*step*")
-				_footstep_timer = 0.0
-			else:
+			_footstep_timer = 0.0
+			footsteps.play()
+			# Emit footstep sound
+			if current_speed > 150.0:
 				#volume *= 1.5  # Louder when running
-				var loud_step := _step_volume*1.5
-				sound.emit(global_position,loud_step)
-				print("*STEP*")
-				_footstep_timer = 0.0
+				#todo emit sound
+				pass
 	else:
-		if _crouch_toggle:
-			anim_sprite.play("crouch_idle")
-		else :
-			anim_sprite.play("idle")
 		_footstep_timer = 0.0
