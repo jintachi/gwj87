@@ -1,5 +1,4 @@
-extends LivingEntity
-class_name Player
+class_name Player extends LivingEntity
 
 static var instance : Player
 @onready var pickup_area: Area2D = $"Pickup Area"
@@ -22,7 +21,6 @@ var quiet_step_vol : float = 0.0
 var on_radiation_source
 @export var radiation_rate : float = 0.08;
 var current_radiation : float
-@onready var radiation_display = $CanvasLayer/RadiationDisplay
 var checkpoint_position
 var _crouch_toggle:bool = false
 @export var regen_multiplier = 4.0

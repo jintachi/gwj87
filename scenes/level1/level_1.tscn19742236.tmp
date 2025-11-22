@@ -628,7 +628,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.77841824
+frame_progress = 0.32680258
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -640,7 +640,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.77841824
+frame_progress = 0.32680258
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -715,7 +715,7 @@ position = Vector2(-477, 718)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.1618217
+frame_progress = 0.71020615
 
 [node name="DroneSound" parent="FlyerBot" index="6"]
 volume_db = 12.0
@@ -739,7 +739,7 @@ position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
 animation = &"idle"
-frame_progress = 0.19256677
+frame_progress = 0.53530777
 
 [node name="GPUParticles2D" parent="Player/AnimatedSprite2D" index="1"]
 position = Vector2(6, -12)

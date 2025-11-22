@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c0lfap4mc25lk"]
+[gd_scene load_steps=25 format=3 uid="uid://c0lfap4mc25lk"]
 
 [ext_resource type="Shader" uid="uid://ct3wgrieor2fr" path="res://assets/shaders/subsampler_outline.gdshader" id="1_028ys"]
 [ext_resource type="Texture2D" uid="uid://do0pyn2wlnnr3" path="res://assets/sprites/pyro_fly/pyro_fly_frames/frame0000.png" id="2_e4ilx"]
@@ -18,10 +18,10 @@
 shader = ExtResource("1_028ys")
 shader_parameter/enable_fill = false
 shader_parameter/fill_color = Color(1, 1, 1, 1)
-shader_parameter/pic = ExtResource("6_y8bv7")
+shader_parameter/pic = ExtResource("7_pehg1")
 shader_parameter/pic_scale = 1.0
 shader_parameter/pic_rot = 1.75
-shader_parameter/origin = Vector2(0, 0.048468627)
+shader_parameter/origin = Vector2(0, -0.047217082)
 shader_parameter/subdivisions = 116.91
 shader_parameter/round_alpha = true
 shader_parameter/color = Color(0, 0, 0, 1)
@@ -106,13 +106,11 @@ alpha_curve = SubResource("CurveTexture_0sw1t")
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_6dc7y"]
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_5ju33")
 sprite_frames = SubResource("SpriteFrames_fwakp")
 animation = &"default_fly"
-frame_progress = 0.26508483
+frame_progress = 0.42293477
 offset = Vector2(0, -48)
 script = ExtResource("9_lx642")
 
@@ -145,13 +143,3 @@ shadow_enabled = true
 shadow_item_cull_mask = 31
 texture = ExtResource("13_6dc7y")
 offset = Vector2(0, -380)
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0, 0, 0, 1)
-z_index = -7
-offset_left = -108.0
-offset_top = -186.0
-offset_right = 306.0
-offset_bottom = 98.0
-texture = SubResource("CanvasTexture_6dc7y")
-metadata/_edit_lock_ = true
