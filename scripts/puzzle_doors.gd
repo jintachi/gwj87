@@ -5,16 +5,18 @@ var open_state : bool = false
 
 @onready var blast_door_right: Sprite2D = $BlastDoorRight
 @onready var blast_door_left: Sprite2D = $BlastDoorLeft
+@onready var terminal_glow : Sprite2D = $TerminalGlow
+var glow_mat
 
 @onready var static_body_2d: StaticBody2D = $StaticBody2D
 @onready var area_2d: Area2D = $Area2D
 
+
 func _ready() -> void:
-	print("1")
 	area_2d.body_entered.connect(break_if_rad_chunk)
+	glow_mat = terminal_glow.material
 
 func break_if_rad_chunk(body: Node2D) -> void:
-	print("2")
 	if body is RadChunk:
 		open_doors()
 
@@ -26,6 +28,14 @@ func open_doors() -> void:
 	var mat_2 = blast_door_right.material
 	var tween = create_tween()
 	
+	tween.tween_method(
+		func(value):
+			if fmod(floor(exp(value)), 2) == 0:
+				terminal_glow.visible = false
+			else:
+				terminal_glow.visible = true,
+		0, 30, 4
+	)
 	tween.set_parallel()
 	tween.tween_method(
 		func(value):
@@ -37,4 +47,5 @@ func open_doors() -> void:
 			mat_2.set_shader_parameter("clip_amount", value),
 		0.0, -.60, 5
 	).set_trans(Tween.TRANS_EXPO)
-	tween.finished.connect(func():static_body_2d.process_mode = Node.PROCESS_MODE_DISABLED,)
+	tween.tween_interval(0.25)
+	tween.chain().tween_callback(func(): static_body_2d.process_mode = Node.PROCESS_MODE_DISABLED,)

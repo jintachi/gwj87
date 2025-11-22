@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccmxfyhbqmseb"]
+[gd_scene load_steps=16 format=3 uid="uid://ccmxfyhbqmseb"]
 
 [ext_resource type="Script" uid="uid://bnl8ygssbeqkn" path="res://scripts/puzzle_doors.gd" id="1_m6i44"]
 [ext_resource type="Shader" uid="uid://fetookhstt25" path="res://scenes/level1/door_clip.gdshader" id="2_ckrhv"]
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="2_o166y"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="3_ckrhv"]
+[ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ckrhv"]
+[ext_resource type="Shader" uid="uid://dpv2kwie0dbm5" path="res://scenes/radiation_glow/radiation_glow.gdshader" id="6_jbxug"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbxug"]
 shader = ExtResource("2_ckrhv")
@@ -17,7 +19,30 @@ shader_parameter/clip_amount = 0.0
 size = Vector2(192, 98)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5esn"]
-size = Vector2(192, 135)
+size = Vector2(128, 64)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pxjbi"]
+noise_type = 2
+frequency = 0.0018
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rq4iq"]
+noise = SubResource("FastNoiseLite_pxjbi")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rq4iq"]
+shader = ExtResource("6_jbxug")
+shader_parameter/subdivisions = 32.0
+shader_parameter/noise = SubResource("NoiseTexture2D_rq4iq")
+
+[sub_resource type="Gradient" id="Gradient_jbxug"]
+colors = PackedColorArray(1, 0.8784314, 0.7490196, 0.4862745, 0.94509804, 0.92156863, 0.84705883, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_52hna"]
+gradient = SubResource("Gradient_jbxug")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
 
 [node name="Doors" type="Node2D"]
 script = ExtResource("1_m6i44")
@@ -46,10 +71,20 @@ position = Vector2(-1, -2)
 shape = SubResource("RectangleShape2D_o2ks1")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(1, 3)
+position = Vector2(128, 48)
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 15.5)
+position = Vector2(0, 32)
 shape = SubResource("RectangleShape2D_i5esn")
 debug_color = Color(0, 0.6431373, 0.32156864, 0.14901961)
+
+[node name="Terminal" type="Sprite2D" parent="Area2D"]
+z_as_relative = false
+texture = ExtResource("5_ckrhv")
+
+[node name="TerminalGlow" type="Sprite2D" parent="."]
+z_as_relative = false
+material = SubResource("ShaderMaterial_rq4iq")
+position = Vector2(128, 48)
+texture = SubResource("GradientTexture2D_52hna")
