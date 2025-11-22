@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ojj2jey21mo4"]
+[gd_scene load_steps=20 format=3 uid="uid://ojj2jey21mo4"]
 
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_nsdob"]
 [ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_yceh7"]
@@ -58,6 +58,8 @@ stream_0/stream = ExtResource("6_yceh7")
 stream_1/stream = ExtResource("7_uovkd")
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uovkd"]
+size = Vector2(20, 32)
 collision_layer = 5
 script = ExtResource("1_nsdob")
 general_inventory = SubResource("Resource_t107e")
@@ -104,5 +106,13 @@ bus = &"SFX"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RadiationDisplay" parent="CanvasLayer" instance=ExtResource("8_uovkd")]
+
+[node name="RadiationDetector" type="Area2D" parent="."]
+position = Vector2(0, -24)
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RadiationDetector"]
+shape = SubResource("RectangleShape2D_uovkd")
 
 [editable path="AnimatedSprite2D"]
