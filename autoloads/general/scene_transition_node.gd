@@ -21,9 +21,10 @@ func transition_to(scene: PackedScene) -> void:
 	material_preloader.visible = false
 	await fade_out()
 
-func reload() -> void:
+func reload(global_checkpoint, player) -> void:
 	await fade_in()
-	get_tree().reload_current_scene()
+	player.global_position = global_checkpoint
+
 	await fade_out()
 
 func fade_in() -> void:

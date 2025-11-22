@@ -38,11 +38,10 @@ metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tuyoq"]
 size = Vector2(20, 9.00006)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("anim_sprite") groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 rotation = 0.010877016
 script = ExtResource("1_qhqgy")
 general_inventory = SubResource("Resource_ur7pv")
-anim_sprite = NodePath("AnimatedSprite2D")
 data = ExtResource("4_qlg0r")
 head_item = SubResource("Resource_d2wvv")
 weapon_item = SubResource("Resource_3v2ag")
@@ -51,8 +50,9 @@ consumable_item = SubResource("Resource_f1ej7")
 ammo_item = SubResource("Resource_oprun")
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("5_tuyoq")]
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.04153881
+frame_progress = 0.04553684
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.21753602, 19.998816)

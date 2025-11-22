@@ -12,8 +12,6 @@
 [ext_resource type="Script" uid="uid://hcicj0vl0oce" path="res://mechanics/ai/tasks/attack_player.gd" id="10_attack"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_p76lb"]
-resource_local_to_scene = false
-resource_name = ""
 var/waypoints/name = &"waypoints"
 var/waypoints/type = 24
 var/waypoints/hint = 0
@@ -45,132 +43,83 @@ var/lock_on_timer/hint = 0
 var/lock_on_timer/hint_string = ""
 
 [sub_resource type="BTAction" id="BTAction_set_waypoint"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("2_set_waypoint")
 
 [sub_resource type="BTAction" id="BTAction_move_to"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("3_move_to")
 
 [sub_resource type="BTAction" id="BTAction_increment"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("4_increment")
 
 [sub_resource type="BTAction" id="BTAction_check_awareness"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("6_check_awareness")
 
 [sub_resource type="BTAction" id="BTAction_set_attack_pos"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("7_set_attack_pos")
 
 [sub_resource type="BTAction" id="BTAction_move_to_attack_pos"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("3_move_to")
 
 [sub_resource type="BTSequence" id="BTSequence_move_once"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Move To Position Once"
 children = [SubResource("BTAction_set_attack_pos"), SubResource("BTAction_move_to_attack_pos")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_4f04p"]
-resource_local_to_scene = false
-resource_name = ""
 forever = true
 children = [SubResource("BTSequence_move_once")]
 
 [sub_resource type="BTAction" id="BTAction_check_close"]
-resource_local_to_scene = false
-resource_name = ""
-check_mode = 1
 script = ExtResource("8_check_distance")
 check_mode = 1
 
 [sub_resource type="BTAction" id="BTAction_lock_on"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("9_lock_on")
 
 [sub_resource type="BTAction" id="BTAction_attack"]
-resource_local_to_scene = false
-resource_name = ""
 script = ExtResource("10_attack")
 
 [sub_resource type="BTRepeat" id="BTRepeat_f3fqj"]
-resource_local_to_scene = false
-resource_name = ""
 forever = true
 children = [SubResource("BTAction_attack")]
 
 [sub_resource type="BTSequence" id="BTSequence_attack"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Attack Sequence"
 children = [SubResource("BTAction_check_close"), SubResource("BTAction_lock_on"), SubResource("BTRepeat_f3fqj")]
 
 [sub_resource type="BTParallel" id="BTParallel_4f04p"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Move Loop Sequence"
 children = [SubResource("BTRepeat_4f04p"), SubResource("BTSequence_attack")]
 
 [sub_resource type="BTSequence" id="BTSequence_awareness_300"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Awareness >= 300 Sequence"
 children = [SubResource("BTAction_check_awareness"), SubResource("BTParallel_4f04p")]
 
 [sub_resource type="BTSequence" id="BTSequence_patrol"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Patrol Sequence"
 children = [SubResource("BTAction_set_waypoint"), SubResource("BTAction_move_to"), SubResource("BTAction_increment"), SubResource("BTSequence_awareness_300")]
 
 [sub_resource type="BTSelector" id="BTSelector_root"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "Root Selector"
 children = [SubResource("BTSequence_patrol")]
 
 [sub_resource type="BTAction" id="BTAction_jypi1"]
-resource_local_to_scene = false
-resource_name = ""
 custom_name = "awareness_task"
-decay_rate_below_200 = 20.0
-decay_rate_above_200 = 19.0
-alert_level_3_timer_duration = 2.0
 script = ExtResource("4_5rr2v")
 decay_rate_below_200 = 20.0
 decay_rate_above_200 = 19.0
 alert_level_3_timer_duration = 2.0
 
 [sub_resource type="BTAction" id="BTAction_gpm82"]
-resource_local_to_scene = false
-resource_name = ""
-hearing_range = 200.0
 script = ExtResource("5_jypi1")
 hearing_range = 200.0
 
 [sub_resource type="BTCooldown" id="BTCooldown_jypi1"]
-resource_local_to_scene = false
-resource_name = ""
 duration = 0.2
 children = [SubResource("BTAction_gpm82")]
 
 [sub_resource type="BTParallel" id="BTParallel_gpm82"]
-resource_local_to_scene = false
-resource_name = ""
 children = [SubResource("BTSelector_root"), SubResource("BTAction_jypi1"), SubResource("BTCooldown_jypi1")]
 
 [resource]
-resource_local_to_scene = false
-resource_name = ""
 blackboard_plan = SubResource("BlackboardPlan_p76lb")
 root_task = SubResource("BTParallel_gpm82")

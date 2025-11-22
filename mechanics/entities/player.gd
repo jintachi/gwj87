@@ -12,6 +12,9 @@ var extra_interactions : Array[Callable]
 @onready var animation: NomadAnimation = $AnimatedSprite2D
 @onready var footsteps: AudioStreamPlayer2D = $Footsteps
 
+var checkpoint_position
+var max_health
+
 
 func _ready() -> void:
 	super()
@@ -19,6 +22,9 @@ func _ready() -> void:
 	instance = self
 	pickup_area.body_entered.connect(item_in_range)
 	pickup_area.body_exited.connect(item_out_of_range)
+
+	checkpoint_position = global_position
+	max_health = health
 
 func item_in_range(body: Node2D) -> void:
 	if body is PhysicalItem:
@@ -58,8 +64,13 @@ func get_move_input() -> void:
 	input_dir = Input.get_vector("left", "right", "up", "down")
 
 func kill() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-	TransitionScene.reload()
+	#process_mode = Node.PROCESS_MODE_DISABLED
+	extra_interactions[0].call(self)
+	var last_index = extra_interactions.size() - 1
+	extra_interactions[0] = extra_interactions[last_index]
+	extra_interactions.resize(last_index)
+	health = max_health
+	TransitionScene.reload(checkpoint_position, self)
 
 func _process(delta: float) -> void:
 	#get_attack_input()
