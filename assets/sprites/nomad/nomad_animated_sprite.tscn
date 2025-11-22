@@ -254,9 +254,8 @@ alpha_curve = SubResource("CurveTexture_dtoso")
 material = SubResource("ShaderMaterial_d77k0")
 sprite_frames = SubResource("SpriteFrames_04bfb")
 animation = &"idle"
-frame_progress = 0.95514584
+frame_progress = 0.43221173
 script = ExtResource("46_dtoso")
-geiger_audio_toggle = false
 rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
@@ -271,5 +270,3 @@ amount = 1
 texture = SubResource("GradientTexture2D_xogpb")
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_u18wl")
-
-[node name="AudioListener2D" type="AudioListener2D" parent="."]

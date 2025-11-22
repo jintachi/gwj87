@@ -1,0 +1,84 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://dxevoiog3ubve"]
+
+[ext_resource type="FontFile" uid="uid://ikjmfllbh1ow" path="res://assets/fonts/Laconic_Regular.otf" id="1_36qhr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7c7mo"]
+bg_color = Color(0.43519226, 0.4351923, 0.43519217, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxtnk"]
+bg_color = Color(0.5409904, 0.54099053, 0.5409904, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36qhr"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.41552073, 0.36258322, 0.27889624, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ke0a"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.2792484, 0.21684569, 0.16134822, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gfiuu"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.32717648, 0.25438732, 0.19039893, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hsry8"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.16219166, 0.17220607, 0.16719818, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fqvh"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 4.0
+bg_color = Color(0.2792484, 0.21684569, 0.16134822, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k4r43"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6392157)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3vha"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6392157)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7c7mo"]
+
+[resource]
+Control/font_sizes/font_size = 18
+Control/fonts/font = ExtResource("1_36qhr")
+Control/styles/grabber_area = SubResource("StyleBoxFlat_7c7mo")
+Control/styles/grabber_area_highlight = SubResource("StyleBoxFlat_vxtnk")
+Control/styles/hover = SubResource("StyleBoxFlat_36qhr")
+Control/styles/hover_pressed = SubResource("StyleBoxFlat_2ke0a")
+Control/styles/normal = SubResource("StyleBoxFlat_gfiuu")
+Control/styles/panel = SubResource("StyleBoxFlat_hsry8")
+Control/styles/pressed = SubResource("StyleBoxFlat_8fqvh")
+Control/styles/scroll = SubResource("StyleBoxFlat_k4r43")
+Control/styles/slider = SubResource("StyleBoxFlat_o3vha")
+Label/styles/normal = SubResource("StyleBoxEmpty_7c7mo")

@@ -98,7 +98,7 @@ func _tick(delta: float) -> Status:
 	
 	if target_pos == Vector2.ZERO:
 		# No target available, stop
-		agent.move(Vector2.ZERO)
+		agent.move(Vector2.ZERO, delta)
 		return RUNNING
 	
 	# Update target if cooldown expired or no target set
@@ -113,7 +113,7 @@ func _tick(delta: float) -> Status:
 	
 	if distance_to_target < arrival_tolerance:
 		# Reached target, wait for cooldown
-		agent.move(Vector2.ZERO)
+		agent.move(Vector2.ZERO, delta)
 		return RUNNING
 	
 	# Get speed and apply multiplier
@@ -124,8 +124,7 @@ func _tick(delta: float) -> Status:
 	speed *= caution_speed_multiplier  # 0.5x speed
 	
 	var direction: Vector2 = agent.global_position.direction_to(_target_position)
-	var desired_velocity: Vector2 = direction * speed
-	agent.move(desired_velocity)
+	agent.move(direction, delta)
 	agent.update_facing()
 	
 	return RUNNING

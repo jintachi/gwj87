@@ -1,0 +1,125 @@
+[gd_resource type="BehaviorTree" load_steps=33 format=3 uid="uid://dv4k24du8qcrm"]
+
+[ext_resource type="Script" uid="uid://c2abtr7uiu0st" path="res://mechanics/ai/tasks/set_next_waypoint.gd" id="2_set_waypoint"]
+[ext_resource type="Script" uid="uid://c8yam2n4p5q6r" path="res://mechanics/ai/tasks/move_to.gd" id="3_move_to"]
+[ext_resource type="Script" uid="uid://dcc0uqo0krryb" path="res://mechanics/ai/tasks/manage_awareness.gd" id="4_5rr2v"]
+[ext_resource type="Script" uid="uid://dpultkb3mcjd7" path="res://mechanics/ai/tasks/increment_waypoint_index.gd" id="4_increment"]
+[ext_resource type="Script" uid="uid://dv0xjjp85ipgo" path="res://mechanics/ai/tasks/detect_hearing.gd" id="5_jypi1"]
+[ext_resource type="Script" uid="uid://bp5767r6vg5s3" path="res://mechanics/ai/tasks/check_awareness_300.gd" id="6_check_awareness"]
+[ext_resource type="Script" uid="uid://babkoe48bkywm" path="res://mechanics/ai/tasks/set_optimal_attack_position.gd" id="7_set_attack_pos"]
+[ext_resource type="Script" uid="uid://d15hehy3f44xc" path="res://mechanics/ai/tasks/check_player_distance.gd" id="8_check_distance"]
+[ext_resource type="Script" uid="uid://ctlxwdj50cujx" path="res://mechanics/ai/tasks/lock_on_timer.gd" id="9_lock_on"]
+[ext_resource type="Script" uid="uid://hcicj0vl0oce" path="res://mechanics/ai/tasks/attack_player.gd" id="10_attack"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_p76lb"]
+var/waypoints/name = &"waypoints"
+var/waypoints/type = 24
+var/waypoints/hint = 0
+var/waypoints/hint_string = ""
+var/patrol_index/name = &"patrol_index"
+var/patrol_index/type = 2
+var/patrol_index/value = 0
+var/patrol_index/hint = 0
+var/patrol_index/hint_string = ""
+var/target_position/name = &"target_position"
+var/target_position/type = 5
+var/target_position/value = Vector2(0, 0)
+var/target_position/hint = 0
+var/target_position/hint_string = ""
+var/speed/name = &"speed"
+var/speed/type = 3
+var/speed/value = 200.0
+var/speed/hint = 1
+var/speed/hint_string = "10,1000,10"
+var/awareness/name = &"awareness"
+var/awareness/type = 2
+var/awareness/value = 0
+var/awareness/hint = 1
+var/awareness/hint_string = "0,300"
+var/lock_on_timer/name = &"lock_on_timer"
+var/lock_on_timer/type = 3
+var/lock_on_timer/value = 0.0
+var/lock_on_timer/hint = 0
+var/lock_on_timer/hint_string = ""
+
+[sub_resource type="BTAction" id="BTAction_set_waypoint"]
+script = ExtResource("2_set_waypoint")
+
+[sub_resource type="BTAction" id="BTAction_move_to"]
+script = ExtResource("3_move_to")
+
+[sub_resource type="BTAction" id="BTAction_increment"]
+script = ExtResource("4_increment")
+
+[sub_resource type="BTAction" id="BTAction_check_awareness"]
+script = ExtResource("6_check_awareness")
+
+[sub_resource type="BTAction" id="BTAction_set_attack_pos"]
+script = ExtResource("7_set_attack_pos")
+
+[sub_resource type="BTAction" id="BTAction_move_to_attack_pos"]
+script = ExtResource("3_move_to")
+
+[sub_resource type="BTSequence" id="BTSequence_move_once"]
+custom_name = "Move To Position Once"
+children = [SubResource("BTAction_set_attack_pos"), SubResource("BTAction_move_to_attack_pos")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_4f04p"]
+forever = true
+children = [SubResource("BTSequence_move_once")]
+
+[sub_resource type="BTAction" id="BTAction_check_close"]
+script = ExtResource("8_check_distance")
+check_mode = 1
+
+[sub_resource type="BTAction" id="BTAction_lock_on"]
+script = ExtResource("9_lock_on")
+
+[sub_resource type="BTAction" id="BTAction_attack"]
+script = ExtResource("10_attack")
+
+[sub_resource type="BTRepeat" id="BTRepeat_f3fqj"]
+forever = true
+children = [SubResource("BTAction_attack")]
+
+[sub_resource type="BTSequence" id="BTSequence_attack"]
+custom_name = "Attack Sequence"
+children = [SubResource("BTAction_check_close"), SubResource("BTAction_lock_on"), SubResource("BTRepeat_f3fqj")]
+
+[sub_resource type="BTParallel" id="BTParallel_4f04p"]
+custom_name = "Move Loop Sequence"
+children = [SubResource("BTRepeat_4f04p"), SubResource("BTSequence_attack")]
+
+[sub_resource type="BTSequence" id="BTSequence_awareness_300"]
+custom_name = "Awareness >= 300 Sequence"
+children = [SubResource("BTAction_check_awareness"), SubResource("BTParallel_4f04p")]
+
+[sub_resource type="BTSequence" id="BTSequence_patrol"]
+custom_name = "Patrol Sequence"
+children = [SubResource("BTAction_set_waypoint"), SubResource("BTAction_move_to"), SubResource("BTAction_increment"), SubResource("BTSequence_awareness_300")]
+
+[sub_resource type="BTSelector" id="BTSelector_root"]
+custom_name = "Root Selector"
+children = [SubResource("BTSequence_patrol")]
+
+[sub_resource type="BTAction" id="BTAction_jypi1"]
+custom_name = "awareness_task"
+script = ExtResource("4_5rr2v")
+decay_rate_below_200 = 20.0
+decay_rate_above_200 = 19.0
+alert_level_3_timer_duration = 2.0
+
+[sub_resource type="BTAction" id="BTAction_gpm82"]
+script = ExtResource("5_jypi1")
+hearing_range = 200.0
+
+[sub_resource type="BTCooldown" id="BTCooldown_jypi1"]
+duration = 0.2
+children = [SubResource("BTAction_gpm82")]
+
+[sub_resource type="BTParallel" id="BTParallel_gpm82"]
+children = [SubResource("BTSelector_root"), SubResource("BTAction_jypi1"), SubResource("BTCooldown_jypi1")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_p76lb")
+root_task = SubResource("BTParallel_gpm82")

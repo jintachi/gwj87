@@ -25,3 +25,5 @@ func item_process(data: InventoryItem.ItemProcessData):
 		if data.entity is LivingEntity:
 			var entity = data.entity as LivingEntity
 			entity.take_damage(damage)
+		if data.entity is Player:
+			data.entity.animation.radiation_amount += 0.02

@@ -10,9 +10,11 @@ var open_state : bool = false
 @onready var area_2d: Area2D = $Area2D
 
 func _ready() -> void:
+	print("1")
 	area_2d.body_entered.connect(break_if_rad_chunk)
 
 func break_if_rad_chunk(body: Node2D) -> void:
+	print("2")
 	if body is RadChunk:
 		open_doors()
 

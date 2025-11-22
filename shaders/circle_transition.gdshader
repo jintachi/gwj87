@@ -16,7 +16,7 @@ vec2 step_px(vec2 uv, float px_size) {
 void fragment() {
 	vec2 aspect_ratio = (size / max(size.x, size.y));
 	vec2 v = (step_px(UV, 256) - 0.5) * aspect_ratio;
-	float inside = length(v) >= (radius * length(aspect_ratio) * 0.5) ? 1.0 : 0.0;
+	float inside = length(v) >= (radius * length(aspect_ratio) * 0.501) ? 1.0 : 0.0;
 	COLOR = vec4(color, inside);
 }
 
