@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=40 format=4 uid="uid://dhtwva8xmexmf"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]

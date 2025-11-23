@@ -1,7 +1,7 @@
-[gd_scene load_steps=40 format=4 uid="uid://dx55o32l3e2g5"]
+[gd_scene load_steps=42 format=4 uid="uid://dx55o32l3e2g5"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
-[ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
+[ext_resource type="Shader" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
 [ext_resource type="Texture2D" uid="uid://fpuq3sga11e0" path="res://assets/tilesets/empty_tileset.png" id="2_jmggy"]
 [ext_resource type="Texture2D" uid="uid://d25gfltip6av" path="res://scenes/level1/start_room_floor.png" id="3_t107e"]
 [ext_resource type="Texture2D" uid="uid://8wr74v1pqfsm" path="res://scenes/level1/grate_texture.png" id="3_wd7kj"]
@@ -27,7 +27,7 @@
 [ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
 [ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="26_6a6ra"]
-[ext_resource type="PackedScene" uid="uid://ojj2jey21mo4" path="res://scenes/level1/player.tscn" id="29_a7lbm"]
+[ext_resource type="PackedScene" path="res://scenes/level1/player.tscn" id="29_a7lbm"]
 [ext_resource type="PackedScene" uid="uid://dbd6f64ev58ey" path="res://scenes/rad_container/rad_container.tscn" id="32_cyq5e"]
 [ext_resource type="PackedScene" uid="uid://dokreh63f5gq8" path="res://scenes/level1/exit.tscn" id="33_a7lbm"]
 
@@ -333,6 +333,15 @@ point_count = 12
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vglon"]
 binding/waypoints = NodePath("../PatrolPath")
 
+[sub_resource type="Gradient" id="Gradient_6jbmo"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5g7au"]
+gradient = SubResource("Gradient_6jbmo")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
+
 [node name="Level1" type="Node2D"]
 y_sort_enabled = true
 
@@ -630,14 +639,14 @@ regen_multiplier = 6.0
 hit_period = 0.85
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.7228305
+frame_progress = 0.027739732
 
 [node name="FlyerBot" parent="." groups=["enemies"] instance=ExtResource("16_36yfi")]
 position = Vector2(-478, 690)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.6263202
+frame_progress = 0.7143217
 
 [node name="PointLight2D" parent="FlyerBot/AnimatedSprite2D" index="3"]
 position = Vector2(5.5977783, -43.054203)
@@ -669,7 +678,7 @@ position = Vector2(-182, -160)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot2" index="1"]
-frame_progress = 0.7580793
+frame_progress = 0.8460643
 
 [node name="PointLight2D" parent="FlyerBot2/AnimatedSprite2D" index="3"]
 position = Vector2(25, -91.99999)
@@ -700,6 +709,7 @@ debug = null
 inset_length = 60.0
 mask = 2
 filter = true
+metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Area2D"]
 position = Vector2(-176.7865, -184)
@@ -711,7 +721,8 @@ bus = &"Ambient"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 visibility_layer = 0
-polygon = PackedVector2Array(-576, 304, 168, 304, 168, 592, 400, 592, 400, -128, 168, -184, -576, -184)
+polygon = PackedVector2Array(-576, 304, 168, 304, 168, 592, 400, 592, 400, -128, 263.5973, -160.92479, 168, -184, -576, -184)
+metadata/_edit_lock_ = true
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 color = Color(0, 0, 0, 1)
@@ -726,6 +737,49 @@ position = Vector2(-568, 392)
 
 [node name="BrokenRadiationContainer2" parent="." instance=ExtResource("32_cyq5e")]
 position = Vector2(616, 104)
+
+[node name="Lamp" type="PointLight2D" parent="."]
+position = Vector2(-155, 551)
+scale = Vector2(8.606647, 8.606647)
+energy = 1.06
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5g7au")
+metadata/_edit_lock_ = true
+
+[node name="Lamp2" type="PointLight2D" parent="."]
+position = Vector2(582, 343.00003)
+scale = Vector2(6.3814483, 6.3814483)
+energy = 0.63
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5g7au")
+metadata/_edit_lock_ = true
+
+[node name="Warning Area" type="PointLight2D" parent="."]
+position = Vector2(-417, 801.00006)
+scale = Vector2(4.628223, 4.628223)
+color = Color(1, 1, 0, 1)
+energy = 0.69
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5g7au")
+metadata/_edit_lock_ = true
+
+[node name="Warning Area2" type="PointLight2D" parent="."]
+position = Vector2(-192.00002, 243.00002)
+scale = Vector2(4.628223, 4.628223)
+color = Color(1, 0, 0, 1)
+energy = 0.69
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5g7au")
+metadata/_edit_lock_ = true
+
+[node name="Warning Area3" type="PointLight2D" parent="."]
+position = Vector2(-160, -308.99997)
+scale = Vector2(4.628223, 4.628223)
+color = Color(1, 0, 0, 1)
+energy = 0.69
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_5g7au")
+metadata/_edit_lock_ = true
 
 [editable path="Player"]
 [editable path="Player/AnimatedSprite2D"]

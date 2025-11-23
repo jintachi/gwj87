@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ojj2jey21mo4"]
+[gd_scene load_steps=36 format=3 uid="uid://dmiwwq1dsu6n1"]
 
 [ext_resource type="Script" uid="uid://bc0nyx1kmau85" path="res://mechanics/entities/player.gd" id="1_nsdob"]
 [ext_resource type="Script" uid="uid://bq4mi00oaovbm" path="res://mechanics/inventory/inventory_slot.gd" id="2_yceh7"]
@@ -8,6 +8,14 @@
 [ext_resource type="AudioStream" uid="uid://bfohgbxm8ty8m" path="res://assets/sounds/step_loud_2.mp3" id="7_uovkd"]
 [ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="7_yceh7"]
 [ext_resource type="PackedScene" uid="uid://b6f5jrkre4v4" path="res://scripts/ui/radiation_display.tscn" id="8_uovkd"]
+[ext_resource type="Theme" uid="uid://dxevoiog3ubve" path="res://assets/ui/game_theme.tres" id="9_vl7me"]
+[ext_resource type="Script" uid="uid://bjnwi1noc1a5n" path="res://scenes/level1/pause.gd" id="10_gk3ck"]
+[ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="10_yxc8o"]
+[ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://assets/sounds/wind_test.mp3" id="11_gk3ck"]
+[ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://assets/sounds/radalarm_hi.mp3" id="12_amacv"]
+[ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://assets/sounds/equip.mp3" id="13_86q3t"]
+[ext_resource type="PackedScene" uid="uid://bhd47vxb6n0bl" path="res://assets/ui/input_action.tscn" id="14_swvbj"]
+[ext_resource type="Script" uid="uid://bsrivijkyrjlt" path="res://scenes/level1/exit_to_main_menu.gd" id="16_amacv"]
 
 [sub_resource type="Resource" id="Resource_yceh7"]
 script = ExtResource("2_yceh7")
@@ -57,6 +65,30 @@ streams_count = 2
 stream_0/stream = ExtResource("6_yceh7")
 stream_1/stream = ExtResource("7_uovkd")
 
+[sub_resource type="LabelSettings" id="LabelSettings_i7spd"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_cbwo8"]
+font_size = 20
+
+[sub_resource type="InputEventAction" id="InputEventAction_jc3v6"]
+action = &"up"
+
+[sub_resource type="InputEventAction" id="InputEventAction_jg00c"]
+action = &"left"
+
+[sub_resource type="InputEventAction" id="InputEventAction_tctaf"]
+action = &"down"
+
+[sub_resource type="InputEventAction" id="InputEventAction_wabva"]
+action = &"right"
+
+[sub_resource type="InputEventAction" id="InputEventAction_80ewk"]
+action = &"interact"
+
+[sub_resource type="InputEventAction" id="InputEventAction_k7oew"]
+action = &"dash"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uovkd"]
 size = Vector2(20, 32)
 
@@ -75,7 +107,7 @@ metadata/_custom_type_script = "uid://bc0nyx1kmau85"
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
 position = Vector2(-1, -29)
-frame_progress = 0.8570871
+frame_progress = 0.24176715
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)
@@ -102,6 +134,208 @@ bus = &"SFX"
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RadiationDisplay" parent="CanvasLayer" instance=ExtResource("8_uovkd")]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("9_vl7me")
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+color = Color(0, 0, 0, 0.7529412)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 200
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+color = Color(0.13067189, 0.11181197, 0.08750149, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_i7spd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resume Margin" type="MarginContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer" node_paths=PackedStringArray("menu_overlay")]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("10_gk3ck")
+menu_overlay = NodePath("../../../..")
+
+[node name="Resume" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/Resume Margin"]
+layout_mode = 2
+text = "Resume"
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+size_flags_vertical = 4
+current_tab = 0
+
+[node name="Audio" type="VBoxContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Audio Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+text = "Audio"
+label_settings = SubResource("LabelSettings_cbwo8")
+
+[node name="Master Volume Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="Master Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("10_yxc8o")
+bus_name = "Master"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio/Master Volume Slider"]
+stream = ExtResource("11_gk3ck")
+parameters/looping = true
+
+[node name="Music Volume Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+visible = false
+layout_mode = 2
+text = "Music Volume"
+
+[node name="Music Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+visible = false
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("10_yxc8o")
+bus_name = "OST"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio/Music Volume Slider"]
+stream = ExtResource("11_gk3ck")
+parameters/looping = true
+
+[node name="SFX Volume Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFX Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("10_yxc8o")
+bus_name = "SFX"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio/SFX Volume Slider"]
+stream = ExtResource("12_amacv")
+bus = &"SFX"
+parameters/looping = true
+
+[node name="UI Volume Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+text = "UI Volume"
+
+[node name="UI Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("10_yxc8o")
+bus_name = "UI"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio/UI Volume Slider"]
+stream = ExtResource("13_86q3t")
+bus = &"UI"
+parameters/looping = true
+
+[node name="Ambient Volume Label" type="Label" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+text = "Ambient Volume"
+
+[node name="Ambient Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+script = ExtResource("10_yxc8o")
+bus_name = "Ambient"
+
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Audio/Ambient Volume Slider"]
+stream = ExtResource("11_gk3ck")
+bus = &"Ambient"
+parameters/looping = true
+
+[node name="Controls" type="ScrollContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+follow_focus = true
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Up" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+layout_mode = 2
+action = SubResource("InputEventAction_jc3v6")
+
+[node name="Left" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+layout_mode = 2
+action = SubResource("InputEventAction_jg00c")
+
+[node name="Down" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+layout_mode = 2
+action = SubResource("InputEventAction_tctaf")
+
+[node name="Right" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+layout_mode = 2
+action = SubResource("InputEventAction_wabva")
+
+[node name="Interact" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+layout_mode = 2
+action = SubResource("InputEventAction_80ewk")
+
+[node name="Dash" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("14_swvbj")]
+visible = false
+layout_mode = 2
+action = SubResource("InputEventAction_k7oew")
+
+[node name="Exit To Main Menu" type="MarginContainer" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("16_amacv")
+
+[node name="Exit To Main Menu" type="Button" parent="CanvasLayer/MarginContainer/ColorRect/MarginContainer/VBoxContainer/Exit To Main Menu"]
+layout_mode = 2
+text = "Exit To Main Menu"
 
 [node name="RadiationDetector" type="Area2D" parent="."]
 position = Vector2(0, -24)
