@@ -509,13 +509,13 @@ collision_mask = 4
 script = ExtResource("14_6jbmo")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-320, -128, -32, -128, -32, 104, 96, 104, 96, 192, -320, 192)
+polygon = PackedVector2Array(-312, -120, -40, -120, -40, 104, 88, 104, 88, 184, -312, 184)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-384, -176, -576, -176, -576, 272, -264, 272, -264, 288, -224, 288, -224, 272, -224, 256, -384, 256)
+polygon = PackedVector2Array(-392, -176, -576, -176, -576, 272, -264, 272, -264, 280, -232, 280, -232, 272, -232, 264, -392, 264)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-160, 256, -160, 288, -104, 288, -104, 272, 160, 272, 160, 592, 400, 592, 400, 416, 448, 416, 448, 392, 384, 392, 384, 320, 448, 320, 448, 296, 392, 296, 392, -192, 32, -192, 32, 32, 192, 32, 192, 96, 160, 96, 160, 256)
+polygon = PackedVector2Array(-152, 264, -152, 280, -104, 280, -104, 272, 160, 272, 160, 592, 400, 592, 400, 416, 448, 416, 448, 392, 384, 392, 384, 320, 448, 320, 448, 296, 392, 296, 392, -192, 40, -192, 40, 24, 200, 24, 200, 104, 168, 104, 168, 264)
 
 [node name="Decorations" type="Node2D" parent="."]
 
@@ -630,14 +630,14 @@ regen_multiplier = 6.0
 hit_period = 0.85
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.7228305
+frame_progress = 0.73163605
 
 [node name="FlyerBot" parent="." groups=["enemies"] instance=ExtResource("16_36yfi")]
 position = Vector2(-478, 690)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.6263202
+frame_progress = 0.04067108
 
 [node name="PointLight2D" parent="FlyerBot/AnimatedSprite2D" index="3"]
 position = Vector2(5.5977783, -43.054203)
@@ -669,7 +669,7 @@ position = Vector2(-182, -160)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot2" index="1"]
-frame_progress = 0.7580793
+frame_progress = 0.17242768
 
 [node name="PointLight2D" parent="FlyerBot2/AnimatedSprite2D" index="3"]
 position = Vector2(25, -91.99999)
