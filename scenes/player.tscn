@@ -50,7 +50,6 @@ consumable_item = SubResource("Resource_f1ej7")
 ammo_item = SubResource("Resource_oprun")
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("5_tuyoq")]
-animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.04553684
 

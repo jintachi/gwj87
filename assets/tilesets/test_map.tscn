@@ -50,7 +50,7 @@ tile_set = ExtResource("1_atj7b")
 
 [node name="PlayerSprite" parent="." instance=ExtResource("2_ignv8")]
 position = Vector2(127, -92)
-frame_progress = 0.835502
+frame_progress = 0.70635206
 
 [node name="Sandstorm" parent="." instance=ExtResource("2_3q0ob")]
 visible = false

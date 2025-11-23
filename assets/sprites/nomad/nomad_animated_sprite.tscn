@@ -221,9 +221,7 @@ alpha_curve = SubResource("CurveTexture_dtoso")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D"]
 material = SubResource("ShaderMaterial_d77k0")
 sprite_frames = SubResource("SpriteFrames_04bfb")
-animation = &"walk"
-frame = 5
-frame_progress = 0.4274406
+animation = &"idle"
 script = ExtResource("46_dtoso")
 rad_audio_streams = [ExtResource("47_y5a7b"), ExtResource("48_a068p"), ExtResource("49_d77k0")]
 

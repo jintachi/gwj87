@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dn4jvhkp3a2f3" path="res://assets/decorations/storage_stall_wall.tscn" id="5_wlolr"]
 [ext_resource type="Texture2D" uid="uid://didk0wom7ki8r" path="res://scenes/level1/small_storage_room_floor.png" id="6_wd7kj"]
 [ext_resource type="Texture2D" uid="uid://ypgrehccjwiq" path="res://scenes/level1/small_storage_room_walls.png" id="7_qulnv"]
-[ext_resource type="PackedScene" uid="uid://ojj2jey21mo4" path="res://scenes/level1/player.tscn" id="7_wlolr"]
 [ext_resource type="Texture2D" uid="uid://dxp7acxcsr07" path="res://scenes/sandstorm/sparkles2.png" id="8_36yfi"]
 [ext_resource type="Texture2D" uid="uid://bmqiidoblmyd1" path="res://scenes/level1/exit_building.png" id="8_a6j6j"]
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="9_euaoc"]
@@ -33,6 +32,7 @@
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
 [ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="24_vglon"]
 [ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="26_6a6ra"]
+[ext_resource type="PackedScene" uid="uid://ojj2jey21mo4" path="res://scenes/level1/player.tscn" id="29_a7lbm"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -705,12 +705,18 @@ initial_parameters = [0.0, 0.0, 5.0, 10.0, 0.1]
 max_parameters = [0.0, 0.0, 0.0, 0.0, 0.0]
 metadata/_edit_use_anchors_ = true
 
+[node name="Player" parent="." instance=ExtResource("29_a7lbm")]
+position = Vector2(419, 718)
+
+[node name="AnimatedSprite2D" parent="Player" index="1"]
+frame_progress = 0.8138363
+
 [node name="FlyerBot" parent="." groups=["enemies"] instance=ExtResource("16_36yfi")]
 position = Vector2(-478, 690)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.2682866
+frame_progress = 0.7696501
 
 [node name="PointLight2D" parent="FlyerBot/AnimatedSprite2D" index="3"]
 position = Vector2(5.5977783, -43.054203)
@@ -742,7 +748,7 @@ position = Vector2(-182, -160)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot2" index="1"]
-frame_progress = 0.40005875
+frame_progress = 0.9014174
 
 [node name="PointLight2D" parent="FlyerBot2/AnimatedSprite2D" index="3"]
 position = Vector2(25, -91.99999)
@@ -765,13 +771,6 @@ bus = &"SFX"
 volume_db = 12.0
 max_distance = 400.0
 bus = &"SFX"
-
-[node name="Player" parent="." instance=ExtResource("7_wlolr")]
-y_sort_enabled = true
-position = Vector2(304, 728)
-
-[node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.13089155
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
@@ -801,9 +800,9 @@ shadow_enabled = true
 shadow_color = Color(0, 0, 0, 1)
 shadow_item_cull_mask = 129
 
+[editable path="Player"]
+[editable path="Player/AnimatedSprite2D"]
 [editable path="FlyerBot"]
 [editable path="FlyerBot/AnimatedSprite2D"]
 [editable path="FlyerBot2"]
 [editable path="FlyerBot2/AnimatedSprite2D"]
-[editable path="Player"]
-[editable path="Player/AnimatedSprite2D"]
