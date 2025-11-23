@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=44 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="9_euaoc"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="10_lqknr"]
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
-[ext_resource type="Texture2D" uid="uid://dxrtknp6ujnot" path="res://scenes/level1/half_storage_stall.png" id="11_o2ks1"]
 [ext_resource type="Texture2D" uid="uid://j36un6oqvwnk" path="res://scenes/level1/door_arch.png" id="11_v5rty"]
 [ext_resource type="Script" uid="uid://btc5utlsyna8i" path="res://scripts/rad_dispenser.gd" id="12_v4nxl"]
 [ext_resource type="Script" uid="uid://ba8kxxuceb2ts" path="res://scenes/level1/fall_hazard.gd" id="14_6jbmo"]
@@ -27,8 +26,8 @@
 [ext_resource type="PackedScene" uid="uid://btjmjs4gy4ybm" path="res://scenes/pyro_fly_enemy.tscn" id="16_36yfi"]
 [ext_resource type="Texture2D" uid="uid://3vx6b3elgsxp" path="res://assets/sprites/metal_crate.png" id="16_rcl1p"]
 [ext_resource type="Texture2D" uid="uid://b16duxxl3ywnl" path="res://assets/sprites/metal_panel.png" id="17_jp34l"]
+[ext_resource type="PackedScene" uid="uid://cb1jr4w6gpas" path="res://assets/decorations/half_stall_wall.tscn" id="18_rcl1p"]
 [ext_resource type="Texture2D" uid="uid://rk8e7r5ih3b1" path="res://assets/sprites/moving_platform.png" id="19_6a6ra"]
-[ext_resource type="Script" uid="uid://d0ecixjm05wu8" path="res://scripts/object_dimmer.gd" id="19_rcl1p"]
 [ext_resource type="Script" uid="uid://c2dyp0374d8dv" path="res://scenes/level1/glitch_overlay.gd" id="21_pw0jy"]
 [ext_resource type="Material" uid="uid://c02e874rq02b8" path="res://assets/materials/glitch_material.tres" id="21_ui0ie"]
 [ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
@@ -297,12 +296,6 @@ texture = ExtResource("2_jmggy")
 physics_layer_0/collision_layer = 3
 sources/0 = SubResource("TileSetAtlasSource_v4nxl")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jp34l"]
-size = Vector2(90, 82)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vglon"]
-size = Vector2(90, 20)
-
 [sub_resource type="Curve2D" id="Curve2D_8702e"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -168, -160, 0, 0, 0, 0, -352, -160, 0, 0, 0, 0, -352, 224, 0, 0, 0, 0, 128, 224, 0, 0, 0, 0, 128, 64, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, -160, 0, 0, 0, 0, -168, -160)
@@ -521,99 +514,19 @@ flip_h = true
 [node name="StorageStallWall" parent="map_paints" instance=ExtResource("5_wlolr")]
 position = Vector2(-576, 633)
 
-[node name="HalfStallWall" type="Sprite2D" parent="map_paints"]
+[node name="HalfStallWall" parent="map_paints" instance=ExtResource("18_rcl1p")]
 position = Vector2(622, 149)
-texture = ExtResource("11_o2ks1")
 
-[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall" node_paths=PackedStringArray("target")]
-collision_layer = 3
-collision_mask = 4
-script = ExtResource("19_rcl1p")
-target = NodePath("..")
-dim_alpha = 0.6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall/Area2D"]
-shape = SubResource("RectangleShape2D_jp34l")
-debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall/StaticBody2D"]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_vglon")
-
-[node name="HalfStallWall2" type="Sprite2D" parent="map_paints"]
+[node name="HalfStallWall2" parent="map_paints" instance=ExtResource("18_rcl1p")]
 position = Vector2(622, 21)
-texture = ExtResource("11_o2ks1")
 
-[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall2" node_paths=PackedStringArray("target")]
-collision_layer = 3
-collision_mask = 4
-script = ExtResource("19_rcl1p")
-target = NodePath("..")
-dim_alpha = 0.6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall2/Area2D"]
-shape = SubResource("RectangleShape2D_jp34l")
-debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall2"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall2/StaticBody2D"]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_vglon")
-
-[node name="HalfStallWall3" type="Sprite2D" parent="map_paints"]
-position = Vector2(465, 21)
-texture = ExtResource("11_o2ks1")
+[node name="HalfStallWall3" parent="map_paints" instance=ExtResource("18_rcl1p")]
+position = Vector2(466, 149)
 flip_h = true
 
-[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall3" node_paths=PackedStringArray("target")]
-collision_layer = 3
-collision_mask = 4
-script = ExtResource("19_rcl1p")
-target = NodePath("..")
-dim_alpha = 0.6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall3/Area2D"]
-shape = SubResource("RectangleShape2D_jp34l")
-debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall3"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall3/StaticBody2D"]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_vglon")
-
-[node name="HalfStallWall4" type="Sprite2D" parent="map_paints"]
-position = Vector2(465, 149)
-texture = ExtResource("11_o2ks1")
+[node name="HalfStallWall4" parent="map_paints" instance=ExtResource("18_rcl1p")]
+position = Vector2(466, 21)
 flip_h = true
-
-[node name="Area2D" type="Area2D" parent="map_paints/HalfStallWall4" node_paths=PackedStringArray("target")]
-collision_layer = 3
-collision_mask = 4
-script = ExtResource("19_rcl1p")
-target = NodePath("..")
-dim_alpha = 0.6
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall4/Area2D"]
-shape = SubResource("RectangleShape2D_jp34l")
-debug_color = Color(0.8745098, 0.8352941, 0.84705883, 0.28235295)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="map_paints/HalfStallWall4"]
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="map_paints/HalfStallWall4/StaticBody2D"]
-position = Vector2(0, 32)
-shape = SubResource("RectangleShape2D_vglon")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_8702e")
@@ -627,7 +540,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.77841824
+frame_progress = 0.3813987
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -639,7 +552,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.77841824
+frame_progress = 0.3813987
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -713,35 +626,12 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-477, 718)
 data = ExtResource("26_6a6ra")
 
-[node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.1618217
-
-[node name="DroneSound" parent="FlyerBot" index="6"]
-volume_db = 12.0
-pitch_scale = 0.45
-max_distance = 400.0
-bus = &"SFX"
-
-[node name="LockOnSound" parent="FlyerBot" index="7"]
-volume_db = 12.0
-max_distance = 400.0
-bus = &"SFX"
-
-[node name="LaserSound" parent="FlyerBot" index="8"]
-volume_db = 12.0
-max_distance = 400.0
-bus = &"SFX"
-
 [node name="Player" parent="." instance=ExtResource("7_wlolr")]
 y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-animation = &"idle"
-frame_progress = 0.19256677
-
-[node name="GPUParticles2D" parent="Player/AnimatedSprite2D" index="1"]
-position = Vector2(6, -12)
+frame_progress = 0.0694222
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
