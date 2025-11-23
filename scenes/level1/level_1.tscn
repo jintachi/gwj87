@@ -32,7 +32,7 @@
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
 [ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="24_vglon"]
 [ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="26_6a6ra"]
-[ext_resource type="PackedScene" uid="uid://ojj2jey21mo4" path="res://scenes/level1/player.tscn" id="29_a7lbm"]
+[ext_resource type="PackedScene" path="res://scenes/level1/player.tscn" id="29_a7lbm"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
