@@ -72,6 +72,7 @@ script = ExtResource("6_check_awareness")
 
 [sub_resource type="BTAction" id="BTAction_set_attack_pos"]
 script = ExtResource("7_set_attack_pos")
+attack_radius = 270.0
 
 [sub_resource type="BTAction" id="BTAction_move_to_attack_pos"]
 script = ExtResource("3_move_to")
