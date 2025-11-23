@@ -12,7 +12,8 @@ extends BTAction
 ## Name of the SceneTree group containing the player.
 @export var player_group: StringName = &"player"
 
-@export var attack_radius: float = 180.0
+## Target radius from player (default 270px).
+@export var attack_radius: float = 270.0
 
 ## Blackboard variable for target position (Vector2).
 @export var target_position_var: StringName = &"target_position"

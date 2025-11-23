@@ -128,3 +128,4 @@ func _tick(delta: float) -> Status:
 	agent.update_facing()
 	
 	return RUNNING
+
