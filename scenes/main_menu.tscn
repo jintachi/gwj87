@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="1_l6cm7"]
 [ext_resource type="Theme" uid="uid://dxevoiog3ubve" path="res://assets/ui/game_theme.tres" id="1_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://assets/sounds/wind_test.mp3" id="2_wu84c"]
-[ext_resource type="PackedScene" uid="uid://bh7opspvxsrxw" path="res://scenes/level1/level_1.tscn" id="3_5dd4i"]
+[ext_resource type="PackedScene" uid="uid://bh7opspvxsrxw" path="res://scenes/level1/level_1_alex.tscn" id="3_5dd4i"]
 [ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://assets/sounds/radalarm_hi.mp3" id="3_8ln24"]
 [ext_resource type="Script" uid="uid://dwq3vy5o2binw" path="res://scripts/ui/options.gd" id="4_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://assets/sounds/equip.mp3" id="4_rtw2f"]
