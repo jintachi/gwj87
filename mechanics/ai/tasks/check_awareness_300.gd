@@ -29,6 +29,10 @@ func _tick(_delta: float) -> Status:
 	var awareness: float = blackboard.get_var(awareness_var, 0.0, false)
 	
 	if awareness >= awareness_threshold:
+		if awareness > 270 :
+			agent.lock_on_sound.play()
+		else : 
+			agent.lock_on_sound.stop()
 		return SUCCESS
 	else:
 		return FAILURE

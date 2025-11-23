@@ -93,17 +93,20 @@ check_mode = 1
 
 [sub_resource type="BTAction" id="BTAction_lock_on"]
 script = ExtResource("9_lock_on")
+lock_on_duration = 1.0
 
 [sub_resource type="BTAction" id="BTAction_attack"]
 script = ExtResource("10_attack")
 
 [sub_resource type="BTDelay" id="BTDelay_4f04p"]
+seconds = 0.5
 children = [SubResource("BTAction_attack")]
 
 [sub_resource type="BTAction" id="BTAction_8ry40"]
 script = ExtResource("9_f3fqj")
 
 [sub_resource type="BTDelay" id="BTDelay_8ilgn"]
+seconds = 0.5
 children = [SubResource("BTAction_8ry40")]
 
 [sub_resource type="BTSequence" id="BTSequence_attack"]
@@ -145,6 +148,7 @@ children = [SubResource("BTAction_gpm82")]
 script = ExtResource("12_8ry40")
 vision_range = 200.0
 vision_angle = 15.0
+awareness_increase_amount = 3.0
 
 [sub_resource type="BTCooldown" id="BTCooldown_8ry40"]
 duration = 0.2
