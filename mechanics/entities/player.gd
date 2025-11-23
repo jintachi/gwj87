@@ -22,6 +22,7 @@ var checkpoint_position
 @export var radiation_tick_damage = 3.0
 var hit_timer : Timer
 
+var on_moving_platform := false
 
 func _ready() -> void:
 	super()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=40 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://bmqiidoblmyd1" path="res://scenes/level1/exit_building.png" id="8_a6j6j"]
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="11_87jvc"]
 [ext_resource type="Texture2D" uid="uid://j36un6oqvwnk" path="res://scenes/level1/door_arch.png" id="11_v5rty"]
-[ext_resource type="Script" uid="uid://btc5utlsyna8i" path="res://scripts/rad_dispenser.gd" id="12_v4nxl"]
 [ext_resource type="Script" uid="uid://ba8kxxuceb2ts" path="res://scenes/level1/fall_hazard.gd" id="14_6jbmo"]
 [ext_resource type="PackedScene" uid="uid://ccmxfyhbqmseb" path="res://scenes/level1/doors.tscn" id="14_t107e"]
 [ext_resource type="Texture2D" uid="uid://cdcwcwir8mdf3" path="res://assets/sprites/crate.png" id="15_a7lbm"]
@@ -31,8 +30,8 @@
 [ext_resource type="Material" uid="uid://c02e874rq02b8" path="res://assets/materials/glitch_material.tres" id="21_ui0ie"]
 [ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
-[ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="24_vglon"]
 [ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="26_6a6ra"]
+[ext_resource type="PackedScene" uid="uid://dbd6f64ev58ey" path="res://scenes/rad_container/rad_container.tscn" id="34_rcl1p"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -304,15 +303,6 @@ point_count = 8
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_detection"]
 size = Vector2(48, 48)
 
-[sub_resource type="Curve" id="Curve_jmggy"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25232202, 1), -4.1806426, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_v4nxl"]
-_limits = [0.0, 64.0, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 860.6745, 0, 0, Vector2(0.26625767, 64), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_36yfi"]
 shader = ExtResource("15_eagek")
 shader_parameter/scroll_vector = Vector2(0.5, 1)
@@ -461,6 +451,7 @@ metadata/_edit_lock_ = true
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("14_6jbmo")
+fixed_respawn = Vector2(-192, 384)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VoidArea"]
 polygon = PackedVector2Array(-320, -128, -32, -128, -32, 104, 96, 104, 96, 192, -320, 192)
@@ -532,7 +523,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.83389425
+frame_progress = 0.6282059
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -544,7 +535,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.83389425
+frame_progress = 0.6282059
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -562,22 +553,15 @@ wait_time = 0.85
 loop = false
 
 [node name="DetectionArea" type="Area2D" parent="MovingPlatform"]
-collision_mask = 3
+collision_mask = 19
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MovingPlatform/DetectionArea"]
 shape = SubResource("RectangleShape2D_detection")
 
 [node name="Sprite2D" type="Sprite2D" parent="MovingPlatform"]
+z_index = -1
 texture = ExtResource("19_6a6ra")
-
-[node name="RadDispenser" type="Sprite2D" parent="."]
-position = Vector2(-481, 348)
-texture = ExtResource("24_vglon")
-offset = Vector2(0, 21.695)
-script = ExtResource("12_v4nxl")
-spawn_curve_width = SubResource("Curve_jmggy")
-spawn_curve_y = SubResource("Curve_v4nxl")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 texture_repeat = 2
@@ -623,7 +607,7 @@ y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.47722986
+frame_progress = 0.119840935
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
@@ -644,6 +628,12 @@ bus = &"Ambient"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 visibility_layer = 0
 polygon = PackedVector2Array(-576, 304, 168, 304, 168, 592, 400, 592, 400, -128, 168, -184, -576, -184)
+
+[node name="BrokenRadiationContainer" parent="." instance=ExtResource("34_rcl1p")]
+position = Vector2(-568, 392)
+
+[node name="BrokenRadiationContainer2" parent="." instance=ExtResource("34_rcl1p")]
+position = Vector2(616, 104)
 
 [editable path="Player"]
 [editable path="Player/AnimatedSprite2D"]
