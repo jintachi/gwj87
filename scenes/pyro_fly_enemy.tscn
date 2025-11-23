@@ -15,7 +15,7 @@ binding/waypoints = NodePath("../PatrolPath:curve")
 [sub_resource type="Curve2D" id="Curve2D_ypqjj"]
 bake_interval = 50.0
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -480, 406, 0, 0, 0, 0, -480, 700, 0, 0, 0, 0, -230, 700, 0, 0, 0, 0, -230, 430, 0, 0, 0, 0, -50, 430, 0, 0, 0, 0, -50, 700, 0, 0, 0, 0, -480, 700, 0, 0, 0, 0, -480, 400)
+"points": PackedVector2Array(0, 0, 0, 0, -479, 728, 0, 0, 0, 0, -296, 726, 0, 0, 0, 0, -293, 951, 0, 0, 0, 0, -168, 963, 0, 0, 0, 0, -167, 1109, 0, 0, 0, 0, -651, 1117, 0, 0, 0, 0, -649, 725, 0, 0, 0, 0, -481, 727)
 }
 point_count = 8
 
@@ -36,12 +36,13 @@ center_alpha = 0.75
 edge_alpha = 0.05
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("2_ypqjj")]
-frame_progress = 0.7969115
+frame_progress = 0.3134261
 
 [node name="PointLight2D" parent="AnimatedSprite2D" index="3"]
 position = Vector2(169, -47.76005)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-2, 2)
 shape = SubResource("RectangleShape2D_yqiff")
 
@@ -69,5 +70,21 @@ show_percentage = false
 [node name="PatrolPath" type="Path2D" parent="."]
 position = Vector2(480, -726)
 curve = SubResource("Curve2D_ypqjj")
+
+[node name="DroneSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gb57k")
+volume_db = -33.0
+pitch_scale = 0.47
+max_distance = 350.0
+
+[node name="LockOnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_8qbxn")
+volume_db = -33.0
+max_distance = 350.0
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pxmu6")
+volume_db = -33.0
+max_distance = 350.0
 
 [editable path="AnimatedSprite2D"]

@@ -29,6 +29,11 @@ func _physics_process(_delta: float) -> void:
 	velocity = self_velocity + external_velocity
 	move_and_slide()
 
+func get_facing() -> float :
+	if face_dir.x < 0:
+		return -1
+	else :
+		return 1
 
 func move(direction_or_velocity: Vector2, delta: float = -1.0) -> void:
 	# If delta is provided (>= 0), this is the parent's move signature
@@ -74,5 +79,4 @@ func _update_awareness_bar() -> void:
 	
 	var awareness: float = 0.0
 	awareness = blackboard.get_var(&"awareness", 0.0, false)
-	
 	awareness_progress_bar.value = awareness
