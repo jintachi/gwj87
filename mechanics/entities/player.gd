@@ -27,6 +27,7 @@ var _crouch_toggle:bool = false
 @export var hit_period = 0.65
 @export var radiation_tick_damage = 3.0
 var hit_timer : Timer
+var on_moving_platform : bool
 
 
 func _ready() -> void:

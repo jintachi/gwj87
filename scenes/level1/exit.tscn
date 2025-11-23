@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://dokreh63f5gq8"]
 
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="1_qmokw"]
-[ext_resource type="Script" path="res://scenes/level1/exit_doors.gd" id="1_xj3b0"]
+[ext_resource type="Script" uid="uid://ccv04c217sipj" path="res://scenes/level1/exit_doors.gd" id="1_xj3b0"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="2_xj3b0"]
 [ext_resource type="Shader" uid="uid://fetookhstt25" path="res://scenes/level1/door_clip.gdshader" id="2_xqfpi"]
 [ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ck4nt"]
