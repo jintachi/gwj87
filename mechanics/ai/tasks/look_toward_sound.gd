@@ -60,3 +60,4 @@ func _tick(_delta: float) -> Status:
 				agent.face_dir(direction)
 	
 	return RUNNING
+
