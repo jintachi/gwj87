@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfb4u81tpku1j"]
+[gd_scene load_steps=15 format=3 uid="uid://cfb4u81tpku1j"]
 
 [ext_resource type="Script" uid="uid://2yahg147da1y" path="res://scripts/rad_chunk.gd" id="1_jdqkw"]
 [ext_resource type="Texture2D" uid="uid://be85t45pratv4" path="res://assets/sprites/rad chunk.png" id="2_ilpst"]
 [ext_resource type="Script" uid="uid://18tkgrluobeh" path="res://scripts/rad_chunk_item.gd" id="2_ne5rs"]
 [ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://assets/sounds/equip.mp3" id="4_pprrs"]
 [ext_resource type="AudioStream" uid="uid://6i52aqdyji4j" path="res://assets/sounds/step_quiet_1.mp3" id="5_ogrfs"]
+[ext_resource type="Shader" uid="uid://dpv2kwie0dbm5" path="res://scenes/radiation_glow/radiation_glow.gdshader" id="6_ogrfs"]
 
 [sub_resource type="Resource" id="Resource_ilpst"]
 script = ExtResource("2_ne5rs")
@@ -17,10 +18,36 @@ metadata/_custom_type_script = "uid://18tkgrluobeh"
 [sub_resource type="CircleShape2D" id="CircleShape2D_pprrs"]
 radius = 64.0
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pxjbi"]
+noise_type = 2
+frequency = 0.0018
+fractal_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rq4iq"]
+noise = SubResource("FastNoiseLite_pxjbi")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rq4iq"]
+shader = ExtResource("6_ogrfs")
+shader_parameter/subdivisions = 32.0
+shader_parameter/noise = SubResource("NoiseTexture2D_rq4iq")
+
+[sub_resource type="Gradient" id="Gradient_xx6vu"]
+colors = PackedColorArray(0, 1.4357032, 0.2665242, 0.49019608, 0, 0.6509804, 0.47843137, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pxjbi"]
+gradient = SubResource("Gradient_xx6vu")
+width = 96
+height = 96
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
 [node name="RadChunk" type="RigidBody2D" node_paths=PackedStringArray("tooltip")]
-collision_layer = 8
+collision_layer = 24
 collision_mask = 0
 gravity_scale = 0.0
+linear_damp = 10.0
 script = ExtResource("1_jdqkw")
 item = SubResource("Resource_ilpst")
 tooltip = NodePath("Label")
@@ -63,3 +90,8 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_pprrs")
+
+[node name="RadiationGlow" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_rq4iq")
+position = Vector2(1, -11)
+texture = SubResource("GradientTexture2D_pxjbi")

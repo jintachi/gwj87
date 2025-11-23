@@ -3,9 +3,6 @@ class_name FlyerBot extends LivingEntity
 @export var patrol_path : Path2D
 @export var stats:LivingEntityData
 var _path_points:PackedVector2Array=[]
-@onready var drone_sound : AudioStreamPlayer2D = $DroneSound
-@onready var lock_on_sound : AudioStreamPlayer2D = $LockOnSound
-@onready var laser_sound : AudioStreamPlayer2D = $LaserSound
 
 @onready var awareness_progress_bar: ProgressBar = $Awareness
 @onready var bt_player: BTPlayer = $BTPlayer
@@ -13,20 +10,16 @@ var _path_points:PackedVector2Array=[]
 var blackboard : Blackboard
 
 func _ready() -> void:
-	blackboard = bt_player.get_blackboard()
-	drone_sound.play()
-	
-	# Wait a frame to ensure blackboard is fully initialized
-	await get_tree().process_frame
 	# Get path points from patrol_path if it exists
-	
 	if patrol_path != null:
 		_path_points = patrol_path.curve.get_baked_points()
-		print("FlyerBot: Found %d path points" % len(_path_points))
-		
-		# Set waypoints to blackboard if we have path points
-		if not _path_points.is_empty():
-			set_waypoints_to_blackboard()
+		print(len(_path_points))
+	
+	blackboard = bt_player.get_blackboard()
+	
+	# Set waypoints to blackboard if we have path points
+	#if not _path_points.is_empty():
+		#set_waypoints_to_blackboard()
 
 
 func _process(_delta: float) -> void:
@@ -67,10 +60,6 @@ func update_facing() -> void:
 
 ## Sets all points from _path_points as waypoints on the blackboard.
 func set_waypoints_to_blackboard() -> void:
-	if not blackboard:
-		push_error("FlyerBot: Blackboard not found")
-		return
-	
 	var waypoints: Array[Vector2] = []
 	
 	if patrol_path != null:
@@ -80,9 +69,7 @@ func set_waypoints_to_blackboard() -> void:
 	else:
 		for point in _path_points:
 			waypoints.append(point)
-	
-	blackboard.set_var(&"waypoints", waypoints)
-	print("FlyerBot: Set %d waypoints to blackboard" % waypoints.size())
+	#blackboard.set_var(&"waypoints", waypoints)
 
 
 ## Updates the awareness progress bar from the blackboard.

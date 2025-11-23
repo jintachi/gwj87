@@ -3,18 +3,18 @@
 #* =============================================================================
 #* Manages awareness value (0-300 max) based on detection.
 #* Handles awareness decay and alert level 3 timer.
-#* Uses BTCooldown nodes in the tree to control decay timing instead of
-#* internal timers.
 #* =============================================================================
 #*
 @tool
 extends BTAction
 ## Manages the awareness system. [br]
-## Returns [code]RUNNING[/code] always (doesn't block sequence). [br]
-## For decay control, wrap this in a BTCooldown node in the tree.
+## Returns [code]RUNNING[/code] always (doesn't block sequence).
 
 ## Blackboard variable that stores awareness (float, 0-300).
 @export var awareness_var: StringName = &"awareness"
+
+## Blackboard variable for awareness decay timer (float).
+@export var awareness_decay_timer_var: StringName = &"awareness_decay_timer"
 
 ## Blackboard variable for player visibility (bool).
 @export var player_visible_var: StringName = &"player_visible"
@@ -37,6 +37,9 @@ extends BTAction
 ## Decay rate when awareness is above 200 (per second).
 @export var decay_rate_above_200: float = 10.0
 
+## Time in seconds before decay starts after last detection.
+@export var decay_start_delay: float = 2.0
+
 ## Time in seconds for alert level 3 awareness timer.
 @export var alert_level_3_timer_duration: float = 10.0
 
@@ -47,9 +50,11 @@ func _generate_name() -> String:
 
 func _enter() -> void:
 	# Initialize awareness if not set
-	if not blackboard.has_var(awareness_var):
+	#if not blackboard.has_var(awareness_var):
 		blackboard.set_var(awareness_var, 0.0)
-	if not blackboard.has_var(alert_level_3_timer_var):
+	#if not blackboard.has_var(awareness_decay_timer_var):
+		blackboard.set_var(awareness_decay_timer_var, 0.0)
+	#if not blackboard.has_var(alert_level_3_timer_var):
 		blackboard.set_var(alert_level_3_timer_var, 0.0)
 
 
@@ -84,12 +89,23 @@ func _tick(delta: float) -> Status:
 		blackboard.set_var(awareness_var, awareness)
 		return RUNNING
 	
-	if not (is_visible or is_audible):
+	# For alert levels 0-2: Normal decay system
+	var decay_timer: float = blackboard.get_var(awareness_decay_timer_var, 0.0, false)
+	
+	# Reset decay timer if player is seen or heard
+	if is_visible or is_audible:
+		decay_timer = 0.0
+		blackboard.set_var(awareness_decay_timer_var, decay_timer)
+	else:
+		# Increment decay timer
+		decay_timer += delta
+		blackboard.set_var(awareness_decay_timer_var, decay_timer)
+	
+	# Apply decay if timer has passed the delay
+	if decay_timer >= decay_start_delay:
 		var decay_rate: float
 		if awareness < 200.0:
 			decay_rate = decay_rate_below_200
-		elif awareness >= 300 :
-			pass
 		else:
 			decay_rate = decay_rate_above_200
 		
