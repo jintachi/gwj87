@@ -311,7 +311,6 @@ texture = ExtResource("2_jmggy")
 13:11/0 = 0
 21:11/0 = 0
 
-
 [sub_resource type="TileSet" id="TileSet_t107e"]
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 3
@@ -319,15 +318,6 @@ sources/0 = SubResource("TileSetAtlasSource_v4nxl")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jp34l"]
 size = Vector2(90, 82)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vglon"]
-size = Vector2(90, 20)
-
-[sub_resource type="Curve2D" id="Curve2D_8702e"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -168, -160, 0, 0, 0, 0, -352, -160, 0, 0, 0, 0, -352, 224, 0, 0, 0, 0, 128, 224, 0, 0, 0, 0, 128, 64, 0, 0, 0, 0, 0, 64, 0, 0, 0, 0, 0, -160, 0, 0, 0, 0, -168, -160)
-}
-point_count = 8
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vglon"]
 size = Vector2(90, 20)
@@ -720,7 +710,7 @@ position = Vector2(-478, 690)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.2682866
+frame_progress = 0.40688264
 
 [node name="PointLight2D" parent="FlyerBot/AnimatedSprite2D" index="3"]
 position = Vector2(5.5977783, -43.054203)
@@ -752,7 +742,7 @@ position = Vector2(-182, -160)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot2" index="1"]
-frame_progress = 0.40005875
+frame_progress = 0.53865427
 
 [node name="PointLight2D" parent="FlyerBot2/AnimatedSprite2D" index="3"]
 position = Vector2(25, -91.99999)
@@ -781,7 +771,7 @@ y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.13089155
+frame_progress = 0.21748684
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
