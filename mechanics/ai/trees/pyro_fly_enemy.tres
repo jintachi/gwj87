@@ -73,6 +73,7 @@ script = ExtResource("6_check_awareness")
 
 [sub_resource type="BTAction" id="BTAction_set_attack_pos"]
 script = ExtResource("7_set_attack_pos")
+attack_radius = 180.0
 
 [sub_resource type="BTAction" id="BTAction_move_to_attack_pos"]
 script = ExtResource("3_move_to")
@@ -132,8 +133,10 @@ children = [SubResource("BTSequence_patrol")]
 [sub_resource type="BTAction" id="BTAction_jypi1"]
 custom_name = "awareness_task"
 script = ExtResource("4_5rr2v")
+awareness_decay_timer_var = null
 decay_rate_below_200 = 20.0
 decay_rate_above_200 = 19.0
+decay_start_delay = null
 alert_level_3_timer_duration = 2.0
 
 [sub_resource type="BTAction" id="BTAction_gpm82"]
