@@ -99,6 +99,7 @@ func get_move_input() -> void:
 
 func kill() -> void:
 	#process_mode = Node.PROCESS_MODE_DISABLED
+	current_radiation = 0
 	if extra_interactions.size() != 0:
 		extra_interactions[0].call(self)
 		var last_index = extra_interactions.size() - 1

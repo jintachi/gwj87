@@ -454,13 +454,13 @@ script = ExtResource("14_6jbmo")
 fixed_respawn = Vector2(-192, 384)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-320, -128, -32, -128, -32, 104, 96, 104, 96, 192, -320, 192)
+polygon = PackedVector2Array(-312, -112, -40, -112, -40, 104, 88, 104, 88, 184, -312, 184)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-384, -176, -576, -176, -576, 272, -264, 272, -264, 288, -224, 288, -224, 272, -224, 256, -384, 256)
+polygon = PackedVector2Array(-392, -176, -576, -176, -576, 272, -264, 272, -264, 280, -224, 280, -224, 272, -224, 264, -392, 264)
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="VoidArea"]
-polygon = PackedVector2Array(-160, 256, -160, 288, -104, 288, -104, 272, 160, 272, 160, 592, 400, 592, 400, 416, 448, 416, 448, 392, 384, 392, 384, 320, 448, 320, 448, 296, 392, 296, 392, -192, 32, -192, 32, 32, 192, 32, 192, 96, 160, 96, 160, 256)
+polygon = PackedVector2Array(-152, 264, -152, 280, -112, 280, -104, 272, 160, 272, 160, 592, 400, 592, 400, 408, 440, 408, 440, 400, 384, 400, 384, 312, 448, 312, 448, 304, 392, 304, 392, -192, 40, -192, 40, 24, 200, 24, 200, 104, 168, 104, 168, 264)
 
 [node name="Decorations" type="Node2D" parent="."]
 
@@ -523,7 +523,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.6282059
+frame_progress = 0.09984354
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -535,7 +535,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.6282059
+frame_progress = 0.09984354
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -607,7 +607,7 @@ y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.119840935
+frame_progress = 0.06811146
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
