@@ -127,6 +127,8 @@ func _process(delta: float) -> void:
 	process_items(delta)
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	if Input.is_action_just_pressed("pause"):
+		pause_menu()
 	if Input.is_action_just_pressed("crouch"): 
 		_handle_crouch_toggle()
 	if input_dir.is_zero_approx():
@@ -162,6 +164,9 @@ func _physics_process(delta: float) -> void:
 	else :
 		move(input_dir, delta)
 	move_and_slide()
+
+func pause_menu() -> void:
+	pass
 
 func _handle_footsteps(delta: float) -> void:
 	_current_speed = velocity.length()

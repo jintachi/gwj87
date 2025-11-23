@@ -9,34 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://blvgfrn7vqqah" path="res://assets/sprites/nomad/nomad_animated_sprite.tscn" id="7_yceh7"]
 [ext_resource type="PackedScene" uid="uid://b6f5jrkre4v4" path="res://scripts/ui/radiation_display.tscn" id="8_uovkd"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmggy"]
-size = Vector2(24, 20)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_yceh7"]
-radius = 35.014282
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jeibo"]
-random_pitch = 1.1
-random_volume_offset_db = 2.0
-streams_count = 2
-stream_0/stream = ExtResource("6_yceh7")
-stream_1/stream = ExtResource("7_uovkd")
-
-[sub_resource type="Resource" id="Resource_o2ks1"]
-script = ExtResource("2_yceh7")
-slot_type = 4
-metadata/_custom_type_script = "uid://bq4mi00oaovbm"
-
-[sub_resource type="Resource" id="Resource_wd7kj"]
-script = ExtResource("2_yceh7")
-slot_type = 2
-metadata/_custom_type_script = "uid://bq4mi00oaovbm"
-
-[sub_resource type="Resource" id="Resource_qulnv"]
-script = ExtResource("2_yceh7")
-slot_type = 3
-metadata/_custom_type_script = "uid://bq4mi00oaovbm"
-
 [sub_resource type="Resource" id="Resource_yceh7"]
 script = ExtResource("2_yceh7")
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
@@ -57,6 +29,34 @@ script = ExtResource("2_yceh7")
 slot_type = 5
 metadata/_custom_type_script = "uid://bq4mi00oaovbm"
 
+[sub_resource type="Resource" id="Resource_wd7kj"]
+script = ExtResource("2_yceh7")
+slot_type = 2
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_qulnv"]
+script = ExtResource("2_yceh7")
+slot_type = 3
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="Resource" id="Resource_o2ks1"]
+script = ExtResource("2_yceh7")
+slot_type = 4
+metadata/_custom_type_script = "uid://bq4mi00oaovbm"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmggy"]
+size = Vector2(24, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yceh7"]
+radius = 35.014282
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jeibo"]
+random_pitch = 1.1
+random_volume_offset_db = 2.0
+streams_count = 2
+stream_0/stream = ExtResource("6_yceh7")
+stream_1/stream = ExtResource("7_uovkd")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uovkd"]
 size = Vector2(20, 32)
 
@@ -75,8 +75,7 @@ metadata/_custom_type_script = "uid://bc0nyx1kmau85"
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
 position = Vector2(-1, -29)
-animation = &"idle"
-frame_progress = 0.4821399
+frame_progress = 0.8570871
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)
