@@ -1,5 +1,4 @@
-extends LivingEntity
-class_name Player
+class_name Player extends LivingEntity
 
 static var instance : Player
 @onready var pickup_area: Area2D = $"Pickup Area"
@@ -16,7 +15,6 @@ var extra_interactions : Array[Callable]
 var on_radiation_source
 @export var radiation_rate : float = 0.08;
 var current_radiation : float
-@onready var radiation_display = $CanvasLayer/RadiationDisplay
 var checkpoint_position
 @export var regen_multiplier = 4.0
 @export var hit_period = 0.65
@@ -107,6 +105,8 @@ func kill() -> void:
 	health = computed_data.max_health
 	health_changed.emit(health, health)
 	TransitionScene.reload(checkpoint_position, self)
+	for e in get_tree().get_nodes_in_group("enemies") :
+		e.blackboard.set_var(&"awareness", 0.0)
 
 func _process(delta: float) -> void:
 	#get_attack_input()

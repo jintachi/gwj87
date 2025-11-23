@@ -36,7 +36,10 @@ center_alpha = 0.75
 edge_alpha = 0.05
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("2_ypqjj")]
-frame_progress = 0.8579072
+frame_progress = 0.7969115
+
+[node name="PointLight2D" parent="AnimatedSprite2D" index="3"]
+position = Vector2(169, -47.76005)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, 2)

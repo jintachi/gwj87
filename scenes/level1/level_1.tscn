@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://bh7opspvxsrxw"]
+[gd_scene load_steps=47 format=4 uid="uid://bh7opspvxsrxw"]
 
 [ext_resource type="TileSet" uid="uid://djw42xhiwdpr7" path="res://assets/tilesets/main_tileset.tres" id="1_i0tyo"]
 [ext_resource type="Shader" uid="uid://dke3ba58f4012" path="res://assets/tilesets/metal_grate.gdshader" id="2_36yfi"]
@@ -34,6 +34,7 @@
 [ext_resource type="Script" uid="uid://dyi5shuvw34w1" path="res://autoloads/audio/sound_area.gd" id="23_ui0ie"]
 [ext_resource type="AudioStream" uid="uid://ebgg45rk5cnn" path="res://assets/sounds/wind_natural.mp3" id="24_dcewl"]
 [ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="24_vglon"]
+[ext_resource type="Resource" uid="uid://dy00yw2uxdywg" path="res://assets/pyro_bot_stats.tres" id="26_6a6ra"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_eagek"]
 size = Vector2(288, 272)
@@ -626,7 +627,7 @@ max_range = 0.2
 min_range = 0.1
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D" instance=ExtResource("4_wlolr")]
-frame_progress = 0.50837183
+frame_progress = 0.77841824
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D"]
 
@@ -638,7 +639,7 @@ speed = 5.0
 max_range = 0.3
 
 [node name="AnimatedSprite2D" parent="Path2D/PathFollow2D2" instance=ExtResource("4_wlolr")]
-frame_progress = 0.50837183
+frame_progress = 0.77841824
 
 [node name="Node" type="Node" parent="Path2D/PathFollow2D2"]
 
@@ -708,15 +709,39 @@ initial_parameters = [0.0, 0.0, 5.0, 10.0, 0.1]
 max_parameters = [0.0, 0.0, 0.0, 0.0, 0.0]
 metadata/_edit_use_anchors_ = true
 
-[node name="FlyerBot" parent="." instance=ExtResource("16_36yfi")]
+[node name="FlyerBot" parent="." groups=["enemies"] instance=ExtResource("16_36yfi")]
 position = Vector2(-477, 718)
+data = ExtResource("26_6a6ra")
+
+[node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
+frame_progress = 0.1618217
+
+[node name="DroneSound" parent="FlyerBot" index="6"]
+volume_db = 12.0
+pitch_scale = 0.45
+max_distance = 400.0
+bus = &"SFX"
+
+[node name="LockOnSound" parent="FlyerBot" index="7"]
+volume_db = 12.0
+max_distance = 400.0
+bus = &"SFX"
+
+[node name="LaserSound" parent="FlyerBot" index="8"]
+volume_db = 12.0
+max_distance = 400.0
+bus = &"SFX"
 
 [node name="Player" parent="." instance=ExtResource("7_wlolr")]
 y_sort_enabled = true
 position = Vector2(304, 728)
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.57951194
+animation = &"idle"
+frame_progress = 0.19256677
+
+[node name="GPUParticles2D" parent="Player/AnimatedSprite2D" index="1"]
+position = Vector2(6, -12)
 
 [node name="Area2D" type="Area2D" parent="."]
 input_pickable = false
