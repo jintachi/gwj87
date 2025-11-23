@@ -35,4 +35,5 @@ func _tick(_delta: float) -> Status:
 			agent.lock_on_sound.stop()
 		return SUCCESS
 	else:
+		agent.lock_on_sound.stop()
 		return FAILURE

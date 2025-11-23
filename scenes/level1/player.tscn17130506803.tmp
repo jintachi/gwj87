@@ -107,7 +107,7 @@ metadata/_custom_type_script = "uid://bc0nyx1kmau85"
 
 [node name="AnimatedSprite2D" parent="." instance=ExtResource("7_yceh7")]
 position = Vector2(-1, -29)
-frame_progress = 0.14729626
+frame_progress = 0.057379223
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -32)

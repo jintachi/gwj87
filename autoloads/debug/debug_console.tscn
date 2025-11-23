@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dx3bthim2yljl"]
+[gd_scene load_steps=2 format=3 uid="uid://bakkf74poqnw4"]
 
 [ext_resource type="Script" uid="uid://cwt4cxtlvxxft" path="res://autoloads/debug/debug_console.gd" id="1_e7lqv"]
 

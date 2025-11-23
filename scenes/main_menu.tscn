@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://bf6gykjcjcmok"]
+[gd_scene load_steps=22 format=3 uid="uid://bf6gykjcjcmok"]
 
 [ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
 [ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
 [ext_resource type="Script" uid="uid://dm6rmg2qqoph5" path="res://autoloads/audio/volume_slider.gd" id="1_l6cm7"]
 [ext_resource type="Theme" uid="uid://dxevoiog3ubve" path="res://assets/ui/game_theme.tres" id="1_lgwnu"]
+[ext_resource type="Script" uid="uid://d0ik1w3fj6ero" path="res://scenes/main_menu.gd" id="1_rcqid"]
 [ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://assets/sounds/wind_test.mp3" id="2_wu84c"]
 [ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://assets/sounds/radalarm_hi.mp3" id="3_8ln24"]
 [ext_resource type="PackedScene" uid="uid://dx55o32l3e2g5" path="res://scenes/level1/level_1.tscn" id="4_rcqid"]
@@ -38,6 +39,8 @@ action = &"interact"
 action = &"dash"
 
 [node name="MainMenu" type="Node"]
+process_mode = 3
+script = ExtResource("1_rcqid")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

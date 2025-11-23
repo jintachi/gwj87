@@ -165,7 +165,17 @@ func _physics_process(delta: float) -> void:
 		move(input_dir, delta)
 	move_and_slide()
 
+@onready var pause_menu_ui: MarginContainer = $CanvasLayer/MarginContainer
+
 func pause_menu() -> void:
+	var is_paused = get_tree().paused
+	if is_paused:
+		# unpause
+		get_tree().paused = false
+		pause_menu_ui.visible = false
+	else:
+		get_tree().paused = true
+		pause_menu_ui.visible = true
 	pass
 
 func _handle_footsteps(delta: float) -> void:

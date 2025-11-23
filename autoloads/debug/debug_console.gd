@@ -37,7 +37,7 @@ class CustomLogger extends Logger:
 	) -> void:
 		if !DebugConsole.instance:
 			return
-		DebugConsole.instance.out.text += "[color=red]" + rationale + "[/color]"
+		# DebugConsole.instance.out.text += "[color=red]" + rationale + "[/color]"
 
 func _init() -> void:
 	instance = self
