@@ -9,6 +9,8 @@ var tween : Tween
 @onready var pickup: AudioStreamPlayer2D = $Pickup
 @onready var place: AudioStreamPlayer2D = $Place
 
+var on_moving_platform := false
+
 func _ready() -> void:
 	if place:
 		place.play()

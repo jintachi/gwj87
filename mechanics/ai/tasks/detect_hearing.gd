@@ -150,7 +150,6 @@ func _on_player_sound(sound_position: Vector2, sound_level: float) -> void:
 	awareness += awareness_increase
 	awareness = min(awareness, 300.0)  # Cap at 300
 	blackboard.set_var(awareness_var, awareness)
-	print("player HEARD, increasing awareness by: " + str(awareness_increase))
 	
 	# Update blackboard variables
 	blackboard.set_var(player_audible_var, true)

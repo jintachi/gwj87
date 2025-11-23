@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://bp5767r6vg5s3" path="res://mechanics/ai/tasks/check_awareness_300.gd" id="6_check_awareness"]
 [ext_resource type="Script" uid="uid://babkoe48bkywm" path="res://mechanics/ai/tasks/set_optimal_attack_position.gd" id="7_set_attack_pos"]
 [ext_resource type="Script" uid="uid://d15hehy3f44xc" path="res://mechanics/ai/tasks/check_player_distance.gd" id="8_check_distance"]
-[ext_resource type="Script" uid="uid://bxybolbkghyf6" path="res://mechanics/ai/tasks/kill_player.gd" id="9_f3fqj"]
 [ext_resource type="Script" uid="uid://ctlxwdj50cujx" path="res://mechanics/ai/tasks/lock_on_timer.gd" id="9_lock_on"]
 [ext_resource type="Script" uid="uid://hcicj0vl0oce" path="res://mechanics/ai/tasks/attack_player.gd" id="10_attack"]
 [ext_resource type="Script" uid="uid://ij4o3bchh0a2" path="res://mechanics/ai/tasks/detect_sight.gd" id="12_8ry40"]
@@ -87,31 +86,21 @@ children = [SubResource("BTSequence_move_once")]
 
 [sub_resource type="BTAction" id="BTAction_check_close"]
 script = ExtResource("8_check_distance")
-far_threshold = 180.0
-near_threshold = 195.0
 check_mode = 1
 
 [sub_resource type="BTAction" id="BTAction_lock_on"]
 script = ExtResource("9_lock_on")
-lock_on_duration = 1.0
 
 [sub_resource type="BTAction" id="BTAction_attack"]
 script = ExtResource("10_attack")
 
-[sub_resource type="BTDelay" id="BTDelay_4f04p"]
-seconds = 0.5
+[sub_resource type="BTRepeat" id="BTRepeat_f3fqj"]
+forever = true
 children = [SubResource("BTAction_attack")]
-
-[sub_resource type="BTAction" id="BTAction_8ry40"]
-script = ExtResource("9_f3fqj")
-
-[sub_resource type="BTDelay" id="BTDelay_8ilgn"]
-seconds = 0.5
-children = [SubResource("BTAction_8ry40")]
 
 [sub_resource type="BTSequence" id="BTSequence_attack"]
 custom_name = "Attack Sequence"
-children = [SubResource("BTAction_check_close"), SubResource("BTAction_lock_on"), SubResource("BTDelay_4f04p"), SubResource("BTDelay_8ilgn")]
+children = [SubResource("BTAction_check_close"), SubResource("BTAction_lock_on"), SubResource("BTRepeat_f3fqj")]
 
 [sub_resource type="BTParallel" id="BTParallel_4f04p"]
 custom_name = "Move Loop Sequence"
@@ -148,7 +137,6 @@ children = [SubResource("BTAction_gpm82")]
 script = ExtResource("12_8ry40")
 vision_range = 200.0
 vision_angle = 15.0
-awareness_increase_amount = 3.0
 
 [sub_resource type="BTCooldown" id="BTCooldown_8ry40"]
 duration = 0.2

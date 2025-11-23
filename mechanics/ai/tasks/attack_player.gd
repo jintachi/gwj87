@@ -40,4 +40,6 @@ func _tick(_delta: float) -> Status:
 
 
 func _do_attack(target: Node2D) -> void:
-	agent.laser_sound.play()
+	# Placeholder for actual attack implementation
+	# This should trigger attack animations, spawn projectiles, etc.
+	print("FlyerBot attacking player at: ", target.global_position)

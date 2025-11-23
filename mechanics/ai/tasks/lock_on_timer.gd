@@ -16,6 +16,7 @@ extends BTAction
 ## Lock-on duration in seconds.
 @export var lock_on_duration: float = 1.5
 
+
 func _generate_name() -> String:
 	return "Lock On Timer (%.1fs)" % lock_on_duration
 
