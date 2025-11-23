@@ -1,13 +1,98 @@
-[gd_scene load_steps=3 format=3 uid="uid://dokreh63f5gq8"]
+[gd_scene load_steps=13 format=3 uid="uid://dokreh63f5gq8"]
 
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="1_qmokw"]
+[ext_resource type="Script" uid="uid://bqax8do4iwjmb" path="res://scenes/level1/exit_doors.gd" id="1_xj3b0"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="2_xj3b0"]
+[ext_resource type="Shader" uid="uid://fetookhstt25" path="res://scenes/level1/door_clip.gdshader" id="2_xqfpi"]
+[ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ck4nt"]
+
+[sub_resource type="Gradient" id="Gradient_xqfpi"]
+offsets = PackedFloat32Array(0.010362694, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ck4nt"]
+gradient = SubResource("Gradient_xqfpi")
+width = 128
+height = 96
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ck4nt"]
+shader = ExtResource("2_xqfpi")
+shader_parameter/clip_amount = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_63ppe"]
+shader = ExtResource("2_xqfpi")
+shader_parameter/clip_amount = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqfpi"]
+size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ck4nt"]
+size = Vector2(96, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_63ppe"]
+size = Vector2(96, 96)
 
 [node name="Exit" type="Node2D"]
+script = ExtResource("1_xj3b0")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = SubResource("GradientTexture2D_ck4nt")
 
 [node name="ExitDoorRight" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_ck4nt")
+position = Vector2(36, -16)
 texture = ExtResource("1_qmokw")
 
 [node name="ExitDoorLeft" type="Sprite2D" parent="."]
-position = Vector2(-80, 0)
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_63ppe")
+position = Vector2(-44, -16)
 texture = ExtResource("2_xj3b0")
+
+[node name="RightDoor" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDoor"]
+position = Vector2(48, 79)
+shape = SubResource("RectangleShape2D_xqfpi")
+
+[node name="LeftDoor" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDoor"]
+position = Vector2(-48, 79)
+shape = SubResource("RectangleShape2D_xqfpi")
+
+[node name="Terminal1" type="Area2D" parent="."]
+z_index = 1
+position = Vector2(-96, 48)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terminal1"]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_ck4nt")
+
+[node name="Sprite2D" type="Sprite2D" parent="Terminal1"]
+texture = ExtResource("5_ck4nt")
+
+[node name="Terminal2" type="Area2D" parent="."]
+z_index = 1
+position = Vector2(88, 48)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terminal2"]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_63ppe")
+
+[node name="Sprite2D" type="Sprite2D" parent="Terminal2"]
+texture = ExtResource("5_ck4nt")
