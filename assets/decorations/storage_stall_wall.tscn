@@ -13,11 +13,13 @@ size = Vector2(118, 20)
 y_sort_enabled = true
 texture = ExtResource("1_wg1x0")
 offset = Vector2(0.5, -32.5)
-script = ExtResource("2_7ranu")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("target")]
 collision_layer = 3
 collision_mask = 4
+script = ExtResource("2_7ranu")
+target = NodePath("..")
+dim_alpha = 0.6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(1, -33)

@@ -165,8 +165,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if body == self:
 		return
 	
-	body.on_moving_platform = true
-	
 	# Add to tracking array if not already present
 	if body not in _on_platform_entities:
 		_on_platform_entities.append(body)
@@ -175,8 +173,6 @@ func _on_body_entered(body: Node2D) -> void:
 ## Called when an entity exits the detection area.
 func _on_body_exited(body: Node2D) -> void:
 	# Remove from tracking array
-	body.on_moving_platform = false
-
 	var index: int = _on_platform_entities.find(body)
 	if index >= 0:
 		_on_platform_entities.remove_at(index)
