@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbd6f64ev58ey"]
+
+[ext_resource type="Texture2D" uid="uid://dr6yg7d72ca76" path="res://assets/sprites/radiation_can_broken.png" id="1_ro412"]
+[ext_resource type="Script" uid="uid://cd2nttgmnbqdj" path="res://scenes/rad_container/rad_container.gd" id="2_e4idc"]
+[ext_resource type="Texture2D" uid="uid://b76uq0qd1dgo5" path="res://assets/sprites/radiation_can_empty.png" id="3_e4idc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ro412"]
+radius = 48.0
+
+[node name="BrokenRadiationContainer" type="Sprite2D"]
+y_sort_enabled = true
+texture = ExtResource("1_ro412")
+script = ExtResource("2_e4idc")
+empty_texture = ExtResource("3_e4idc")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ro412")

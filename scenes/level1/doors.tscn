@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ckrhv"]
 [ext_resource type="Shader" uid="uid://dpv2kwie0dbm5" path="res://scenes/radiation_glow/radiation_glow.gdshader" id="6_jbxug"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2ks1"]
+size = Vector2(96, 96)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbxug"]
 shader = ExtResource("2_ckrhv")
 shader_parameter/clip_amount = 0.0
@@ -14,9 +17,6 @@ shader_parameter/clip_amount = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o166y"]
 shader = ExtResource("2_ckrhv")
 shader_parameter/clip_amount = 0.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o2ks1"]
-size = Vector2(192, 98)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5esn"]
 size = Vector2(128, 64)
@@ -47,6 +47,20 @@ metadata/_snap_enabled = true
 [node name="Doors" type="Node2D"]
 script = ExtResource("1_m6i44")
 
+[node name="RightDoor" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightDoor"]
+position = Vector2(48, 79)
+shape = SubResource("RectangleShape2D_o2ks1")
+
+[node name="LeftDoor" type="AnimatableBody2D" parent="."]
+position = Vector2(0, -79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftDoor"]
+position = Vector2(-48, 79)
+shape = SubResource("RectangleShape2D_o2ks1")
+
 [node name="BlastDoorRight" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_jbxug")
@@ -60,15 +74,6 @@ material = SubResource("ShaderMaterial_o166y")
 position = Vector2(0, -79)
 texture = ExtResource("3_ckrhv")
 offset = Vector2(-44, 64)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(1, 2)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-1, -2)
-shape = SubResource("RectangleShape2D_o2ks1")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(128, 48)

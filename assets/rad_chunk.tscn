@@ -47,6 +47,7 @@ metadata/_snap_enabled = true
 collision_layer = 8
 collision_mask = 0
 gravity_scale = 0.0
+linear_damp = 10.0
 script = ExtResource("1_jdqkw")
 item = SubResource("Resource_ilpst")
 tooltip = NodePath("Label")

@@ -12,6 +12,7 @@ var extra_interactions : Array[Callable]
 @onready var footsteps: AudioStreamPlayer2D = $Footsteps
 
 @onready var radiation_detector = $RadiationDetector
+@onready var radiation_display = $CanvasLayer/RadiationDisplay
 var on_radiation_source
 @export var radiation_rate : float = 0.08;
 var current_radiation : float

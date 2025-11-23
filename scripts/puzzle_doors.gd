@@ -4,11 +4,12 @@ var open_state : bool = false
 @export var animation_duration : float = 0.5
 
 @onready var blast_door_right: Sprite2D = $BlastDoorRight
+@onready var right_barrier := $RightDoor
 @onready var blast_door_left: Sprite2D = $BlastDoorLeft
+@onready var left_barrier := $LeftDoor
 @onready var terminal_glow : Sprite2D = $TerminalGlow
 var glow_mat
 
-@onready var static_body_2d: StaticBody2D = $StaticBody2D
 @onready var area_2d: Area2D = $Area2D
 
 
@@ -47,5 +48,5 @@ func open_doors() -> void:
 			mat_2.set_shader_parameter("clip_amount", value),
 		0.0, -.60, 5
 	).set_trans(Tween.TRANS_EXPO)
-	tween.tween_interval(0.25)
-	tween.chain().tween_callback(func(): static_body_2d.process_mode = Node.PROCESS_MODE_DISABLED,)
+	tween.tween_property(right_barrier, "position:x", right_barrier.position.x + 64, 5).set_trans(Tween.TRANS_EXPO)
+	tween.tween_property(left_barrier, "position:x", left_barrier.position.x -64, 5).set_trans(Tween.TRANS_EXPO)
