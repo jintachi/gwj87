@@ -8,6 +8,7 @@ var open_state : bool = false
 @onready var blast_door_left: Sprite2D = $BlastDoorLeft
 @onready var left_barrier := $LeftDoor
 @onready var terminal_glow : Sprite2D = $TerminalGlow
+@onready var audio : AudioStreamPlayer2D = $AudioStreamPlayer2D
 var glow_mat
 
 @onready var area_2d: Area2D = $Area2D
@@ -38,6 +39,7 @@ func open_doors() -> void:
 		0, 30, 4
 	)
 	tween.set_parallel()
+	tween.tween_callback(func():audio.play())
 	tween.tween_method(
 		func(value):
 			mat_1.set_shader_parameter("clip_amount", value),

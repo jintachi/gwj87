@@ -12,6 +12,8 @@ var terminal1_disabled := false
 var terminal2_disabled := false
 var open_state = false
 
+@onready var audio : AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 func _ready() -> void:
     terminal1.body_entered.connect(
         func(value):
@@ -93,6 +95,7 @@ func open_doors():
     var tween = create_tween()
 
     tween.set_parallel()
+    tween.tween_callback(func():audio.play())
     tween.tween_method(
         func(value):
             mat_1.set_shader_parameter("clip_amount", value),

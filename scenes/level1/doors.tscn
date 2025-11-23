@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ccmxfyhbqmseb"]
+[gd_scene load_steps=17 format=3 uid="uid://ccmxfyhbqmseb"]
 
 [ext_resource type="Script" uid="uid://bnl8ygssbeqkn" path="res://scripts/puzzle_doors.gd" id="1_m6i44"]
 [ext_resource type="Shader" uid="uid://fetookhstt25" path="res://scenes/level1/door_clip.gdshader" id="2_ckrhv"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="3_ckrhv"]
 [ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ckrhv"]
 [ext_resource type="Shader" uid="uid://dpv2kwie0dbm5" path="res://scenes/radiation_glow/radiation_glow.gdshader" id="6_jbxug"]
+[ext_resource type="AudioStream" uid="uid://coxtt0ao4adpm" path="res://assets/sounds/blast_door.mp3" id="7_52hna"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2ks1"]
 size = Vector2(96, 96)
@@ -93,3 +94,6 @@ z_as_relative = false
 material = SubResource("ShaderMaterial_rq4iq")
 position = Vector2(128, 48)
 texture = SubResource("GradientTexture2D_52hna")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_52hna")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://dokreh63f5gq8"]
+[gd_scene load_steps=18 format=3 uid="uid://dokreh63f5gq8"]
 
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="1_qmokw"]
 [ext_resource type="Script" uid="uid://bqax8do4iwjmb" path="res://scenes/level1/exit_doors.gd" id="1_xj3b0"]
 [ext_resource type="Texture2D" uid="uid://vmd0iemwjm1p" path="res://scenes/level1/blast_door_left.png" id="2_xj3b0"]
 [ext_resource type="Shader" uid="uid://fetookhstt25" path="res://scenes/level1/door_clip.gdshader" id="2_xqfpi"]
 [ext_resource type="Texture2D" uid="uid://2gi1rtqtjt3i" path="res://scenes/level1/door_terminal.png" id="5_ck4nt"]
+[ext_resource type="AudioStream" uid="uid://coxtt0ao4adpm" path="res://assets/sounds/blast_door.mp3" id="6_63ppe"]
 
 [sub_resource type="Gradient" id="Gradient_xqfpi"]
 offsets = PackedFloat32Array(0.010362694, 1)
@@ -123,3 +124,6 @@ texture = ExtResource("5_ck4nt")
 
 [node name="Glow" type="Sprite2D" parent="Terminal2"]
 texture = SubResource("GradientTexture2D_aknn7")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_63ppe")
