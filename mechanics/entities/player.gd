@@ -101,7 +101,7 @@ func kill() -> void:
 	#process_mode = Node.PROCESS_MODE_DISABLED
 	current_radiation = 0
 	if extra_interactions.size() != 0:
-		extra_interactions[0].call(self)
+		extra_interactions[0].call_deferred(self)
 		var last_index = extra_interactions.size() - 1
 		extra_interactions[0] = extra_interactions[last_index]
 		extra_interactions.resize(last_index)
