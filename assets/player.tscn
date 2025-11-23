@@ -71,6 +71,8 @@ armor_item = SubResource("Resource_wd7kj")
 consumable_item = SubResource("Resource_qulnv")
 ammo_item = SubResource("Resource_o2ks1")
 
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
