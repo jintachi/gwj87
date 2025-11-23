@@ -1,21 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bf0e0l206u8xd"]
+[gd_scene load_steps=6 format=3 uid="uid://bf0e0l206u8xd"]
 
 [ext_resource type="PackedScene" uid="uid://buthufw0534k" path="res://scenes/player.tscn" id="1_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://b7a551uw81yi4" path="res://mechanics/agents/stealth_enemy.tscn" id="2_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://diyvgpcwpsqht" path="res://mechanics/platforms/moving_platform.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bw78xcrp6eq12" path="res://scenes/pyro_fly_enemy.tscn" id="2_0wfyh"]
+[ext_resource type="Resource" uid="uid://c2oy1qdb1nyjc" path="res://assets/player_stats.tres" id="4_tefeu"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0wfyh"]
 blend_mode = 1
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sugp2"]
-
-[sub_resource type="ImageTexture" id="ImageTexture_o5qli"]
-
-[sub_resource type="Curve2D" id="Curve2D_sugp2"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 32, -100, 0, 0, 0, 0, -118, -50, 0, 0, 0, 0, -191, 60, 0, 0, 0, 0, -138, 191, 0, 0, 0, 0, 81, 285, 0, 0, 0, 0, 166, 257, 0, 0, 0, 0, 173, 152, 0, 0, 0, 0, 234, 52, 0, 0, 0, 0, 179, -60, 0, 0, 0, 0, 32, -100)
-}
-point_count = 10
 
 [node name="Main" type="Node"]
 
@@ -29,23 +21,7 @@ scale = Vector2(1.8572543, 1.8572543)
 texture = SubResource("PlaceholderTexture2D_sugp2")
 
 [node name="Player" parent="." instance=ExtResource("1_0wfyh")]
-z_index = 1
-position = Vector2(496, -2.0023435e-07)
-scale = Vector2(0.72084606, 0.72084606)
+position = Vector2(452, -259)
+data = ExtResource("4_tefeu")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(-233, -117.99999)
-scale = Vector2(44.782406, 44.782406)
-texture = SubResource("ImageTexture_o5qli")
-height = 125.0
-
-[node name="Path2D" type="Path2D" parent="."]
-curve = SubResource("Curve2D_sugp2")
-
-[node name="MovingPlatform" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(684, 0)
-waypoints = Array[Vector2]([Vector2(0, 0), Vector2(200, 0)])
-
-[node name="StealthEnemy" parent="." node_paths=PackedStringArray("patrol_path") instance=ExtResource("2_0wfyh")]
-position = Vector2(-88, -61)
-patrol_path = NodePath("../Path2D")
+[node name="FlyerBot" parent="." instance=ExtResource("2_0wfyh")]

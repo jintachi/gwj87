@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cbivj0wlrxv7m"]
 
-[ext_resource type="BehaviorTree" uid="uid://58440tv70xh3" path="res://mechanics/ai/trees/stealth_enemy.tres" id="1_7p1mj"]
+[ext_resource type="BehaviorTree" uid="uid://dhrvg8g1qu7to" path="res://mechanics/ai/trees/stealth_enemy.tres" id="1_7p1mj"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
 

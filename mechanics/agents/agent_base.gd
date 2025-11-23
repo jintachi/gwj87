@@ -11,7 +11,6 @@ class_name AgentBase
 @export var speed: float = 200.0
 
 ## Current facing direction (-1.0 = left, 1.0 = right).
-## Kept for backward compatibility with AI tasks that expect this format.
 var _facing: float = 1.0
 
 ## Current facing direction as a normalized Vector2 (for top-down games).
@@ -40,53 +39,15 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	# Apply movement - this is the SINGLE location where movement is applied
-	# AI tasks should call set_desired_velocity() or move() to set _desired_velocity
-	# Tasks run during _process() or behavior tree update, which happens before _physics_process()
-	
-	# Debug: Print movement command occasionally (only for stealth enemies)
-	if name.contains("StealthEnemy") or name.contains("Stealth"):
-		var debug_tick: int = int(Time.get_ticks_msec() / 2000)  # Every 2 seconds
-		if debug_tick != get_meta("last_movement_debug_tick", -1):
-			set_meta("last_movement_debug_tick", debug_tick)
-			if _desired_velocity.length() > 0.1:
-				print("AgentBase: Applying movement - velocity=%s, speed=%.0f" % [
-					_desired_velocity, _desired_velocity.length()
-				])
-			else:
-				print("AgentBase: No movement command (velocity=ZERO)")
 	
 	velocity = _desired_velocity
 	move_and_slide()
 	
 	# Update facing based on actual movement
 	update_facing()
-	
-	# Reset desired velocity AFTER applying it
-	# This ensures that if no task sets it next frame, the agent stops
-	# Tasks must call move() or set_desired_velocity() every frame to continue moving
 	_desired_velocity = Vector2.ZERO
 
 
-## Set the desired velocity for movement.
-## This is the preferred method for AI tasks to request movement.
-## Movement is applied in _physics_process() to ensure single source of truth.
-## IMPORTANT: Tasks must call this every frame to continue moving.
-## @param p_velocity: The desired velocity vector.
-func set_desired_velocity(p_velocity: Vector2) -> void:
-	_desired_velocity = p_velocity
-
-
-## Move the agent with the given velocity.
-## DEPRECATED: Use set_desired_velocity() instead.
-## This method is kept for backward compatibility but will be removed.
-## It now just sets the desired velocity, which is applied in _physics_process().
-func move(p_velocity: Vector2) -> void:
-	set_desired_velocity(p_velocity)
-
-
-## Update facing direction based on current velocity.
-## For top-down games, this rotates the agent to face movement direction.
 func update_facing() -> void:
 	if velocity.length() > 0.1:
 		# Update facing direction based on velocity
@@ -102,22 +63,13 @@ func update_facing() -> void:
 		# Update legacy _facing for backward compatibility
 		_facing = signf(velocity.x) if abs(velocity.x) > 0.1 else _facing
 
-
-## Get the current facing direction.
-## Returns 1.0 when facing right, -1.0 when facing left.
-## Kept for backward compatibility.
 func get_facing() -> float:
 	return _facing
 
-
-## Get the current facing direction as a Vector2.
-## Returns a normalized Vector2 pointing in the direction the agent is facing.
 func get_facing_direction() -> Vector2:
 	return _facing_direction
 
 
-## Set the facing direction directly.
-## @param dir: -1.0 for left, 1.0 for right, or a Vector2 for full direction.
 func face_dir(dir) -> void:
 	if dir is Vector2:
 		# Vector2 direction
@@ -144,4 +96,3 @@ func get_health() -> Node:
 func take_damage(amount: float) -> void:
 	if health and health.has_method("take_damage"):
 		health.take_damage(amount)
-

@@ -1,9 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://diyvgpcwpsqht"]
+[gd_scene load_steps=3 format=3 uid="uid://diyvgpcwpsqht"]
 
 [ext_resource type="Script" uid="uid://b21oecr7l6ckg" path="res://mechanics/platforms/moving_platform.gd" id="1_script"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
-size = Vector2(200, 127.99487)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_detection"]
 size = Vector2(200, 200)

@@ -8,11 +8,16 @@ signal item_removed
 @export var slot_type : Type = Type.Any
 @export var item : InventoryItem
 
-func try_add(new_item: InventoryItem) -> bool:
+func can_accept(new_item: InventoryItem) -> bool:
 	if slot_type != Type.Any and slot_type != new_item.slot_type: return false
 	if item != null: return false
+	return true
+
+func try_add(new_item: InventoryItem, entity: Entity = null) -> bool:
+	if not can_accept(new_item): return false
 	item_added.emit(new_item)
-	new_item.item_added(self)
+	new_item.item_added(self, entity)
+	item = new_item
 	return true
 
 func try_remove(item_spec: InventoryItem) -> bool:

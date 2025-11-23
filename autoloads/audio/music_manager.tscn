@@ -4,3 +4,17 @@
 
 [node name="MusicManager" type="Node"]
 script = ExtResource("1_3u18u")
+
+[node name="Main" type="AudioStreamPlayer2D" parent="."]
+max_distance = 2000000.0
+attenuation = 1e-05
+panning_strength = 0.0
+bus = &"OST"
+playback_type = 1
+
+[node name="Main_Crossfade" type="AudioStreamPlayer2D" parent="."]
+max_distance = 2000000.0
+attenuation = 1e-05
+panning_strength = 0.0
+bus = &"OST"
+playback_type = 1
