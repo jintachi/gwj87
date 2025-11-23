@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=38 format=3 uid="uid://dv4k24du8qcrm"]
+[gd_resource type="BehaviorTree" load_steps=39 format=3 uid="uid://dv4k24du8qcrm"]
 
 [ext_resource type="Script" uid="uid://c2abtr7uiu0st" path="res://mechanics/ai/tasks/set_next_waypoint.gd" id="2_set_waypoint"]
 [ext_resource type="Script" uid="uid://c8yam2n4p5q6r" path="res://mechanics/ai/tasks/move_to.gd" id="3_move_to"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bp5767r6vg5s3" path="res://mechanics/ai/tasks/check_awareness_300.gd" id="6_check_awareness"]
 [ext_resource type="Script" uid="uid://babkoe48bkywm" path="res://mechanics/ai/tasks/set_optimal_attack_position.gd" id="7_set_attack_pos"]
 [ext_resource type="Script" uid="uid://d15hehy3f44xc" path="res://mechanics/ai/tasks/check_player_distance.gd" id="8_check_distance"]
+[ext_resource type="Script" uid="uid://bxybolbkghyf6" path="res://mechanics/ai/tasks/kill_player.gd" id="9_8ry40"]
 [ext_resource type="Script" uid="uid://ctlxwdj50cujx" path="res://mechanics/ai/tasks/lock_on_timer.gd" id="9_lock_on"]
 [ext_resource type="Script" uid="uid://hcicj0vl0oce" path="res://mechanics/ai/tasks/attack_player.gd" id="10_attack"]
 [ext_resource type="Script" uid="uid://ij4o3bchh0a2" path="res://mechanics/ai/tasks/detect_sight.gd" id="12_8ry40"]
@@ -72,7 +73,6 @@ script = ExtResource("6_check_awareness")
 
 [sub_resource type="BTAction" id="BTAction_set_attack_pos"]
 script = ExtResource("7_set_attack_pos")
-attack_radius = 270.0
 
 [sub_resource type="BTAction" id="BTAction_move_to_attack_pos"]
 script = ExtResource("3_move_to")
@@ -103,6 +103,8 @@ seconds = 0.5
 children = [SubResource("BTAction_attack")]
 
 [sub_resource type="BTAction" id="BTAction_8ry40"]
+custom_name = "Kill Player"
+script = ExtResource("9_8ry40")
 
 [sub_resource type="BTDelay" id="BTDelay_8ilgn"]
 seconds = 0.5

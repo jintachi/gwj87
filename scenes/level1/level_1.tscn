@@ -630,14 +630,14 @@ regen_multiplier = 6.0
 hit_period = 0.85
 
 [node name="AnimatedSprite2D" parent="Player" index="1"]
-frame_progress = 0.73163605
+frame_progress = 0.35657087
 
 [node name="FlyerBot" parent="." groups=["enemies"] instance=ExtResource("16_36yfi")]
 position = Vector2(-478, 690)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot" index="1"]
-frame_progress = 0.04067108
+frame_progress = 0.44066057
 
 [node name="PointLight2D" parent="FlyerBot/AnimatedSprite2D" index="3"]
 position = Vector2(5.5977783, -43.054203)
@@ -669,7 +669,7 @@ position = Vector2(-182, -160)
 data = ExtResource("26_6a6ra")
 
 [node name="AnimatedSprite2D" parent="FlyerBot2" index="1"]
-frame_progress = 0.17242768
+frame_progress = 0.57241607
 
 [node name="PointLight2D" parent="FlyerBot2/AnimatedSprite2D" index="3"]
 position = Vector2(25, -91.99999)
