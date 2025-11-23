@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf6gykjcjcmok"]
+[gd_scene load_steps=21 format=3 uid="uid://bf6gykjcjcmok"]
 
 [ext_resource type="Script" uid="uid://hxnqwexrwsv1" path="res://scripts/ui/new_game.gd" id="1_8ln24"]
 [ext_resource type="Script" uid="uid://dlct518f8hokm" path="res://scripts/ui/continue.gd" id="1_jk1qb"]
@@ -6,8 +6,6 @@
 [ext_resource type="Theme" uid="uid://dxevoiog3ubve" path="res://assets/ui/game_theme.tres" id="1_lgwnu"]
 [ext_resource type="AudioStream" uid="uid://s10cg5w6xfns" path="res://assets/sounds/wind_test.mp3" id="2_wu84c"]
 [ext_resource type="AudioStream" uid="uid://cn357cegkygkh" path="res://assets/sounds/radalarm_hi.mp3" id="3_8ln24"]
-[ext_resource type="Script" uid="uid://dwq3vy5o2binw" path="res://scripts/ui/options.gd" id="4_lgwnu"]
-[ext_resource type="PackedScene" uid="uid://dx55o32l3e2g5" path="res://scenes/level1/level_1.tscn" id="4_rcqid"]
 [ext_resource type="AudioStream" uid="uid://c0rwx2fwtq3h1" path="res://assets/sounds/equip.mp3" id="4_rtw2f"]
 [ext_resource type="Script" uid="uid://dhslpkm7j7o3r" path="res://scripts/ui/exit.gd" id="9_flqon"]
 [ext_resource type="PackedScene" uid="uid://bhd47vxb6n0bl" path="res://assets/ui/input_action.tscn" id="10_5dd4i"]
@@ -48,7 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.025910461, 0.04558961, 0.097272344, 1)
+color = Color(0.24313726, 0.23529412, 0.22745098, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = -1
@@ -61,8 +59,13 @@ theme = ExtResource("1_lgwnu")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
+alignment = 1
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 text = "Downcycling"
 label_settings = SubResource("LabelSettings_vue75")
@@ -70,6 +73,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Continue" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Continue"
 script = ExtResource("1_jk1qb")
@@ -80,40 +84,43 @@ text = "New Game"
 script = ExtResource("1_8ln24")
 target_scene = ExtResource("4_rcqid")
 
-[node name="Options" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
-text = "Options"
-script = ExtResource("4_lgwnu")
+size_flags_vertical = 4
+current_tab = 0
 
-[node name="Audio" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+[node name="Audio" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer"]
 layout_mode = 2
+metadata/_tab_index = 0
 
-[node name="Audio Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Audio Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 text = "Audio"
 label_settings = SubResource("LabelSettings_wu84c")
 
-[node name="Master Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Master Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 text = "Master Volume"
 
-[node name="Master Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Master Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 script = ExtResource("1_l6cm7")
 bus_name = "Master"
 
-[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Master Volume Slider"]
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio/Master Volume Slider"]
 stream = ExtResource("2_wu84c")
 parameters/looping = true
 
-[node name="Music Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Music Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 visible = false
 layout_mode = 2
 text = "Music Volume"
 
-[node name="Music Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Music Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 visible = false
 layout_mode = 2
 max_value = 1.0
@@ -121,96 +128,100 @@ step = 0.001
 script = ExtResource("1_l6cm7")
 bus_name = "OST"
 
-[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Music Volume Slider"]
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio/Music Volume Slider"]
 stream = ExtResource("2_wu84c")
 parameters/looping = true
 
-[node name="SFX Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="SFX Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 text = "SFX Volume"
 
-[node name="SFX Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="SFX Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 script = ExtResource("1_l6cm7")
 bus_name = "SFX"
 
-[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/SFX Volume Slider"]
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio/SFX Volume Slider"]
 stream = ExtResource("3_8ln24")
 bus = &"SFX"
 parameters/looping = true
 
-[node name="UI Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="UI Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 text = "UI Volume"
 
-[node name="UI Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="UI Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 script = ExtResource("1_l6cm7")
 bus_name = "UI"
 
-[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/UI Volume Slider"]
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio/UI Volume Slider"]
 stream = ExtResource("4_rtw2f")
 bus = &"UI"
 parameters/looping = true
 
-[node name="Ambient Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Ambient Volume Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 text = "Ambient Volume"
 
-[node name="Ambient Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio"]
+[node name="Ambient Volume Slider" type="HSlider" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio"]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
 script = ExtResource("1_l6cm7")
 bus_name = "Ambient"
 
-[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/Audio/Ambient Volume Slider"]
+[node name="TestSound" type="AudioStreamPlayer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Audio/Ambient Volume Slider"]
 stream = ExtResource("2_wu84c")
 bus = &"Ambient"
 parameters/looping = true
 
-[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Exit"
-script = ExtResource("9_flqon")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+[node name="Controls" type="ScrollContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 follow_focus = true
+metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Up" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Up" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_5dd4i")
 
-[node name="Left" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Left" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_lgwnu")
 
-[node name="Down" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Down" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_flqon")
 
-[node name="Right" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Right" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_1ajci")
 
-[node name="Interact" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Interact" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
 layout_mode = 2
 action = SubResource("InputEventAction_rcqid")
 
-[node name="Dash" parent="CanvasLayer/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("10_5dd4i")]
+[node name="Dash" parent="CanvasLayer/MarginContainer/VBoxContainer/TabContainer/Controls/VBoxContainer" instance=ExtResource("10_5dd4i")]
+visible = false
 layout_mode = 2
 action = SubResource("InputEventAction_7b55j")
+
+[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "Exit"
+script = ExtResource("9_flqon")
 
 [node name="MusicRequest" type="Node" parent="."]
 script = ExtResource("12_rcqid")
