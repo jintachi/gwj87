@@ -5,22 +5,83 @@ extends Node2D
 @onready var exit_door_left: Sprite2D = $ExitDoorLeft
 @onready var left_barrier := $LeftDoor
 @onready var terminal1 := $Terminal1
+@onready var terminal1_glow = $Terminal1/Glow
+var terminal1_disabled := false
 @onready var terminal2 := $Terminal2
+@onready var terminal2_glow = $Terminal2/Glow
+var terminal2_disabled := false
 var open_state = false
 
 func _ready() -> void:
-    terminal1.body_entered.connect(check_overlaps)
-    terminal2.body_entered.connect(check_overlaps)
+    terminal1.body_entered.connect(
+        func(value):
+            if value is RadChunk:
+                var tween = create_tween()
+                tween.tween_method(
+                    func(value):
+                        if fmod(floor(exp(value)), 2) == 0:
+                            terminal1_glow.visible = false
+                        else:
+                            terminal1_glow.visible = true,
+                            0, 30, 4
+                )
+                tween.finished.connect(
+                    func():
+                        terminal1_disabled = true
+                        terminal1_glow.visible = false
+                        check_overlaps(value)
+                )
+    )
+    terminal1.body_exited.connect(
+        func(value):
+            var check_rad_chunk = null
+            for node in terminal1.get_overlapping_areas():
+                if node is RadChunk:
+                    check_rad_chunk = node
+            if check_rad_chunk == null:
+                terminal1_disabled = false
+                terminal1_glow.visible = true
+    )
+    
+    terminal2.body_entered.connect(
+        func(value):
+            if value is RadChunk:
+                var tween = create_tween()
+                tween.tween_method(
+                    func(value):
+                        if fmod(floor(exp(value)), 2) == 0:
+                            terminal2_glow.visible = false
+                        else:
+                            terminal2_glow.visible = true,
+                            0, 30, 4
+                )
+                tween.finished.connect(
+                    func():
+                        terminal2_disabled = true
+                        terminal2_glow.visible = false
+                        check_overlaps(value)
+                )
+    )
+    terminal2.body_exited.connect(
+        func(value):
+            var check_rad_chunk = null
+            for node in terminal2.get_overlapping_areas():
+                if node is RadChunk:
+                    check_rad_chunk = node
+            if check_rad_chunk == null:
+                terminal2_disabled = false
+                terminal2_glow.visible = true
+    )
 
 
 func check_overlaps(body):
-    var list = []
-    list.append(terminal1.get_overlapping_bodies())
-    list.append(terminal2.get_overlapping_bodies())
+    var list = terminal1.get_overlapping_bodies() + terminal2.get_overlapping_bodies()
     var count = 0
+    print(list)
     for item in list:
         if item is RadChunk:
             count += 1
+
     if count >= 2:
         open_doors()
 

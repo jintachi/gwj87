@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dokreh63f5gq8"]
+[gd_scene load_steps=17 format=3 uid="uid://dokreh63f5gq8"]
 
 [ext_resource type="Texture2D" uid="uid://xwxy2w4ql6y" path="res://scenes/level1/blast_door_right.png" id="1_qmokw"]
 [ext_resource type="Script" uid="uid://bqax8do4iwjmb" path="res://scenes/level1/exit_doors.gd" id="1_xj3b0"]
@@ -32,8 +32,29 @@ size = Vector2(96, 96)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ck4nt"]
 size = Vector2(96, 96)
 
+[sub_resource type="Gradient" id="Gradient_ck4nt"]
+offsets = PackedFloat32Array(0.012953368, 1)
+colors = PackedColorArray(0.61960787, 0.7647059, 0.78039217, 0.3882353, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_63ppe"]
+gradient = SubResource("Gradient_ck4nt")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63ppe"]
 size = Vector2(96, 96)
+
+[sub_resource type="Gradient" id="Gradient_ybog0"]
+colors = PackedColorArray(0.61960787, 0.7647059, 0.78039217, 0.4, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_aknn7"]
+gradient = SubResource("Gradient_ybog0")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
 
 [node name="Exit" type="Node2D"]
 script = ExtResource("1_xj3b0")
@@ -75,7 +96,7 @@ shape = SubResource("RectangleShape2D_xqfpi")
 z_index = 1
 position = Vector2(-96, 48)
 collision_layer = 0
-collision_mask = 4
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terminal1"]
 position = Vector2(0, 40)
@@ -84,11 +105,14 @@ shape = SubResource("RectangleShape2D_ck4nt")
 [node name="Sprite2D" type="Sprite2D" parent="Terminal1"]
 texture = ExtResource("5_ck4nt")
 
+[node name="Glow" type="Sprite2D" parent="Terminal1"]
+texture = SubResource("GradientTexture2D_63ppe")
+
 [node name="Terminal2" type="Area2D" parent="."]
 z_index = 1
 position = Vector2(88, 48)
 collision_layer = 0
-collision_mask = 4
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terminal2"]
 position = Vector2(0, 40)
@@ -96,3 +120,6 @@ shape = SubResource("RectangleShape2D_63ppe")
 
 [node name="Sprite2D" type="Sprite2D" parent="Terminal2"]
 texture = ExtResource("5_ck4nt")
+
+[node name="Glow" type="Sprite2D" parent="Terminal2"]
+texture = SubResource("GradientTexture2D_aknn7")
